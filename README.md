@@ -28,19 +28,22 @@ $ echo '{"a": 1}' | jet --from json --to transit
 
 ## Installation
 
-Install via brew:
+Linux and macOS binaries are provided via brew.
+
+Install:
 
     brew install borkdude/brew/jet
 
-To upgrade:
+Upgrade:
 
     brew upgrade jet
 
+
 ## Build
 
-    script/compile
+You will need leiningen and GraalVM.
 
-You will need GraalVM 19.1.1 or higher.
+    script/compile
 
 ## License
 
