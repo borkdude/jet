@@ -53,7 +53,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - buildlinux-{{ checksum "deps.edn" }}-{{ checksum ".circleci/config.yml" }}
+            - buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Install Clojure
           command: |
@@ -94,7 +94,7 @@ jobs:
           paths:
             - ~/.m2
             - ~/graalvm-ce-19.1.1
-          key: buildlinux-{{ checksum "deps.edn" }}-{{ checksum ".circleci/config.yml" }}
+          key: buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release
           destination: release
@@ -109,7 +109,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - buildmac-{{ checksum "deps.edn" }}-{{ checksum ".circleci/config.yml" }}
+            - buildmac-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Install Clojure
           command: |
@@ -149,7 +149,7 @@ jobs:
           paths:
             - ~/.m2
             - ~/graalvm-ce-19.1.1
-          key: buildmac-{{ checksum "deps.edn" }}-{{ checksum ".circleci/config.yml" }}
+          key: buildmac-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release
           destination: release
@@ -163,14 +163,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "deps.edn" }}
+          - v1-dependencies-{{ checksum "project.clj" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run: .circleci/script/deploy
       - save_cache:
           paths:
             - ~/.m2
-          key: v1-dependencies-{{ checksum "deps.edn" }}
+          key: v1-dependencies-{{ checksum "project.clj" }}
   # docker:
   #   docker:
   #     - image: circleci/buildpack-deps:stretch
