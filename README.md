@@ -38,6 +38,21 @@ Upgrade:
 
     brew upgrade jet
 
+This tool can also be used via the JVM. If you use leiningen, you can put the
+following in your `.lein/profiles`:
+
+``` clojure
+{:user
+ {:dependencies [[borkdude/jet "0.0.2-SNAPSHOT"]]
+  :aliases {"jet" ["run" "-m" "jet.main"]}}}
+```
+
+And then call `jet` like:
+
+``` shellsession
+$ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
+{:a 1}
+```
 
 ## Build
 
