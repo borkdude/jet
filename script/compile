@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [ -z "$GRAALVM_HOME" ]; then
+    echo "Please set GRAALVM_HOME"
+    exit 1
+fi
+
+"$GRAALVM_HOME/bin/gu" install native-image
+
+JET_VERSION=$(cat resources/JET_VERSION)
+
+lein with-profiles +clojure-1.10.1 do clean, uberjar
+$GRAALVM_HOME/bin/native-image \
+  -jar target/jet-$JET_VERSION-standalone.jar \
+  -H:Name=jet \
+  -H:+ReportExceptionStackTraces \
+  -J-Dclojure.spec.skip-macros=true \
+  -J-Dclojure.compiler.direct-linking=true \
+  "-H:IncludeResources=JET_VERSION" \
+  -H:ReflectionConfigurationFiles=reflection.json \
+  --initialize-at-build-time  \
+  -H:Log=registerResource: \
+  --verbose \
+  --no-fallback \
+  --no-server \
+  "-J-Xmx3g"
