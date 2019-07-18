@@ -17,9 +17,9 @@
              :uberjar {:global-vars {*assert* false}
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"
                                   "-Dclojure.spec.skip-macros=true"]
-                       :main jet.core
+                       :main jet.main
                        :aot :all}}
-  :aliases {"jet" ["run" "-m" "jet.core"]}
+  :aliases {"jet" ["run" "-m" "jet.main"]}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_user
                                     :password :env/clojars_pass

@@ -1,4 +1,5 @@
-(ns jet.core
+(ns jet.main
+  {:no-doc true}
   (:require
    [cheshire.core :as cheshire]
    [clojure.string :as str :refer [starts-with?]]
