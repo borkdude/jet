@@ -1,5 +1,6 @@
-(defproject jet #=(clojure.string/trim
-                   #=(slurp "resources/JET_VERSION"))
+(defproject borkdude/jet
+  #=(clojure.string/trim
+     #=(slurp "resources/JET_VERSION"))
   :description "jet"
   :url "https://github.com/borkdude/jet"
   :scm {:name "git"
