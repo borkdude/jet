@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+rm -rf /tmp/release
+mkdir -p /tmp/release
+cp jet /tmp/release
+VERSION=$(cat resources/JET_VERSION)
+
+cd /tmp/release
+
+## release binary as zip archive
+
+zip "jet-$VERSION-$JET_PLATFORM-amd64.zip" jet
+
+## cleanup
+
+rm jet
