@@ -1,8 +1,8 @@
 # jet
 
 [![CircleCI](https://circleci.com/gh/borkdude/jet/tree/master.svg?style=shield)](https://circleci.com/gh/borkdude/jet/tree/master)
-[![Clojars Project](https://img.shields.io/clojars/v/jet.svg)](https://clojars.org/jet)
-[![cljdoc badge](https://cljdoc.org/badge/jet/jet)](https://cljdoc.org/d/jet/jet/CURRENT)
+[![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/jet)
+[![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/jet/jet/CURRENT)
 
 Transform JSON into EDN into Transit.
 
