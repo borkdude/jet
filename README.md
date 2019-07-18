@@ -8,7 +8,7 @@ Transform JSON into EDN into Transit and vice versa.
 
 ## Usage
 
-`jet` supports three options:
+`jet` supports the following options:
 
    - `--from`: allowed values: `edn`, `transit` or `json`
    - `--to`: allowed values: `edn`, `transit` or `json`
