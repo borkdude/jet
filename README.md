@@ -10,10 +10,10 @@ Transform JSON into EDN into Transit.
 
 `jet` supports three options:
 
-   `--from`: allowed values: `edn`, `transit` or `json`
-   `--to`: allowed values: `edn`, `transit` or `json`
-   `--keywordize`: allowed values: `true` or `false`
-   `--version`: prints current version of `jet`
+   - `--from`: allowed values: `edn`, `transit` or `json`
+   - `--to`: allowed values: `edn`, `transit` or `json`
+   - `--keywordize`: allowed values: `true` or `false`. If `true`, keywordizes JSON keys.
+   - `--version`: if present, prints current version of `jet` and exits.
 
 Examples:
 
@@ -35,6 +35,12 @@ Install via brew:
 To upgrade:
 
     brew upgrade jet
+
+## Build
+
+    script/compile
+
+You will need GraalVM 19.1.1 or higher.
 
 ## License
 
