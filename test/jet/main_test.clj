@@ -59,9 +59,7 @@
               "--from" "transit"
               "--to" "json")))
   (testing "pretty printing"
-    (jet "[{:a 1 :b 2}
-           {:a 1 :b 2}
-           {:a 1 :b 2}
-           {:a 1 :b 2}
-           {:a 1 :b 2}
-           {:a 1 :b 2}]" "--from" "edn" "--to" "json" "-pretty")))
+    (is (= "{\n  \"a\" : [ {\n    \"b\" : {\n      \"c\" : \"d\"\n    }\n  } ]\n}\n"
+           (jet "{:a [{:b {:c :d}}]}" "--from" "edn" "--to" "json" "--pretty")))
+    (is (= "{:a [{:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}]}\n"
+           (jet "{:a [{:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}}]}" "--from" "edn" "--to" "edn" "--pretty")))))

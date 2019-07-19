@@ -53,9 +53,10 @@
         (case to
           :edn (if pretty (fipp input) (prn input))
           :json (println (cheshire/generate-string input {:pretty pretty}))
-          :transit (let [writer (transit/writer System/out :json)]
+          :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
+                         writer (transit/writer bos :json)]
                      (transit/write writer input)
-                     (println)))))))
+                     (println (String. (.toByteArray bos) "UTF-8"))))))))
 
 ;;;; Scratch
 
