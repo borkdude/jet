@@ -18,7 +18,7 @@ Transform JSON into EDN into Transit and vice versa.
 Examples:
 
 ``` shellsession
-$ echo '{"a": 1}' | jet --from json --keywordize --to edn
+$ echo '{"a": 1}' | jet --from json --to edn
 {"a" 1}
 $ echo '{"a": 1}' | jet --from json --keywordize --to edn
 {:a 1}
