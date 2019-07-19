@@ -4,42 +4,42 @@
 #
 version: 2.1
 jobs:
-  # testjvm:
-  #   docker:
-  #     # specify the version you desire here
-  #     - image: circleci/clojure:lein-2.8.1
-  #   working_directory: ~/repo
-  #   environment:
-  #     LEIN_ROOT: "true"
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           - v1-dependencies-{{ checksum "deps.edn" }}
-  #           # fallback to using the latest cache if no exact match is found
-  #           - v1-dependencies-
-  #     - run:
-  #         name: Install Clojure
-  #         command: |
-  #           wget -nc https://download.clojure.org/install/linux-install-1.10.1.447.sh
-  #           chmod +x linux-install-1.10.1.447.sh
-  #           sudo ./linux-install-1.10.1.447.sh
-  #     - run:
-  #         name: Run JVM tests
-  #         command: |
-  #           script/test
-  #     - run:
-  #         name: Run as tools.deps dependency
-  #         command: |
-  #           .circleci/script/tools.deps
-  #     - run:
-  #         name: Run as lein command
-  #         command: |
-  #           .circleci/script/lein
-  #     - save_cache:
-  #         paths:
-  #           - ~/.m2
-  #         key: v1-dependencies-{{ checksum "deps.edn" }}
+  testjvm:
+    docker:
+      # specify the version you desire here
+      - image: circleci/clojure:lein-2.8.1
+    working_directory: ~/repo
+    environment:
+      LEIN_ROOT: "true"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "project.clj" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install Clojure
+          command: |
+            wget -nc https://download.clojure.org/install/linux-install-1.10.1.447.sh
+            chmod +x linux-install-1.10.1.447.sh
+            sudo ./linux-install-1.10.1.447.sh
+      - run:
+          name: Run JVM tests
+          command: |
+            script/test
+      # - run:
+      #     name: Run as tools.deps dependency
+      #     command: |
+      #       .circleci/script/tools.deps
+      - run:
+          name: Run as lein command
+          command: |
+            .circleci/script/lein
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
   buildlinux:
     docker:
       - image: circleci/clojure:lein-2.8.1
@@ -48,7 +48,7 @@ jobs:
       LEIN_ROOT: "true"
       GRAALVM_HOME: /home/circleci/graalvm-ce-19.1.1
       JET_PLATFORM: linux # used in release script
-#      CLJ_KONDO_TEST_ENV: native
+      JET_TEST_ENV: native
     steps:
       - checkout
       - restore_cache:
@@ -78,10 +78,10 @@ jobs:
           command: |
             script/compile
           no_output_timeout: 30m
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #       script/test
+      - run:
+          name: Run tests
+          command: |
+            script/test
       # - run:
       #     name: Performance report
       #     command: |
@@ -104,7 +104,7 @@ jobs:
     environment:
       GRAALVM_HOME: /Users/distiller/graalvm-ce-19.1.1/Contents/Home
       JET_PLATFORM: macos # used in release script
-      # CLJ_KONDO_TEST_ENV: native
+      JET_TEST_ENV: native
     steps:
       - checkout
       - restore_cache:
@@ -133,10 +133,10 @@ jobs:
           command: |
             script/compile
           no_output_timeout: 30m
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #       script/test
+      - run:
+          name: Run tests
+          command: |
+            script/test
       # - run:
       #     name: Performance report
       #     command: |
@@ -186,7 +186,7 @@ workflows:
   version: 2
   ci:
     jobs:
-#      - testjvm
+      - testjvm
       - buildlinux
       - buildmac
       - deploy:
@@ -194,7 +194,7 @@ workflows:
             branches:
               only: master
           requires:
-#            - testjvm
+            - testjvm
             - buildlinux
             - buildmac
       # - docker:

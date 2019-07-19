@@ -44,7 +44,7 @@
                     :transit (transit/read
                               (transit/reader (io/input-stream (.getBytes in)) :json)))
             output (case to
-                     :edn input
+                     :edn (pr-str input)
                      :json (cheshire/encode input)
                      :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
                                     writer (transit/writer (io/output-stream bos) :json)]

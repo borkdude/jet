@@ -19,7 +19,7 @@ Examples:
 
 ``` shellsession
 $ echo '{"a": 1}' | jet --from json --to edn --keywordize false
-{a 1}
+{"a" 1}
 $ echo '{"a": 1}' | jet --from json --to edn --keywordize true
 {:a 1}
 $ echo '{"a": 1}' | jet --from json --to transit
