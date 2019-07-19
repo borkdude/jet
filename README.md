@@ -12,15 +12,15 @@ Transform JSON into EDN into Transit and vice versa.
 
    - `--from`: allowed values: `edn`, `transit` or `json`
    - `--to`: allowed values: `edn`, `transit` or `json`
-   - `--keywordize`: allowed values: `true` or `false`. If `true`, keywordizes JSON keys.
+   - `--keywordize`: if present, keywordizes JSON keys.
    - `--version`: if present, prints current version of `jet` and exits.
 
 Examples:
 
 ``` shellsession
-$ echo '{"a": 1}' | jet --from json --to edn --keywordize false
+$ echo '{"a": 1}' | jet --from json --keywordize --to edn
 {"a" 1}
-$ echo '{"a": 1}' | jet --from json --to edn --keywordize true
+$ echo '{"a": 1}' | jet --from json --keywordize --to edn
 {:a 1}
 $ echo '{"a": 1}' | jet --from json --to transit
 ["^ ","a",1]
@@ -53,6 +53,16 @@ And then call `jet` like:
 $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 {:a 1}
 ```
+
+## Test
+
+Test the JVM version:
+
+    script/test
+
+Test the native version:
+
+    JET_TEST_ENV=native script/test
 
 ## Build
 

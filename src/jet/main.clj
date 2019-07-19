@@ -25,11 +25,14 @@
                  opts-map))
         from (-> (get opts "--from") first keyword)
         to (-> (get opts "--to") first keyword)
-        keywordize (-> (get opts "--keywordize") first)
+        keywordize (when-let [k (get opts "--keywordize")]
+                     (cond (empty? k) true
+                           (= "true" (first k)) true
+                           :else false))
         version (boolean (get opts "--version"))]
     {:from from
      :to to
-     :keywordize (= "true" keywordize)
+     :keywordize keywordize
      :version version}))
 
 (defn -main

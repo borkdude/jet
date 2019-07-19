@@ -23,7 +23,7 @@
     "native" #'jet-native
     #'jet-jvm))
 
-(if (= jet jet-jvm)
+(if (= jet #'jet-jvm)
   (println "==== Testing JVM version")
   (println "==== Testing native version"))
 
@@ -35,7 +35,7 @@
   (is (= "{:a 1}\n"
          (jet "{\"a\": 1}"
               "--from" "json"
-              "--keywordize" "true"
+              "--keywordize"
               "--to" "edn")))
   (is (= "[\"^ \",\"~:a\",1]\n"
          (jet "{\"a\": 1}"
