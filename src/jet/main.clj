@@ -5,7 +5,8 @@
    [clojure.string :as str :refer [starts-with?]]
    [clojure.edn :as edn]
    [cognitect.transit :as transit]
-   [clojure.java.io :as io])
+   [clojure.java.io :as io]
+   [fipp.edn :refer [pprint] :rename {pprint fipp}])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
@@ -29,15 +30,18 @@
                      (cond (empty? k) true
                            (= "true" (first k)) true
                            :else false))
-        version (boolean (get opts "--version"))]
+        version (boolean (get opts "--version"))
+        pretty (boolean (get opts "--pretty"))]
     {:from from
      :to to
      :keywordize keywordize
-     :version version}))
+     :version version
+     :pretty pretty}))
 
 (defn -main
   [& args]
-  (let [{:keys [:from :to :keywordize :version]} (parse-opts args)]
+  (let [{:keys [:from :to :keywordize
+                :pretty :version]} (parse-opts args)]
     (if version
       (println (str/trim (slurp (io/resource "JET_VERSION"))))
       (let [in (slurp *in*)
@@ -45,12 +49,19 @@
                     :edn (edn/read-string in)
                     :json (cheshire/parse-string in keywordize)
                     :transit (transit/read
-                              (transit/reader (io/input-stream (.getBytes in)) :json)))
-            output (case to
-                     :edn (pr-str input)
-                     :json (cheshire/encode input)
-                     :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
-                                    writer (transit/writer (io/output-stream bos) :json)]
-                                (transit/write writer input)
-                                (String. (.toByteArray bos) "UTF-8")))]
-        (println output)))))
+                              (transit/reader (io/input-stream (.getBytes in)) :json)))]
+        (case to
+          :edn (if pretty (fipp input) (prn input))
+          :json (println (cheshire/generate-string input {:pretty pretty}))
+          :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
+                         writer (transit/writer bos :json)]
+                     (transit/write writer input)
+                     (println (String. (.toByteArray bos) "UTF-8"))))))))
+
+;;;; Scratch
+
+(comment
+  *out*
+  System/out
+  (io/writer *out*)
+  (fipp {:a 1}))

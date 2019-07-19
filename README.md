@@ -13,6 +13,7 @@ CLI to transform JSON into EDN into Transit and vice versa.
    - `--from`: allowed values: `edn`, `transit` or `json`
    - `--to`: allowed values: `edn`, `transit` or `json`
    - `--keywordize`: if present, keywordizes JSON keys.
+   - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--version`: if present, prints current version of `jet` and exits.
 
 Examples:
