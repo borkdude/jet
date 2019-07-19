@@ -25,11 +25,14 @@
                  opts-map))
         from (-> (get opts "--from") first keyword)
         to (-> (get opts "--to") first keyword)
-        keywordize (-> (get opts "--keywordize") first)
+        keywordize (when-let [k (get opts "--keywordize")]
+                     (cond (empty? k) true
+                           (= "true" (first k)) true
+                           :else false))
         version (boolean (get opts "--version"))]
     {:from from
      :to to
-     :keywordize (= "true" keywordize)
+     :keywordize keywordize
      :version version}))
 
 (defn -main
@@ -44,7 +47,7 @@
                     :transit (transit/read
                               (transit/reader (io/input-stream (.getBytes in)) :json)))
             output (case to
-                     :edn input
+                     :edn (pr-str input)
                      :json (cheshire/encode input)
                      :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
                                     writer (transit/writer (io/output-stream bos) :json)]
