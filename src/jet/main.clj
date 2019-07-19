@@ -60,4 +60,7 @@
 ;;;; Scratch
 
 (comment
+  *out*
+  System/out
+  (io/writer *out*)
   (fipp {:a 1}))

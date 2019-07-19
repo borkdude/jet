@@ -27,7 +27,7 @@
   (println "==== Testing JVM version")
   (println "==== Testing native version"))
 
-(deftest json->edn-test
+(deftest main-test
   (is (= "{\"a\" 1}\n"
          (jet "{\"a\": 1}"
               "--from" "json"
@@ -57,4 +57,11 @@
   (is (= "{\"a\":1}\n"
          (jet "[\"^ \",\"~:a\",1]\n"
               "--from" "transit"
-              "--to" "json"))))
+              "--to" "json")))
+  (testing "pretty printing"
+    (jet "[{:a 1 :b 2}
+           {:a 1 :b 2}
+           {:a 1 :b 2}
+           {:a 1 :b 2}
+           {:a 1 :b 2}
+           {:a 1 :b 2}]" "--from" "edn" "--to" "json" "-pretty")))
