@@ -4,7 +4,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-Transform JSON into EDN into Transit and vice versa.
+CLI to transform JSON into EDN into Transit and vice versa.
 
 ## Usage
 
