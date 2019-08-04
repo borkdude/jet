@@ -109,18 +109,15 @@ $ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '
 {:foo 1 :bar 2}
 ```
 
-Multiple queries in a vector are applied after one another:
-
-``` clojure
-$ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '[#{:a :b} (vals)]'
-[2 1]
-```
+An example with `zipmap`:
 
 ``` clojure
 $ echo '{:keys [:a :b :c] :vals [1 2 3]}' \
 | jet --from edn --to edn --query '[(juxt :keys :vals) (zipmap)]'
 {:a 1, :b 2, :c 3}
 ```
+
+Examples with `filter` and `remove`:
 
 ``` clojure
 $ curl -s https://jsonplaceholder.typicode.com/todos \
