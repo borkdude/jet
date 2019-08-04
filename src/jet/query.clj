@@ -43,6 +43,8 @@
                                         #(query % f))]
                                 (op-f c x))
               count (count x)
+              select-keys (select-keys x (second q))
+              dissoc (apply dissoc x (rest q))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
