@@ -170,11 +170,9 @@ $ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '
 Composed queries should be wrapped in a vector:
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '[(vals) (map last)]'
-[3 6]
+$ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '[{:c false} (vals)]'
+[1 2]
 ```
-
-
 
 ## Test
 
