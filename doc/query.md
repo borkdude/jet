@@ -50,7 +50,7 @@ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} {:a #
 {:a {:a/a 1}}
 ```
 
-Some Clojure-like functions are supported which are mostly intented to operate
+Some Clojure-like functions are supported which are mostly intended to operate
 on list-like values, except for `keys`, `vals`, `select-keys`, `dissoc` and
 `map-vals` which operate on maps.
 
