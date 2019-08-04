@@ -135,7 +135,12 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 Comparing values can be done with `=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
-$ echo '[{:a 1} {:a 2} {:a 3}]' | \
-lein jet --from edn --keywordize --to edn --query '(filter (>= :a 2))'
+$ echo '[{:a 1} {:a 2} {:a 3}]' | lein jet --from edn --to edn --query '(filter (>= :a 2))'
 [{:a 2} {:a 3}]
+```
+
+``` clojure
+echo '[{:a {:b 1}} {:a {:b 2}}]' \
+| jet --from edn --to edn --query '(filter (= [:a :b] 1))'
+[{:a {:b 1}}]
 ```
