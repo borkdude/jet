@@ -6,6 +6,7 @@
    [clojure.edn :as edn]
    [cognitect.transit :as transit]
    [clojure.java.io :as io]
+   [jet.query :as q]
    [fipp.edn :refer [pprint] :rename {pprint fipp}])
   (:gen-class))
 
@@ -31,17 +32,19 @@
                            (= "true" (first k)) true
                            :else false))
         version (boolean (get opts "--version"))
-        pretty (boolean (get opts "--pretty"))]
+        pretty (boolean (get opts "--pretty"))
+        query (first (get opts "--query"))]
     {:from from
      :to to
      :keywordize keywordize
      :version version
-     :pretty pretty}))
+     :pretty pretty
+     :query (edn/read-string query)}))
 
 (defn -main
   [& args]
   (let [{:keys [:from :to :keywordize
-                :pretty :version]} (parse-opts args)]
+                :pretty :version :query]} (parse-opts args)]
     (if version
       (println (str/trim (slurp (io/resource "JET_VERSION"))))
       (let [in (slurp *in*)
@@ -49,7 +52,9 @@
                     :edn (edn/read-string in)
                     :json (cheshire/parse-string in keywordize)
                     :transit (transit/read
-                              (transit/reader (io/input-stream (.getBytes in)) :json)))]
+                              (transit/reader (io/input-stream (.getBytes in)) :json)))
+            input (if query (q/query input query)
+                      input)]
         (case to
           :edn (if pretty (fipp input) (prn input))
           :json (println (cheshire/generate-string input {:pretty pretty}))
