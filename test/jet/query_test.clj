@@ -38,4 +38,8 @@
   (is (= '[{:a 2} {:a 3}]
          (query '[{:a 1} {:a 2} {:a 3}] '(filter (>= :a 2)))))
   (is (= '[{:a 1} {:a 2}]
-         (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a 2))))))
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a 2)))))
+  (is (= '{:a 1 :b 2}
+         (query '{:a 1 :b 2 :c 3} '(select-keys [:a :b]))))
+  (is (= '{:c 3}
+         (query '{:a 1 :b 2 :c 3} '(dissoc :a :b)))))
