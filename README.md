@@ -64,7 +64,7 @@ $ echo '[{:a {:b 1}} {:a {:b 2}}]' \
 [{:a {:b 1}}]
 ```
 
-## [Query](query.md)
+## [Query](doc/query.md)
 
 ## Test
 
