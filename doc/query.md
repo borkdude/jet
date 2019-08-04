@@ -1,8 +1,10 @@
 # Query
 
 The `--query` option allows to select or remove specific parts of the output. A
-query is written in EDN. NOTE: some parts of this query language may change in
-the coming months after I've used it more (2019-08-04).
+query is written in EDN.
+
+NOTE: some parts of this query language may change in the coming months after it
+has seen more usage (2019-08-04).
 
 Single values can be selected by using a key:
 
