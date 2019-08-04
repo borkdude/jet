@@ -157,7 +157,7 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
-[:a :b]
+[[1 2 3] [4 5 6]]
 ```
 
 ## Test
