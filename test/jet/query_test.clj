@@ -20,6 +20,22 @@
   (is (= {:foo [:bar]} (query {:foo {:bar 2}} '{:foo (keys)})))
   (is (= {:foo [2]} (query {:foo {:bar 2}} '{:foo (vals)})))
   (is (= [3 6] (query [[1 2 3] [4 5 6]] '(map last))))
+  (is (= [1 2] (query [{:a 1} {:a 2}] '(map :a))))
+  (is (= [1 2] (query [{:a 1} {:a 2}] '(map :a))))
   (is (= [1 2] (query {:a 1 :b 2 :c 3} '[{:c false} (vals)])))
   (is (= {:foo 1 :bar 1}
-         (query {:foo {:a 1 :b 2} :bar {:a 1 :b 2}} '(map-vals :a)))))
+         (query {:foo {:a 1 :b 2} :bar {:a 1 :b 2}} '(map-vals :a))))
+  (is (= {:a 1 :b 2 :c 3}
+         (query {:keys [:a :b :c] :vals [1 2 3]} '[(juxt :keys :vals) (zipmap)])))
+  (is (= '[{:name foo :private true}]
+         (query '[{:name foo :private true}
+                  {:name bar :private false}] '(filter :private))))
+  (is (= 1 (query '[{:name foo :private true}
+                    {:name bar :private false}] '[(filter :private) (count)])))
+  (is (= '[{:name foo, :private true}]
+         (query '[{:name foo :private true}
+                  {:name bar :private false}] '(filter (= :name foo)))))
+  (is (= '[{:a 2} {:a 3}]
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (>= :a 2)))))
+  (is (= '[{:a 1} {:a 2}]
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a 2))))))

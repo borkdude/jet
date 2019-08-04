@@ -1,0 +1,3 @@
+{:cljdoc.doc/tree
+ [["Readme" {:file "README.md"}]
+  ["Query" {:file "doc/query.md"}]]}

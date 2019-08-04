@@ -1,9 +1,19 @@
-(ns jet.query)
+(ns jet.query
+  (:refer-clojure :exclude [comparator]))
 
 (declare query)
 
+(defn comparator [[c q v]]
+  (let [c-f (case c
+              = =
+              < <
+              <= <=
+              >= >=)]
+    #(c-f (query % q) v)))
+
 (defn sexpr-query [x q]
-  (let [res (case (first q)
+  (let [op (first q)
+        res (case op
               take (take (second q) x)
               drop (drop (second q) x)
               nth (try (nth x (second q))
@@ -13,15 +23,26 @@
               vals (vec (vals x))
               first (first x)
               last (last x)
-              map (map #(sexpr-query % (list (second q))) x)
+              map (map #(query % (let [f (second q)]
+                                   (if (symbol? f)
+                                     (list f)
+                                     f))) x)
               juxt (vec (for [q (rest q)]
                           (if (symbol? q)
                             (sexpr-query x (list q))
                             (query x q))))
-              map-vals (if (map? x)
-                         (zipmap (keys x)
-                                 (map #(query % (second q)) (vals x)))
-                         x)
+              map-vals (zipmap (keys x)
+                               (map #(query % (second q)) (vals x)))
+              zipmap (zipmap (first x) (second x))
+              (filter remove) (let [op-f (case op
+                                           filter filter
+                                           remove remove)
+                                    f (second q)
+                                    c (if (list? f)
+                                        (comparator f)
+                                        #(query % f))]
+                                (op-f c x))
+              count (count x)
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
@@ -34,7 +55,7 @@
     (vector? q) (if-let [next-op (first q)]
                   (query (query x next-op) (vec (rest q)))
                   x)
-    (sequential? q) (sexpr-query x q)
+    (list? q) (sexpr-query x q)
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)
