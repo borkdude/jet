@@ -54,25 +54,22 @@
   [x q]
   (cond
     (not q) nil
+    (set? q) (if (map? x)
+               (select-keys x q)
+               (mapv #(select-keys % q) x))
     (vector? q) (if-let [next-op (first q)]
-                  (query (query x next-op) (vec (rest q)))
+                  (recur (query x next-op) (vec (rest q)))
                   x)
     (list? q) (sexpr-query x q)
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)
-    (let [default (some #(or (nil? %) (false? %)) (vals q))
-          kf (fn [[k v]]
-               (when-not (contains? q k)
-                 [k (query v default)]))
-          init (if default (into {} (keep kf x)) {})
-          rf (fn [m k v]
-               (if (and v (contains? x k))
-                 (assoc m k (query (get x k) v))
-                 m))]
-      (reduce-kv rf init q))
-    (map? x) (get x q)
-    :else x))
+    (reduce-kv (fn [m k v]
+                 (if (and v (contains? x k))
+                   (assoc m k (query (get x k) v))
+                   m))
+               x q)
+    (map? x) (get x q)))
 
 ;;;; Scratch
 
