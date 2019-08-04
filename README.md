@@ -44,7 +44,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--to`: allowed values: `edn`, `transit` or `json`
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
-   - `--query`: if present, applies query to output. See [Query](query.md).
+   - `--query`: if present, applies query to output. See [Query](doc/query.md).
    - `--version`: if present, prints current version of `jet` and exits.
 
 Examples:
