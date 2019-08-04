@@ -51,7 +51,7 @@
 (defn query
   [x q]
   (cond
-    (not query) nil
+    (not q) nil
     (vector? q) (if-let [next-op (first q)]
                   (query (query x next-op) (vec (rest q)))
                   x)
