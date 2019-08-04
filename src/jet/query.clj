@@ -1,5 +1,7 @@
 (ns jet.query)
 
+(declare query)
+
 (defn sexpr-query [x q]
   (let [res (case (first q)
               take (take (second q) x)
@@ -9,7 +11,13 @@
                          (last x)))
               keys (vec (keys x))
               vals (vec (vals x))
+              first (first x)
               last (last x)
+              map (map #(sexpr-query % (list (second q))) x)
+              juxt (vec (for [q (rest q)]
+                          (if (symbol? q)
+                            (sexpr-query x (list q))
+                            (query x q))))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
@@ -23,7 +31,7 @@
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)
-    (let [default (or (get q :jet.query/all))
+    (let [default (some #(or (nil? %) (false? %)) (vals q))
           kf (fn [[k v]]
                (when-not (contains? q k)
                  [k (query v default)]))
@@ -33,12 +41,12 @@
                  (assoc m k (query (get x k) v))
                  m))]
       (reduce-kv rf init q))
+    (map? x) (get x q)
     :else x))
 
 ;;;; Scratch
 
 (comment
-  ;; TODO: document these
   (query {:a 1 :b 2} {:a true})
   (query {:a {:a/a 1 :a/b 2} :b 2} {:a {:a/a true}})
   (query {:a [{:a/a 1 :a/b 2}] :b 2} {:a {:a/a true}})

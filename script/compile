@@ -24,3 +24,5 @@ $GRAALVM_HOME/bin/native-image \
   --no-fallback \
   --no-server \
   "-J-Xmx3g"
+
+lein clean
