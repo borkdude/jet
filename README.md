@@ -63,7 +63,7 @@ $ echo '{"a": 1}' | jet --from json --to transit
 The `--query` option allows to select or remove specific parts of the output. A
 query is written in EDN.
 
-Single values can be selected by using a key::
+Single values can be selected by using a key:
 
 ``` clojure
 echo '{:a 1}' | jet --from edn --to edn --query ':a'
@@ -78,8 +78,8 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:a true :b true}'
 ```
 
 By default, only keys that have truthy values in the query will be selected from
-the output. However, if one of the values have a falsy value, this behavior is
-reversed and unmentioned keys are left out:
+the output. However, if one of the values has a falsy value, this behavior is
+reversed and other keys are left in:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:c false}'
@@ -92,8 +92,8 @@ $ echo '{:a {:a/a 1 :a/b 2} :b 2 :c 3}' \
 {:b 2, :a #:a{:b 2}}
 ```
 
-If the query is applied to a list-like, it is applied to all the elements inside
-the list-like value:
+If the query is applied to a list-like value, the query is applied to all the
+elements inside the list-like value:
 
 ``` clojure
 echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '{:a true}'
