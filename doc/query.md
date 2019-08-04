@@ -13,30 +13,21 @@ echo '{:a 1}' | jet --from edn --to edn --query ':a'
 1
 ```
 
-Multiple values can be selected using a map:
+Multiple values can be selected using set notation:
 
 ``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:a true :b true}'
+echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '#{:a :b}'
 {:a 1, :b 2}
 ```
 
-or using `select-keys`:
+or more explicitly using `select-keys`:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys [:a :b])'
 {:a 1, :b 2}
 ```
 
-By default, only keys that have truthy values in the query will be selected from
-the output. However, if one of the values has a falsy value, this behavior is
-reversed and other keys are left in:
-
-``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:c false}'
-{:a 1, :b 2}
-```
-
-The same can be achieved with `dissoc`:
+Removing keys can be achieved with `dissoc`:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
@@ -47,14 +38,15 @@ If the query is applied to a list-like value, the query is applied to all the
 elements inside the list-like value:
 
 ``` clojure
-echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '{:a true}'
+echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '#{:a}'
 [{:a 1} {:a 2}]
 ```
 
-Nested values can be selected by using a nested query:
+Applying multiple queries after one another can be achieved using vector
+notation. Queries on nested keys are written using nested maps.
 
 ``` clojure
-echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '{:a {:a/a true}}'
+echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} {:a #{:a/a}}]'
 {:a {:a/a 1}}
 ```
 
@@ -120,8 +112,8 @@ $ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '
 Multiple queries in a vector are applied after one another:
 
 ``` clojure
-$ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '[{:c false} (vals)]'
-[1 2]
+$ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '[#{:a :b} (vals)]'
+[2 1]
 ```
 
 ``` clojure

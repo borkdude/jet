@@ -54,6 +54,9 @@
   [x q]
   (cond
     (not q) nil
+    (set? q) (if (map? x)
+               (select-keys x q)
+               (mapv #(select-keys % q) x))
     (vector? q) (if-let [next-op (first q)]
                   (query (query x next-op) (vec (rest q)))
                   x)
@@ -61,11 +64,7 @@
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)
-    (let [default (some #(or (nil? %) (false? %)) (vals q))
-          kf (fn [[k v]]
-               (when-not (contains? q k)
-                 [k (query v default)]))
-          init (if default (into {} (keep kf x)) {})
+    (let [init x
           rf (fn [m k v]
                (if (and v (contains? x k))
                  (assoc m k (query (get x k) v))

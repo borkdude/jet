@@ -40,4 +40,4 @@
     (is (= "{:a [{:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}]}\n"
            (jet "{:a [{:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}}]}" "--from" "edn" "--to" "edn" "--pretty"))))
   (testing "query"
-    (is (= "{:a 1}\n" (jet "{:a 1 :b 2}" "--from" "edn" "--to" "edn" "--query" "{:a true}")))))
+    (is (= "{:a 1}\n" (jet "{:a 1 :b 2}" "--from" "edn" "--to" "edn" "--query" "#{:a}")))))
