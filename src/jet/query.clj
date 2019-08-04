@@ -18,6 +18,14 @@
                           (if (symbol? q)
                             (sexpr-query x (list q))
                             (query x q))))
+              map-vals (if (map? x)
+                         (zipmap (keys x)
+                                 (map #(query % (second q)) (vals x)))
+                         x)
+              ->> (let [ops (rest q)]
+                    (if-let [next-op (first ops)]
+                      (query (query x next-op) (cons '->> (rest ops)))
+                      x))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
@@ -27,7 +35,7 @@
   [x q]
   (cond
     (not query) nil
-    (list? q) (sexpr-query x q)
+    (sequential? q) (sexpr-query x q)
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)

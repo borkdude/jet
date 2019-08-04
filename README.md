@@ -61,7 +61,8 @@ $ echo '{"a": 1}' | jet --from json --to transit
 ## Query
 
 The `--query` option allows to select or remove specific parts of the output. A
-query is written in EDN.
+query is written in EDN. NOTE: some parts of this query language may change in
+the coming months after I've used it more (2019-08-04).
 
 Single values can be selected by using a key:
 
@@ -107,8 +108,9 @@ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '{:a {:a/a tr
 {:a {:a/a 1}}
 ```
 
-Some Clojure-like functions are supported which are mostly intented
-to operate on list-like values:
+Some Clojure-like functions are supported which are mostly intented to operate
+on list-like values, except for `keys`, `vals` and `map-vals` which operate on
+maps:
 
 ``` clojure
 echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
@@ -159,6 +161,17 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
 [[1 2 3] [4 5 6]]
 ```
+
+``` clojure
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(->> (vals) (map last))'
+[3 6]
+```
+
+``` clojure
+$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
+[3 6]
+```
+
 
 ## Test
 

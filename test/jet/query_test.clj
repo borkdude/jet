@@ -19,4 +19,7 @@
   (is (= {:a 3} (query {:a [1 2 3]} '{:a (last)})))
   (is (= {:foo [:bar]} (query {:foo {:bar 2}} '{:foo (keys)})))
   (is (= {:foo [2]} (query {:foo {:bar 2}} '{:foo (vals)})))
-  (is (= [3 6] (query [[1 2 3] [4 5 6]] '(map last)))))
+  (is (= [3 6] (query [[1 2 3] [4 5 6]] '(map last))))
+  (is (= 2 (query {:a 1 :b 2} '(->> (vals) (last)))))
+  (is (= {:foo 1 :bar 1}
+         (query {:foo {:a 1 :b 2} :bar {:a 1 :b 2}} '(map-vals :a)))))
