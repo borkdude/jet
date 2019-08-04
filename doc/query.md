@@ -20,12 +20,26 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:a true :b true}'
 {:a 1, :b 2}
 ```
 
+or using `select-keys`:
+
+``` clojure
+echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys [:a :b])'
+{:a 1, :b 2}
+```
+
 By default, only keys that have truthy values in the query will be selected from
 the output. However, if one of the values has a falsy value, this behavior is
 reversed and other keys are left in:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:c false}'
+{:a 1, :b 2}
+```
+
+The same can be achieved with `dissoc`:
+
+``` clojure
+echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
 {:a 1, :b 2}
 ```
 
@@ -45,8 +59,8 @@ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '{:a {:a/a tr
 ```
 
 Some Clojure-like functions are supported which are mostly intented to operate
-on list-like values, except for `keys`, `vals` and `map-vals` which operate on
-maps:
+on list-like values, except for `keys`, `vals`, `select-keys`, `dissoc` and
+`map-vals` which operate on maps.
 
 ``` clojure
 echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
