@@ -22,10 +22,6 @@
                          (zipmap (keys x)
                                  (map #(query % (second q)) (vals x)))
                          x)
-              ->> (let [ops (rest q)]
-                    (if-let [next-op (first ops)]
-                      (query (query x next-op) (cons '->> (rest ops)))
-                      x))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
@@ -35,6 +31,9 @@
   [x q]
   (cond
     (not query) nil
+    (vector? q) (if-let [next-op (first q)]
+                  (query (query x next-op) (vec (rest q)))
+                  x)
     (sequential? q) (sexpr-query x q)
     (sequential? x)
     (mapv #(query % q) x)

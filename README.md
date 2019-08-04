@@ -163,14 +163,17 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
 ```
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(->> (vals) (map last))'
+$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
+{:foo 1 :bar 2}
+```
+
+Composed queries should be wrapped in a vector:
+
+``` clojure
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '[(vals) (map last)]'
 [3 6]
 ```
 
-``` clojure
-$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
-[3 6]
-```
 
 
 ## Test
