@@ -4,6 +4,7 @@
    [jet.query :refer [query]]))
 
 (deftest query-test
+  (is (= nil (query [] false)))
   (is (= '1 (query {:a 1 :b 2} :a)))
   (is (= '1 (query {1 1} 1)))
   (is (= '1 (query {"1" 1} "1")))
