@@ -29,12 +29,6 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '{:c false}'
 {:a 1, :b 2}
 ```
 
-``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2 :c 3}' \
-| jet --from edn --to edn --query '{:c false :a {:a/b true}}'
-{:b 2, :a #:a{:b 2}}
-```
-
 If the query is applied to a list-like value, the query is applied to all the
 elements inside the list-like value:
 
@@ -118,26 +112,26 @@ $ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '[{:c false} (vals)]
 
 ``` clojure
 $ echo '{:keys [:a :b :c] :vals [1 2 3]}' \
-| lein jet --from edn --to edn --query '[(juxt :keys :vals) (zipmap)]'
+| jet --from edn --to edn --query '[(juxt :keys :vals) (zipmap)]'
 {:a 1, :b 2, :c 3}
 ```
 
 ``` clojure
 $ curl -s https://jsonplaceholder.typicode.com/todos \
-| lein jet --from json --keywordize --to edn --query '[(filter :completed) (count)]'
+| jet --from json --keywordize --to edn --query '[(filter :completed) (count)]'
 90
 ```
 
 ``` clojure
 $ curl -s https://jsonplaceholder.typicode.com/todos \
-| lein jet --from json --keywordize --to edn --query '[(remove :completed) (count)]'
+| jet --from json --keywordize --to edn --query '[(remove :completed) (count)]'
 110
 ```
 
 Comparing values can be done with `=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
-$ echo '[{:a 1} {:a 2} {:a 3}]' | lein jet --from edn --to edn --query '(filter (>= :a 2))'
+$ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a 2))'
 [{:a 2} {:a 3}]
 ```
 
