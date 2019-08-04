@@ -11,7 +11,7 @@
   (is (= '{:a 1} (query {:a 1 :b 2} #{:a})))
   (is (= '{:a 1} (query {:a 1 :b 2} '(select-keys [:a]))))
   (is (= {:a #:a{:a 1}} (query {:a {:a/a 1 :a/b 2} :b 2} [#{:a} {:a #{:a/a}}])))
-  (is (= {:a [#:a{:a 1}]} (query {:a [{:a/a 1 :a/b 2}] :b 2} {:a {:a/a true}})))
+  (is (= {:a [#:a{:a 1}]} (query {:a [{:a/a 1 :a/b 2}] :b 2} [#{:a} {:a #{:a/a}}])))
   (is (= {:a 1, :c 3} (query {:a 1 :b 2 :c 3} '(dissoc :b))))
   (is (= [1] (query [1 2 3] '(take 1))))
   (is (= [2 3] (query [1 2 3] '(drop 1))))
@@ -24,7 +24,7 @@
   (is (= [3 6] (query [[1 2 3] [4 5 6]] '(map last))))
   (is (= [1 2] (query [{:a 1} {:a 2}] '(map :a))))
   (is (= [1 2] (query [{:a 1} {:a 2}] '(map :a))))
-  (is (= [1 2] (query {:a 1 :b 2 :c 3} '[{:c false} (vals)])))
+  (is (= [1 2] (query {:a 1 :b 2 :c 3} '[(dissoc :c) (vals)])))
   (is (= {:foo 1 :bar 1}
          (query {:foo {:a 1 :b 2} :bar {:a 1 :b 2}} '(map-vals :a))))
   (is (= {:a 1 :b 2 :c 3}
