@@ -1,4 +1,5 @@
 (ns jet.query
+  {:no-doc true}
   (:refer-clojure :exclude [comparator])
   (:require [clojure.set :as set]))
 
