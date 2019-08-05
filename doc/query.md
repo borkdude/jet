@@ -65,9 +65,9 @@ $ echo '{:a {:b 1}}' | jet --from edn --to edn --query '(update :a :b)'
 {:a 1}
 ```
 
-The difference between `assoc` and `update` is that the query provided the the
-former begins at the root and the query provided to the latter begins at the key
-and value to be updated.
+The difference between `assoc` and `update` is that the query provided to the
+former begins at the root and the query provided to the latter begins at place
+to be updated.
 
 There are also `assoc-in` and `update-in` which behave in similar ways but allow
 changing nested values:
