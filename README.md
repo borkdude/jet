@@ -72,21 +72,6 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
 
-The last example in the [jq](https://stedolan.github.io/jq/tutorial/) tutorial:
-
-``` shellsession
-$ curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | \
-jet --from json --keywordize --to edn --pretty --query '
-(map
- {:message [:commit :message]
-  :name [:commit :committer :name]
-  :parents [:parents (map :html_url)]})'
-
-({:message "Merge pull request #1948 from eli-schwartz/no-pacman-sy\n\ndocs: fix seriously dangerous download instructions for Arch Linux",
-  :name "GitHub",
-...
-```
-
 ## [Query](doc/query.md)
 
 ## Test
