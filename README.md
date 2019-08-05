@@ -25,7 +25,7 @@ following in your `.lein/profiles`:
 
 ``` clojure
 {:user
- {:dependencies [[borkdude/jet "0.0.2"]]
+ {:dependencies [[borkdude/jet "0.0.6"]]
   :aliases {"jet" ["run" "-m" "jet.main"]}}}
 ```
 
