@@ -14,14 +14,7 @@ echo '{:a 1}' | jet --from edn --to edn --query ':a'
 1
 ```
 
-Multiple values can be selected using set notation:
-
-``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '#{:a :b}'
-{:a 1, :b 2}
-```
-
-or more explicitly using `select-keys`:
+Multiple values can be selected using `select-keys`:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys [:a :b])'
@@ -35,19 +28,10 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
 {:a 1, :b 2}
 ```
 
-<!-- If the query is applied to a list, the query is applied to all the elements
-inside the list:
-
-``` clojure
-echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '#{:a}'
-[{:a 1} {:a 2}]
-```
--->
-
 A query can be applied to every element in a list using `map`:
 
 ``` clojure
-$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a})'
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map (select-keys [:a]))'
 [{:a 1} {:a 2}]
 ```
 
@@ -63,6 +47,23 @@ Updating an existing key and value can be done with `update`:
 ``` clojure
 $ echo '{:a {:b 1}}' | jet --from edn --to edn --query '(update :a :b)'
 {:a 1}
+```
+
+<!-- Like any query, functions can be applied in a nested fashion: -->
+
+``` clojure
+echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (take 2))'
+{:a [1 2]}
+```
+
+``` clojure
+echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (drop 2))'
+{:a [3]}
+```
+
+``` clojure
+echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (nth 2))'
+{:a 3}
 ```
 
 The difference between `assoc` and `update` is that the query provided to the
@@ -95,10 +96,10 @@ $ echo '{:a 1}' | jet --from edn --to edn --query '(hash-map :foo :a :bar (quote
 ```
 
 Applying multiple queries after one another can be achieved using vector
-notation. <!-- Queries on nested keys are written using nested maps. -->
+notation. 
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} (update :a :a/a)]'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-keys [:a]) (update :a :a/a)]'
 {:a 1}
 ```
 
@@ -135,8 +136,8 @@ echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
 3
 ```
 
-To avoid ambiguity when applying a function to list elements, use `map`
-explicity.
+<!-- To avoid ambiguity when applying a function to list elements, use `map`
+explicity. -->
 
 ``` clojure
 echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(last)'
@@ -165,23 +166,6 @@ $ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '
 {:foo 1 :bar 2}
 ```
 
-Like any query, functions can be applied in a nested fashion:
-
-``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (take 2)}'
-{:a [1 2]}
-```
-
-``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (drop 2)}'
-{:a [3]}
-```
-
-``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (nth 2)}'
-{:a 3}
-```
-
 Use `juxt` to apply multiple queries to the same element. The result is a list
 of multiple results.
 
@@ -191,7 +175,7 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(juxt :a :b)
 ```
 
 ``` clojure
-$ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (juxt first last)}'
+$ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (juxt first last))'
 {:a [1 3]}
 ```
 
