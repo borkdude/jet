@@ -1,7 +1,6 @@
 # Query
 
-NOTE: This query language may change in the coming months after it
-has seen more usage. Consider it experimental and not suited for production usage (2019-08-04).
+NOTE: This query language is work in progress. Consider it experimental, suited for exploratory programming, but not suited for production usage yet (2019-08-04).
 
 NOTE: In this document, the word list also applies to arrays and vectors.
 
