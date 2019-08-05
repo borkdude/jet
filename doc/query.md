@@ -92,7 +92,7 @@ echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
 3
 ```
 
-To avoid ambiguity when applying a function on list elements, use `map`
+To avoid ambiguity when applying a function to list elements, use `map`
 explicity.
 
 ``` clojure
