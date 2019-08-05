@@ -10,7 +10,8 @@
               = =
               < <
               <= <=
-              >= >=)]
+              >= >=
+              not= not=)]
     #(c-f (query % q) v)))
 
 (defn promote-function-query [q]
@@ -24,15 +25,18 @@
         vals (map #(query x %) vals)]
     (zipmap keys vals)))
 
+(defn safe-nth [x n]
+  (try (nth x n)
+       (catch Exception _e
+         nil)))
+
 (defn sexpr-query [x q]
   (let [[op & args] q
         [arg1] args
         res (case op
               take (take arg1 x)
               drop (drop arg1 x)
-              nth (try (nth x arg1)
-                       (catch Exception _e
-                         (last x)))
+              nth (safe-nth x arg1)
               keys (vec (keys x))
               vals (vec (vals x))
               first (first x)
@@ -102,6 +106,7 @@
     (list? q) (sexpr-query x q)
     (map? q) (create-map x (apply concat (seq q)))
     (map? x) (get x q)
+    (number? q) (safe-nth x q)
     :else (get x q)))
 
 ;;;; Scratch

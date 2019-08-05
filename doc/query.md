@@ -240,7 +240,7 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 110
 ```
 
-Comparing values can be done with `=`, `>`, `>=`, `<` and `<=`.
+Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
 $ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a 2))'

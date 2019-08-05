@@ -40,6 +40,8 @@
          (query '[{:a 1} {:a 2} {:a 3}] '(filter (>= :a 2)))))
   (is (= '[{:a 1} {:a 2}]
          (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a 2)))))
+  (is (= '[{:a 1} {:a 2}]
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (not= :a 3)))))
   (is (= '{:a 1 :b 2}
          (query '{:a 1 :b 2 :c 3} '(select-keys :a :b))))
   (is (= '{:c 3}
@@ -67,4 +69,5 @@
   (is (= '{:a {:a 1}}
          (query {:a {:a [1 2 3]}} '(update-in [:a :a] first))))
   (is (= 1 (query {:a 1} '(get :a))))
-  (is (= 100 (query [100 1 2] '(get 0)))))
+  (is (= 100 (query [100 1 2] '(get 0))))
+  (is (= 1 (query (list 1 2 3) '0))))
