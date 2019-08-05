@@ -46,4 +46,10 @@
   (is (= '{:c 3}
          (query '{:a 1 :b 2 :c 3} '(dissoc :a :b))))
   (is (= '{:b 1}
-         (query '{:a 1} '(rename-keys {:a :b})))))
+         (query '{:a 1} '(rename-keys {:a :b}))))
+  (is (= '{:foo 1 :bar 2}
+         (query '{:a 1 :b 2} '(hash-map :foo :a :bar :b))))
+  (is (= '{:a 1 :b 3}
+         (query '{:a 1 :b 2} '{:b (quote 3)})))
+  (is (= '{:a 1}
+         (query nil '(hash-map :a (quote 1))))))

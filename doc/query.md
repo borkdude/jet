@@ -51,6 +51,20 @@ $ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a}
 [{:a 1} {:a 2}]
 ```
 
+Creating a new map from scratch is done with `hash-map`:
+
+``` clojure
+$ echo '{:a 1 :b 2}' | lein jet --from edn --to edn --query '(hash-map :foo :a :bar :b)'
+{:foo 1, :bar 2}
+```
+
+and creating new values from scratch is done with `quote`:
+
+``` clojure
+$ echo '{:a 1}' | lein jet --from edn --to edn --query '(hash-map :foo :a :bar (quote "hello"))'
+{:foo 1, :bar "hello"}
+```
+
 Applying multiple queries after one another can be achieved using vector
 notation. Queries on nested keys are written using nested maps.
 

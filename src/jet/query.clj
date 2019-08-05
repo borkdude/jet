@@ -48,6 +48,12 @@
               select-keys (select-keys x (second q))
               dissoc (apply dissoc x (rest q))
               rename-keys (set/rename-keys x (second q))
+              quote (second q)
+              hash-map (let [args (rest q)
+                             keys (take-nth 2 args)
+                             vals (take-nth 2 (rest args))
+                             vals (map #(query x %) vals)]
+                         (zipmap keys vals))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
