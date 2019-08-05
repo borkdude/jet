@@ -12,7 +12,7 @@ query is written in EDN.
 Single values can be selected by using a key:
 
 ``` clojure
-    echo '{:a 1}' | jet --from edn --to edn --query ':a'
+echo '{:a 1}' | jet --from edn --to edn --query ':a'
 1
 ```
 
