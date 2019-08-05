@@ -66,6 +66,17 @@ These Clojure-like functions are supported:
 - functions that operate on lists: `first`, `last`, `take`, `drop`,
   `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`
 
+
+``` clojure
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
+[:a :b]
+```
+
+``` clojure
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
+[[1 2 3] [4 5 6]]
+```
+
 ``` clojure
 echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo bar" "foo-bar"})'
 {"foo-bar":1}
@@ -81,13 +92,37 @@ echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
 3
 ```
 
-When applying functions on all elements in a list, you have to use `map` as some
-functions operate both on maps and lists.
+To avoid ambiguity when applying a function on list elements, use `map`
+explicity.
+
+``` clojure
+echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(last)'
+[4 5 6]
+```
 
 ``` clojure
 echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(map last)'
 [3 6]
 ```
+
+``` clojure
+echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(count)'
+2
+```
+
+``` clojure
+echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(map count)'
+[1 1]
+```
+
+To apply a function on a all map values, use `map-vals`:
+
+``` clojure
+$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
+{:foo 1 :bar 2}
+```
+
+Like any query, functions can be applied in a nested fashion:
 
 ``` clojure
 echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (take 2)}'
@@ -104,10 +139,8 @@ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (nth 2)}'
 {:a 3}
 ```
 
-``` clojure
-$ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (juxt first last)}'
-{:a [1 3]}
-```
+Use `juxt` to apply multiple queries to the same element. The result is a list
+of multiple results.
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(juxt :a :b)'
@@ -115,18 +148,8 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(juxt :a :b)
 ```
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
-[:a :b]
-```
-
-``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
-[[1 2 3] [4 5 6]]
-```
-
-``` clojure
-$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
-{:foo 1 :bar 2}
+$ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '{:a (juxt first last)}'
+{:a [1 3]}
 ```
 
 An example with `zipmap`:
