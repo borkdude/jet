@@ -66,9 +66,6 @@ These Clojure-like functions are supported:
 - functions that operate on lists: `first`, `last`, `take`, `drop`,
   `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`
 
-When applying functions on all elements in a list, you have to use `map` as some
-functions operate both on maps and lists.
-
 ``` clojure
 echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo bar" "foo-bar"})'
 {"foo-bar":1}
@@ -83,6 +80,9 @@ echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
 echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
 3
 ```
+
+When applying functions on all elements in a list, you have to use `map` as some
+functions operate both on maps and lists.
 
 ``` clojure
 echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(map last)'
