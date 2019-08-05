@@ -1,7 +1,7 @@
 # Query
 
 NOTE: some parts of this query language may change in the coming months after it
-has seen more usage. Consider it experimental and not suited for production (2019-08-04).
+has seen more usage. Consider it experimental and not suited for production usage (2019-08-04).
 
 NOTE: in this document, the word list also applies to arrays and vectors.
 
