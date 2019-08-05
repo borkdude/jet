@@ -51,7 +51,7 @@ $ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a}
 [{:a 1} {:a 2}]
 ```
 
-Associating new key and values in a map is done with `assoc`:
+Associating a new key and value in a map is done with `assoc`:
 
 ``` clojure
 $ echo '{:a 1}' | jet --from edn --to edn --query '(assoc :b :a)'
