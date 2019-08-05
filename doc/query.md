@@ -6,6 +6,8 @@ query is written in EDN.
 NOTE: some parts of this query language may change in the coming months after it
 has seen more usage (2019-08-04).
 
+NOTE: in this document, the word list applies to arrays, vectors and lists.
+
 Single values can be selected by using a key:
 
 ``` clojure
@@ -34,13 +36,23 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
 {:a 1, :b 2}
 ```
 
-If the query is applied to a list-like value, the query is applied to all the
-elements inside the list-like value:
+If the query is applied to a list, the query is applied to all the elements
+inside the list:
 
 ``` clojure
 echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '#{:a}'
 [{:a 1} {:a 2}]
 ```
+
+or you can do so explicitly by using `map`:
+
+``` clojure
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a})'
+[{:a 1} {:a 2}]
+```
+
+When applying functions on all elements in a list, you have to use `map` as some
+functions operate both on maps and lists.
 
 Applying multiple queries after one another can be achieved using vector
 notation. Queries on nested keys are written using nested maps.
@@ -54,7 +66,7 @@ These Clojure-like functions are supported:
 
 - functions that operate on maps: `keys`, `vals`, `rename-keys`, `select-keys`,
   `dissoc`, `map-vals`, `juxt`, `count`
-- functions that operate on list-like values: `first`, `last`, `take`, `drop`,
+- functions that operate on lists: `first`, `last`, `take`, `drop`,
   `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`
 
 ``` clojure
