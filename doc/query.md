@@ -35,15 +35,16 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
 {:a 1, :b 2}
 ```
 
-If the query is applied to a list, the query is applied to all the elements
+<!-- If the query is applied to a list, the query is applied to all the elements
 inside the list:
 
 ``` clojure
 echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '#{:a}'
 [{:a 1} {:a 2}]
 ```
+-->
 
-or you can do so explicitly by using `map`:
+A query can be applied to every element in a list using `map`:
 
 ``` clojure
 $ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a})'
