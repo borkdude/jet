@@ -240,7 +240,7 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 110
 ```
 
-Comparing values can be done with `=`, `>`, `>=`, `<` and `<=`.
+Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
 $ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a 2))'
@@ -251,4 +251,20 @@ $ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :
 echo '[{:a {:b 1}} {:a {:b 2}}]' \
 | jet --from edn --to edn --query '(filter (= [:a :b] 1))'
 [{:a {:b 1}}]
+```
+
+The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial
+using jet:
+
+``` shellsession
+$ curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | \
+jet --from json --keywordize --to edn --pretty --query '
+(map
+ {:message [:commit :message]
+  :name [:commit :committer :name]
+  :parents [:parents (map :html_url)]})'
+
+({:message "Merge pull request #1948 from eli-schwartz/no-pacman-sy\n\ndocs: fix seriously dangerous download instructions for Arch Linux",
+  :name "GitHub",
+...
 ```

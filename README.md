@@ -62,12 +62,14 @@ $ echo '{"a": 1}' | jet --from json --to transit
 $ echo '[{:a {:b 1}} {:a {:b 2}}]' \
 | jet --from edn --to edn --query '(filter (= [:a :b] 1))'
 [{:a {:b 1}}]
+```
 
-# get the latest commit SHA and date for a project from Github:
+Get the latest commit SHA and date for a project from Github:
+``` shellsession
 $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
-| lein jet --from json --keywordize --to edn \
---query '[(first) {:sha :sha :date [:commit :author :date]}]'
-{:sha "e754f6baf87ee739165e1f932ddb06ffda1bf826", :date "2019-08-04T12:59:18Z"}
+| jet --from json --keywordize --to edn \
+--query '[0 {:sha :sha :date [:commit :author :date]}]'
+{:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
 
 ## [Query](doc/query.md)
