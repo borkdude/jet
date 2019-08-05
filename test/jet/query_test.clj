@@ -70,4 +70,6 @@
          (query {:a {:a [1 2 3]}} '(update-in [:a :a] first))))
   (is (= 1 (query {:a 1} '(get :a))))
   (is (= 100 (query [100 1 2] '(get 0))))
-  (is (= 1 (query (list 1 2 3) '0))))
+  (is (= 1 (query (list 1 2 3) '0)))
+  (is (= [1 2 3] (query {:a [1 1 2 2 3 3 1 1]} '[:a (distinct)])))
+  (is (= [1 2 3 1] (query {:a [1 1 2 2 3 3 1 1]} '[:a (dedupe)]))))

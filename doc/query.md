@@ -139,11 +139,12 @@ $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-k
 
 In addition to the functions we've already covered, these Clojure-like functions are supported:
 
-- functions that operate on maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`, `rename-keys`, `select-keys`,
-  `dissoc`, `map-vals`, `juxt`, `count`.
-- functions that operate on lists: `first`, `last`, `take`, `drop`,
-  `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`.
-- function that produces a literal value: `quote`
+- functions that operate on maps: `assoc`, `assoc-in`, `update`, `update-in`,
+  `keys`, `vals`, `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`,
+  `count`.
+- functions that operate on lists: `first`, `last`, `take`, `drop`, `nth`,
+  `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`, `distinct`, `dedupe`.
+- function that produces a literal value: `quote`.
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
@@ -238,6 +239,16 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 $ curl -s https://jsonplaceholder.typicode.com/todos \
 | jet --from json --keywordize --to edn --query '[(remove :completed) (count)]'
 110
+```
+
+Remove duplicate values with `distinct` and `dedupe`:
+
+``` clojure
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | lein jet --from edn --to edn --query '[:a (distinct)]'
+[1 2 3]
+
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | lein jet --from edn --to edn --query '[:a (dedupe)]'
+[1 2 3 1]
 ```
 
 Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.

@@ -82,6 +82,8 @@
                              v (query v update-in-query)]
                           (assoc-in x path v))
               get (get x arg1)
+              distinct (distinct x)
+              dedupe (dedupe x)
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
