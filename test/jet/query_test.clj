@@ -52,4 +52,6 @@
   (is (= '{:a 1 :b 3}
          (query '{:a 1 :b 2} '{:b (quote 3)})))
   (is (= '{:a 1}
-         (query nil '(hash-map :a (quote 1))))))
+         (query nil '(hash-map :a (quote 1)))))
+  (is (= '{:a 1 :b 1}
+         (query {:a 1} '(assoc :b :a)))))

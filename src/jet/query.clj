@@ -54,6 +54,11 @@
                              vals (take-nth 2 (rest args))
                              vals (map #(query x %) vals)]
                          (zipmap keys vals))
+              assoc (let [args (rest q)
+                          keys (take-nth 2 args)
+                          vals (take-nth 2 (rest args))
+                          vals (map #(query x %) vals)]
+                      (merge x (zipmap keys vals)))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
