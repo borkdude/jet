@@ -1,5 +1,6 @@
 (ns jet.query
-  (:refer-clojure :exclude [comparator]))
+  (:refer-clojure :exclude [comparator])
+  (:require [clojure.set :as set]))
 
 (declare query)
 
@@ -45,6 +46,7 @@
               count (count x)
               select-keys (select-keys x (second q))
               dissoc (apply dissoc x (rest q))
+              rename-keys (set/rename-keys x (second q))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)

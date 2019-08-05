@@ -44,4 +44,6 @@
   (is (= '{:a 1 :b 2}
          (query '{:a 1 :b 2 :c 3} '(select-keys [:a :b]))))
   (is (= '{:c 3}
-         (query '{:a 1 :b 2 :c 3} '(dissoc :a :b)))))
+         (query '{:a 1 :b 2 :c 3} '(dissoc :a :b))))
+  (is (= '{:b 1}
+         (query '{:a 1} '(rename-keys {:a :b})))))

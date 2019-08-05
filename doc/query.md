@@ -50,9 +50,18 @@ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} {:a #
 {:a {:a/a 1}}
 ```
 
-Some Clojure-like functions are supported which are mostly intended to operate
-on list-like values, except for `keys`, `vals`, `select-keys`, `dissoc` and
-`map-vals` which operate on maps.
+The following Clojure-like functions are supported:
+
+Some Clojure-like functions are supported:
+
+- functions that operate on maps: `keys`, `vals`, `rename-keys`, `select-keys`,
+  `dissoc`, `map-vals`, `juxt`, `count`
+- functions that operate on list-like values: `first`, `last`, `take`, `drop`,
+  `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`
+
+``` clojure
+echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo bar" "foo-bar"})'
+```
 
 ``` clojure
 echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
