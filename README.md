@@ -64,7 +64,6 @@ $ echo '[{:a {:b 1}} {:a {:b 2}}]' \
 [{:a {:b 1}}]
 
 # get the latest commit SHA and date for a project from Github:
-
 curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
 --query '[(first) #{:sha :commit} {:commit [:author :date]} (rename-keys {:commit :date})]'
