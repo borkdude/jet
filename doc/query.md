@@ -14,7 +14,7 @@ echo '{:a 1}' | jet --from edn --to edn --query ':a'
 1
 ```
 
-Multiple values can be selected using `select-keys`:
+A subselection of a map can be made with `select-keys`:
 
 ``` clojure
 echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys [:a :b])'
