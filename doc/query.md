@@ -1,9 +1,9 @@
 # Query
 
-NOTE: some parts of this query language may change in the coming months after it
+NOTE: This query language may change in the coming months after it
 has seen more usage. Consider it experimental and not suited for production usage (2019-08-04).
 
-NOTE: in this document, the word list also applies to arrays and vectors.
+NOTE: In this document, the word list also applies to arrays and vectors.
 
 The `--query` option allows to select or remove specific parts of the output. A
 query is written in EDN.
@@ -95,20 +95,20 @@ $ echo '{:a 1}' | jet --from edn --to edn --query '(hash-map :foo :a :bar (quote
 ```
 
 Applying multiple queries after one another can be achieved using vector
-notation. Queries on nested keys are written using nested maps.
+notation. <!-- Queries on nested keys are written using nested maps. -->
 
 ``` clojure
-echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} {:a #{:a/a}}]'
-{:a {:a/a 1}}
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[#{:a} (update :a :a/a)]'
+{:a 1}
 ```
 
-These Clojure-like functions are supported:
+In addition to the functions we've already covered, these Clojure-like functions are supported:
 
-- functions that operate on maps: `keys`, `vals`, `rename-keys`, `select-keys`,
-  `dissoc`, `map-vals`, `juxt`, `count`
+- functions that operate on maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`, `rename-keys`, `select-keys`,
+  `dissoc`, `map-vals`, `juxt`, `count`.
 - functions that operate on lists: `first`, `last`, `take`, `drop`,
-  `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`
-
+  `nth`, `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`.
+- function that produces a literal value: `quote`
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
