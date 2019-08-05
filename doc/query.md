@@ -1,6 +1,8 @@
 # Query
 
-NOTE: This query language is work in progress. Consider it experimental, suited for exploratory programming, but not suited for production usage yet (2019-08-04).
+NOTE: This query language is work in progress. Consider it experimental, suited
+for exploratory programming, but not suited for production usage yet
+(2019-08-04).
 
 NOTE: In this document, the word list also applies to arrays and vectors.
 
@@ -10,16 +12,48 @@ query is written in EDN.
 Single values can be selected by using a key:
 
 ``` clojure
-echo '{:a 1}' | jet --from edn --to edn --query ':a'
+    echo '{:a 1}' | jet --from edn --to edn --query ':a'
 1
+```
+
+or more explicity with `get`:
+
+``` clojure
+echo '{:a 1}' | jet --from edn --to edn --query '(get :a)'
+1
+```
+
+NOTE: in some places, queries can conflict with key names. E.g:
+
+``` clojure
+echo '{(juxt :a) 1}' | jet --from edn --to edn --query '(juxt :a)'
+[nil]
+```
+
+In these places, `get` offers an unambiguous way to retrieve the value:
+
+``` clojure
+$ echo '{(juxt :a) 1}' | jet --from edn --to edn --query '(get (juxt :a))'
+1
+```
+
+Numbers can be used for looking up by position in lists:
+``` clojure
+$ echo '[1 2 3]' | lein jet --from edn --to edn --query '0'
+1
+$ echo '[1 2 3]' | lein jet --from edn --to edn --query '100'
+nil
 ```
 
 A subselection of a map can be made with `select-keys`:
 
 ``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys [:a :b])'
+echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys :a :b)'
 {:a 1, :b 2}
 ```
+
+NOTE: unlike in Clojure, the keys for `select-keys` are not wrapped in a
+sequence.
 
 Removing keys can be achieved with `dissoc`:
 
@@ -31,7 +65,7 @@ echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
 A query can be applied to every element in a list using `map`:
 
 ``` clojure
-$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map (select-keys [:a]))'
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map (select-keys :a))'
 [{:a 1} {:a 2}]
 ```
 
@@ -99,7 +133,7 @@ Applying multiple queries after one another can be achieved using vector
 notation. 
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-keys [:a]) (update :a :a/a)]'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-keys :a) (update :a :a/a)]'
 {:a 1}
 ```
 
@@ -177,6 +211,11 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(juxt :a :b)
 ``` clojure
 $ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (juxt first last))'
 {:a [1 3]}
+```
+
+``` clojure
+$ echo '[1 2 3]' | jet --from edn --to edn --query '(juxt 0 1 2 3)'
+[1 2 3 nil]
 ```
 
 An example with `zipmap`:

@@ -18,62 +18,66 @@
     (list q)
     q))
 
+(defn create-map [x args]
+  (let [keys (take-nth 2 args)
+        vals (take-nth 2 (rest args))
+        vals (map #(query x %) vals)]
+    (zipmap keys vals)))
+
 (defn sexpr-query [x q]
-  (let [op (first q)
+  (let [[op & args] q
+        [arg1] args
         res (case op
-              take (take (second q) x)
-              drop (drop (second q) x)
-              nth (try (nth x (second q))
+              take (take arg1 x)
+              drop (drop arg1 x)
+              nth (try (nth x arg1)
                        (catch Exception _e
                          (last x)))
               keys (vec (keys x))
               vals (vec (vals x))
               first (first x)
               last (last x)
-              map (map #(query % (let [f (second q)]
+              map (map #(query % (let [f arg1]
                                    (promote-function-query f))) x)
-              juxt (vec (for [q (rest q)]
+              juxt (vec (for [q args]
                           (if (symbol? q)
                             (sexpr-query x (list q))
                             (query x q))))
               map-vals (zipmap (keys x)
-                               (map #(query % (second q)) (vals x)))
+                               (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
               (filter remove) (let [op-f (case op
                                            filter filter
                                            remove remove)
-                                    f (second q)
+                                    f arg1
                                     c (if (list? f)
                                         (comparator f)
                                         #(query % f))]
                                 (op-f c x))
               count (count x)
-              select-keys (select-keys x (second q))
+              select-keys (select-keys x args)
               dissoc (apply dissoc x (rest q))
-              rename-keys (set/rename-keys x (second q))
-              quote (second q)
-              hash-map (let [args (rest q)
-                             keys (take-nth 2 args)
-                             vals (take-nth 2 (rest args))
-                             vals (map #(query x %) vals)]
-                         (zipmap keys vals))
-              assoc (let [args (rest q)
+              rename-keys (set/rename-keys x arg1)
+              quote arg1
+              hash-map (create-map x args)
+              assoc (let [args args
                           keys (take-nth 2 args)
                           vals (take-nth 2 (rest args))
                           vals (map #(query x %) vals)]
                       (merge x (zipmap keys vals)))
-              update (let [[k update-query] (rest q)
+              update (let [[k update-query] args
                            update-query (promote-function-query update-query)
                            v (get x k)]
                        (assoc x k (query v update-query)))
-              assoc-in (let [[path assoc-in-query] (rest q)
+              assoc-in (let [[path assoc-in-query] args
                              v (query x assoc-in-query)]
                          (assoc-in x path v))
-              update-in (let [[path update-in-query] (rest q)
+              update-in (let [[path update-in-query] args
                               update-in-query (promote-function-query update-in-query)
                              v (get-in x path)
                              v (query v update-in-query)]
-                         (assoc-in x path v))
+                          (assoc-in x path v))
+              get (get x arg1)
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
@@ -91,29 +95,16 @@
   [x q]
   (cond
     (not q) nil
-    (set? q) (if (map? x)
-               (select-keys x q)
-               (mapv #(select-keys % q) x))
-    (vector? q) (if-let [next-op (first q)]
-                  (recur (query x next-op) (vec (rest q)))
-                  x)
+    (vector? q)
+    (if-let [next-op (first q)]
+      (recur (query x next-op) (vec (rest q)))
+      x)
     (list? q) (sexpr-query x q)
-    (sequential? x)
-    (mapv #(query % q) x)
-    (map? q)
-    (nested-query x q)
-    (map? x) (get x q)))
+    (map? q) (create-map x (apply concat (seq q)))
+    (map? x) (get x q)
+    :else (get x q)))
 
 ;;;; Scratch
 
 (comment
-  (query {:a 1 :b 2} {:a true})
-  (query {:a {:a/a 1 :a/b 2} :b 2} {:a {:a/a true}})
-  (query {:a [{:a/a 1 :a/b 2}] :b 2} {:a {:a/a true}})
-  (query {:a 1 :b 2 :c 3} {:jet.query/all true :b false})
-  (query [1 2 3] '(take 1))
-  (query [1 2 3] '(drop 1))
-  (query {:a [1 2 3]} '{:a (take 1)})
-  (query {:a [1 2 3]} '{:a (nth 1)})
-  (query {:a [1 2 3]} '{:a (last)})
   )
