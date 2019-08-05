@@ -13,6 +13,11 @@
               >= >=)]
     #(c-f (query % q) v)))
 
+(defn promote-function-query [q]
+  (if (symbol? q)
+    (list q)
+    q))
+
 (defn sexpr-query [x q]
   (let [op (first q)
         res (case op
@@ -26,9 +31,7 @@
               first (first x)
               last (last x)
               map (map #(query % (let [f (second q)]
-                                   (if (symbol? f)
-                                     (list f)
-                                     f))) x)
+                                   (promote-function-query f))) x)
               juxt (vec (for [q (rest q)]
                           (if (symbol? q)
                             (sexpr-query x (list q))
@@ -59,10 +62,30 @@
                           vals (take-nth 2 (rest args))
                           vals (map #(query x %) vals)]
                       (merge x (zipmap keys vals)))
+              update (let [[k update-query] (rest q)
+                           update-query (promote-function-query update-query)
+                           v (get x k)]
+                       (assoc x k (query v update-query)))
+              assoc-in (let [[path assoc-in-query] (rest q)
+                             v (query x assoc-in-query)]
+                         (assoc-in x path v))
+              update-in (let [[path update-in-query] (rest q)
+                              update-in-query (promote-function-query update-in-query)
+                             v (get-in x path)
+                             v (query v update-in-query)]
+                         (assoc-in x path v))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
       res)))
+
+(defn nested-query [x q]
+  (reduce-kv
+   (fn [m k v]
+     (if (and v (contains? x k))
+       (assoc m k (query (get x k) v))
+       m))
+   x q))
 
 (defn query
   [x q]
@@ -78,11 +101,7 @@
     (sequential? x)
     (mapv #(query % q) x)
     (map? q)
-    (reduce-kv (fn [m k v]
-                 (if (and v (contains? x k))
-                   (assoc m k (query (get x k) v))
-                   m))
-               x q)
+    (nested-query x q)
     (map? x) (get x q)))
 
 ;;;; Scratch

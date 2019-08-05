@@ -51,11 +51,33 @@ $ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map #{:a}
 [{:a 1} {:a 2}]
 ```
 
-Associating new keys in a map is done with `assoc`:
+Associating new key and values in a map is done with `assoc`:
 
 ``` clojure
 $ echo '{:a 1}' | jet --from edn --to edn --query '(assoc :b :a)'
 {:a 1, :b 1}
+```
+
+Updating an existing key and value can be done with `update`:
+
+``` clojure
+$ echo '{:a {:b 1}}' | jet --from edn --to edn --query '(update :a :b)'
+{:a 1}
+```
+
+The difference between `assoc` and `update` is that the query provided the the
+former begins at the root and the query provided to the latter begins at the key
+and value to be updated.
+
+There are also `assoc-in` and `update-in` which behave in similar ways but allow
+changing nested values:
+
+``` clojure
+$ echo '{:a 1}' | lein jet --from edn --to edn --query '(assoc-in [:b :c] :a)'
+{:a 1, :b {:c 1}}
+
+$ echo '{:a {:b [1 2 3]}}' | lein jet --from edn --to edn --query '(update-in [:a :b] last)'
+{:a {:b 3}}
 ```
 
 Creating a new map from scratch is done with `hash-map`:

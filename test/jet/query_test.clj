@@ -54,4 +54,14 @@
   (is (= '{:a 1}
          (query nil '(hash-map :a (quote 1)))))
   (is (= '{:a 1 :b 1}
-         (query {:a 1} '(assoc :b :a)))))
+         (query {:a 1} '(assoc :b :a))))
+  (is (= '{:a 1}
+         (query {:a {:b 1}} '(update :a :b))))
+  (is (= '{:a 1}
+         (query {:a [1 2 3]} '(update :a first))))
+  (is (= '{:a {:a 2} :b 2}
+         (query {:a {:a 1} :b 2} '(assoc-in [:a :a] :b))))
+  (is (= '{:a {:a 1}}
+         (query {:a {:a {:b 1}}} '(update-in [:a :a] :b))))
+  (is (= '{:a {:a 1}}
+         (query {:a {:a [1 2 3]}} '(update-in [:a :a] first)))))
