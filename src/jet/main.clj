@@ -2,12 +2,13 @@
   {:no-doc true}
   (:require
    [cheshire.core :as cheshire]
-   [clojure.string :as str :refer [starts-with?]]
    [clojure.edn :as edn]
-   [cognitect.transit :as transit]
    [clojure.java.io :as io]
-   [jet.query :as q]
-   [fipp.edn :refer [pprint] :rename {pprint fipp}])
+   [clojure.string :as str :refer [starts-with?]]
+   [cognitect.transit :as transit]
+   [fipp.edn :refer [pprint] :rename {pprint fipp}]
+   [jet.data-readers]
+   [jet.query :as q])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
@@ -39,7 +40,7 @@
      :keywordize keywordize
      :version version
      :pretty pretty
-     :query (edn/read-string query)}))
+     :query (edn/read-string {:readers *data-readers*} query)}))
 
 (defn -main
   [& args]
