@@ -52,6 +52,8 @@
          (query '{:a 1 :b 2} '(hash-map :foo :a :bar :b))))
   (is (= '{:a 1 :b 3}
          (query '{:a 1 :b 2} '(assoc :b (quote 3)))))
+  (is (= '{:a 1 :b 3}
+         (query '{:a 1 :b 2} '(assoc :b #jet/lit 3))))
   (is (= '{:a 1}
          (query nil '(hash-map :a (quote 1)))))
   (is (= '{:a 1}
@@ -72,4 +74,7 @@
   (is (= 100 (query [100 1 2] '(get 0))))
   (is (= 1 (query (list 1 2 3) '0)))
   (is (= [1 2 3] (query {:a [1 1 2 2 3 3 1 1]} '[:a (distinct)])))
-  (is (= [1 2 3 1] (query {:a [1 1 2 2 3 3 1 1]} '[:a (dedupe)]))))
+  (is (= [1 2 3 1] (query {:a [1 1 2 2 3 3 1 1]} '[:a (dedupe)])))
+  (is (= "foo bar" (query {:a "foo bar" :b 2} '(if (re-find "foo" :a) :a :b))))
+  (is (= 2 (query {:a "foo bar" :b 2} '(if (re-find "baz" :a) :a :b))))
+  (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b)))))

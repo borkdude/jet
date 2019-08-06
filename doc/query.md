@@ -122,15 +122,29 @@ $ echo '{:a 1 :b 2}' | jet --from edn --to edn --query '(hash-map :foo :a :bar :
 {:foo 1, :bar 2}
 ```
 
-and creating new values from scratch is done with `quote`:
+or using a map literal:
 
 ``` clojure
-$ echo '{:a 1}' | jet --from edn --to edn --query '(hash-map :foo :a :bar (quote "hello"))'
+$ echo '{:a 1 :b 2}' | jet --from edn --to edn --query '{:foo :a :bar :b}'
+{:foo 1, :bar 2}
+```
+
+Inserting literal values can be done with done with `quote`:
+
+``` clojure
+$ echo '{:a 1}' | jet --from edn --to edn --query '{:foo :a :bar (quote "hello")}'
+{:foo 1, :bar "hello"}
+```
+
+or prefixing it with the tag `#jet/lit`:
+
+``` clojure
+$ echo '{:a 1}' | jet --from edn --to edn --query '{:foo :a :bar #jet/lit "hello"}'
 {:foo 1, :bar "hello"}
 ```
 
 Applying multiple queries after one another can be achieved using vector
-notation. 
+notation.
 
 ``` clojure
 $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-keys :a) (update :a :a/a)]'
@@ -139,12 +153,13 @@ $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-k
 
 In addition to the functions we've already covered, these Clojure-like functions are supported:
 
-- functions that operate on maps: `assoc`, `assoc-in`, `update`, `update-in`,
-  `keys`, `vals`, `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`,
-  `count`.
-- functions that operate on lists: `first`, `last`, `take`, `drop`, `nth`,
-  `map`, `zipmap`, `filter`, `remove`, `juxt`, `count`, `distinct`, `dedupe`.
-- function that produces a literal value: `quote`.
+- for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
+  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`.
+- for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
+  `remove`, `juxt`, `count`, `distinct`, `dedupe`.
+- working with strings: `str`, `re-find`
+- logic: `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
+- literal values: `quote`/`#jet/lit`.
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
@@ -251,6 +266,13 @@ $ echo '{:a [1 1 2 2 3 3 1 1]}' | lein jet --from edn --to edn --query '[:a (ded
 [1 2 3 1]
 ```
 
+Producing a string can be done with `str`:
+
+``` shellsession
+ echo '{:a 1 :b 2}' | jet --from edn --to edn --query '(str :a #jet/lit "/" :b)'
+"1/2"
+```
+
 Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
@@ -262,6 +284,20 @@ $ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :
 echo '[{:a {:b 1}} {:a {:b 2}}]' \
 | jet --from edn --to edn --query '(filter (= [:a :b] 1))'
 [{:a {:b 1}}]
+```
+
+Applying a regex can be done with `re-find`:
+
+``` shellsession
+$ echo '{:a "foo bar" :b 2}' | lein jet --from edn --to edn --query '(re-find "foo" :a)'
+"foo"
+```
+
+A conditional query can be made with `if`:
+
+``` shellsession
+$ echo '{:a "foo bar" :b 2}' | jet --from edn --to edn --query '(if (re-find "foo" :a) :a :b)'
+"foo bar"
 ```
 
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial

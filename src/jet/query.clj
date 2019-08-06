@@ -32,7 +32,7 @@
 
 (defn sexpr-query [x q]
   (let [[op & args] q
-        [arg1] args
+        [arg1 arg2 arg3] args
         res (case op
               take (take arg1 x)
               drop (drop arg1 x)
@@ -84,6 +84,9 @@
               get (get x arg1)
               distinct (distinct x)
               dedupe (dedupe x)
+              str (apply str (map #(query x %) args))
+              re-find (re-find (re-pattern arg1) (query x arg2))
+              if (if (query x arg1) (query x arg2) (query x arg3))
               x)]
     (if (and (vector? x) (sequential? res))
       (vec res)
