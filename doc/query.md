@@ -187,7 +187,7 @@ echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo ba
 {"foo-bar":1}
 ```
 
-To apply a function on a all map values, use `map-vals`:
+To apply a function on all map values, use `map-vals`:
 
 ``` clojure
 $ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --query '(map-vals :a)'
@@ -306,7 +306,7 @@ $ echo '{:a "foo bar" :b 2}' | lein jet --query '(re-find #jet/lit "foo" :a)'
 "foo"
 ```
 
-Logic:
+Boolean logic:
 
 ``` shellsession
 $ echo '{:a "foo bar" :b 2}' | jet --query '(if (re-find #jet/lit "foo" :a) :a :b)'
@@ -321,11 +321,6 @@ $ echo '{:a 1 :b 3}' | jet --query '(and :a :b)'
 ``` shellsession
 $ echo '{:a 1 :b 3}' | jet --query '(or :a :b)'
 1
-```
-
-``` shellsession
-$ echo '{:a 1 :b 3}' | jet --query '(not :a)'
-false
 ```
 
 ``` shellsession
