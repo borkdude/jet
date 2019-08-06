@@ -41,7 +41,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 `jet` supports the following options:
 
    - `--from`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--to`: allowed values: `edn`, `transit` or `json`, defaults to `edn`
+   - `--to`: `edn`, `transit` or `json`, defaults to `edn`
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: if present, applies query to output. See [Query](doc/query.md).
@@ -73,6 +73,11 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 ```
 
 ## [Query](doc/query.md)
+
+## Caveats
+
+When using `--keywordize` and `--to edn` ensure that your keys do not have
+whitespace, as this will result in invalid EDN.
 
 ## Test
 
