@@ -26,8 +26,8 @@
                           (update opts-map current-opt conj opt)
                           current-opt))
                  opts-map))
-        from (-> (get opts "--from") first keyword)
-        to (-> (get opts "--to") first keyword)
+        from (some-> (get opts "--from") first keyword)
+        to (some-> (get opts "--to") first keyword)
         keywordize (when-let [k (get opts "--keywordize")]
                      (cond (empty? k) true
                            (= "true" (first k)) true
@@ -35,8 +35,8 @@
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))]
-    {:from from
-     :to to
+    {:from (or from :edn)
+     :to (or to :edn)
      :keywordize keywordize
      :version version
      :pretty pretty

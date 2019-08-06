@@ -12,43 +12,43 @@ query is written in EDN.
 Single values can be selected by using a key:
 
 ``` clojure
-echo '{:a 1}' | jet --from edn --to edn --query ':a'
+echo '{:a 1}' | jet --query ':a'
 1
 ```
 
 or more explicity with `get`:
 
 ``` clojure
-echo '{:a 1}' | jet --from edn --to edn --query '(get :a)'
+echo '{:a 1}' | jet --query '(get :a)'
 1
 ```
 
 NOTE: in some places, queries can conflict with key names. E.g:
 
 ``` clojure
-echo '{(juxt :a) 1}' | jet --from edn --to edn --query '(juxt :a)'
+echo '{(juxt :a) 1}' | jet --query '(juxt :a)'
 [nil]
 ```
 
 In these places, `get` offers an unambiguous way to retrieve the value:
 
 ``` clojure
-$ echo '{(juxt :a) 1}' | jet --from edn --to edn --query '(get (juxt :a))'
+$ echo '{(juxt :a) 1}' | jet --query '(get (juxt :a))'
 1
 ```
 
 Numbers can be used for looking up by position in lists:
 ``` clojure
-$ echo '[1 2 3]' | lein jet --from edn --to edn --query '0'
+$ echo '[1 2 3]' | lein jet --query '0'
 1
-$ echo '[1 2 3]' | lein jet --from edn --to edn --query '100'
+$ echo '[1 2 3]' | lein jet --query '100'
 nil
 ```
 
 A subselection of a map can be made with `select-keys`:
 
 ``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(select-keys :a :b)'
+echo '{:a 1 :b 2 :c 3}' | jet --query '(select-keys :a :b)'
 {:a 1, :b 2}
 ```
 
@@ -58,45 +58,45 @@ sequence.
 Removing keys can be achieved with `dissoc`:
 
 ``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --from edn --to edn --query '(dissoc :c)'
+echo '{:a 1 :b 2 :c 3}' | jet --query '(dissoc :c)'
 {:a 1, :b 2}
 ```
 
 A query can be applied to every element in a list using `map`:
 
 ``` clojure
-$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --from edn --to edn --query '(map (select-keys :a))'
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --query '(map (select-keys :a))'
 [{:a 1} {:a 2}]
 ```
 
 Associating a new key and value in a map is done with `assoc`:
 
 ``` clojure
-$ echo '{:a 1}' | jet --from edn --to edn --query '(assoc :b :a)'
+$ echo '{:a 1}' | jet --query '(assoc :b :a)'
 {:a 1, :b 1}
 ```
 
 Updating an existing key and value can be done with `update`:
 
 ``` clojure
-$ echo '{:a {:b 1}}' | jet --from edn --to edn --query '(update :a :b)'
+$ echo '{:a {:b 1}}' | jet --query '(update :a :b)'
 {:a 1}
 ```
 
 <!-- Like any query, functions can be applied in a nested fashion: -->
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (take 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (take 2))'
 {:a [1 2]}
 ```
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (drop 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (drop 2))'
 {:a [3]}
 ```
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (nth 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (nth 2))'
 {:a 3}
 ```
 
@@ -108,38 +108,38 @@ There are also `assoc-in` and `update-in` which behave in similar ways but allow
 changing nested values:
 
 ``` clojure
-$ echo '{:a 1}' | lein jet --from edn --to edn --query '(assoc-in [:b :c] :a)'
+$ echo '{:a 1}' | lein jet --query '(assoc-in [:b :c] :a)'
 {:a 1, :b {:c 1}}
 
-$ echo '{:a {:b [1 2 3]}}' | lein jet --from edn --to edn --query '(update-in [:a :b] last)'
+$ echo '{:a {:b [1 2 3]}}' | lein jet --query '(update-in [:a :b] last)'
 {:a {:b 3}}
 ```
 
 Creating a new map from scratch is done with `hash-map`:
 
 ``` clojure
-$ echo '{:a 1 :b 2}' | jet --from edn --to edn --query '(hash-map :foo :a :bar :b)'
+$ echo '{:a 1 :b 2}' | jet --query '(hash-map :foo :a :bar :b)'
 {:foo 1, :bar 2}
 ```
 
 or using a map literal:
 
 ``` clojure
-$ echo '{:a 1 :b 2}' | jet --from edn --to edn --query '{:foo :a :bar :b}'
+$ echo '{:a 1 :b 2}' | jet --query '{:foo :a :bar :b}'
 {:foo 1, :bar 2}
 ```
 
 Inserting literal values can be done with done with `quote`:
 
 ``` clojure
-$ echo '{:a 1}' | jet --from edn --to edn --query '{:foo :a :bar (quote "hello")}'
+$ echo '{:a 1}' | jet --query '{:foo :a :bar (quote "hello")}'
 {:foo 1, :bar "hello"}
 ```
 
 or prefixing it with the tag `#jet/lit`:
 
 ``` clojure
-$ echo '{:a 1}' | jet --from edn --to edn --query '{:foo :a :bar #jet/lit "hello"}'
+$ echo '{:a 1}' | jet --query '{:foo :a :bar #jet/lit "hello"}'
 {:foo 1, :bar "hello"}
 ```
 
@@ -147,7 +147,7 @@ Applying multiple queries after one another can be achieved using vector
 notation.
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --from edn --to edn --query '[(select-keys :a) (update :a :a/a)]'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[(select-keys :a) (update :a :a/a)]'
 {:a 1}
 ```
 
@@ -166,19 +166,19 @@ In addition to the functions we've already covered, these Clojure-like functions
 Copy the input value:
 
 ``` shellsession
-$ echo '{:a 1}' | jet --from edn --to edn --query '{:input (identity)}'
+$ echo '{:a 1}' | jet --query '{:input (identity)}'
 {:input {:a 1}}
 ```
 
 Keys and values:
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --query '(keys)'
 [:a :b]
 ```
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --query '(vals)'
 [[1 2 3] [4 5 6]]
 ```
 
@@ -190,19 +190,19 @@ echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo ba
 To apply a function on a all map values, use `map-vals`:
 
 ``` clojure
-$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
+$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --query '(map-vals :a)'
 {:foo 1 :bar 2}
 ```
 
 Miscellaneous list functions:
 
 ``` clojure
-echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
+echo '[1 2 3]' | jet --query '(first)'
 1
 ```
 
 ``` clojure
-echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
+echo '[1 2 3]' | jet --query '(last)'
 3
 ```
 
@@ -210,22 +210,22 @@ echo '[1 2 3]' | jet --from edn --to edn --query '(last)'
 explicity. -->
 
 ``` clojure
-echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(last)'
+echo '[[1 2 3] [4 5 6]]' | jet --query '(last)'
 [4 5 6]
 ```
 
 ``` clojure
-echo '[[1 2 3] [4 5 6]]' | jet --from edn --to edn --query '(map last)'
+echo '[[1 2 3] [4 5 6]]' | jet --query '(map last)'
 [3 6]
 ```
 
 ``` clojure
-echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(count)'
+echo '[{:a 1} {:a 2}]' | jet --query '(count)'
 2
 ```
 
 ``` clojure
-echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(map count)'
+echo '[{:a 1} {:a 2}]' | jet --query '(map count)'
 [1 1]
 ```
 
@@ -233,17 +233,17 @@ Use `juxt` to apply multiple queries to the same element. The result is a list
 of multiple results.
 
 ``` clojure
-$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(juxt :a :b)'
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --query '(juxt :a :b)'
 [[1 2 3] [4 5 6]]
 ```
 
 ``` clojure
-$ echo '{:a [1 2 3]}' | jet --from edn --to edn --query '(update :a (juxt first last))'
+$ echo '{:a [1 2 3]}' | jet --query '(update :a (juxt first last))'
 {:a [1 3]}
 ```
 
 ``` clojure
-$ echo '[1 2 3]' | jet --from edn --to edn --query '(juxt 0 1 2 3)'
+$ echo '[1 2 3]' | jet --query '(juxt 0 1 2 3)'
 [1 2 3 nil]
 ```
 
@@ -251,7 +251,7 @@ An example with `zipmap`:
 
 ``` clojure
 $ echo '{:keys [:a :b :c] :vals [1 2 3]}' \
-| jet --from edn --to edn --query '[(juxt :keys :vals) (zipmap)]'
+| jet --query '[(juxt :keys :vals) (zipmap)]'
 {:a 1, :b 2, :c 3}
 ```
 
@@ -272,51 +272,51 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 Remove duplicate values with `distinct` and `dedupe`:
 
 ``` clojure
-$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --from edn --to edn --query '[:a (distinct)]'
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --query '[:a (distinct)]'
 [1 2 3]
 
-$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --from edn --to edn --query '[:a (dedupe)]'
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --query '[:a (dedupe)]'
 [1 2 3 1]
 ```
 
 Producing a string can be done with `str`:
 
 ``` shellsession
- echo '{:a 1 :b 2}' | jet --from edn --to edn --query '(str :a #jet/lit "/" :b)'
+ echo '{:a 1 :b 2}' | jet --query '(str :a #jet/lit "/" :b)'
 "1/2"
 ```
 
 Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
-$ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a #jet/lit 2))'
+$ echo '[{:a 1} {:a 2} {:a 3}]' | jet --query '(filter (>= :a #jet/lit 2))'
 [{:a 2} {:a 3}]
 ```
 
 ``` clojure
 echo '[{:a {:b 1}} {:a {:b 2}}]' \
-| jet --from edn --to edn --query '(filter (= [:a :b] #jet/lit 1))'
+| jet --query '(filter (= [:a :b] #jet/lit 1))'
 [{:a {:b 1}}]
 ```
 
 Applying a regex can be done with `re-find`:
 
 ``` shellsession
-$ echo '{:a "foo bar" :b 2}' | lein jet --from edn --to edn --query '(re-find #jet/lit "foo" :a)'
+$ echo '{:a "foo bar" :b 2}' | lein jet --query '(re-find #jet/lit "foo" :a)'
 "foo"
 ```
 
 A conditional query can be made with `if`:
 
 ``` shellsession
-$ echo '{:a "foo bar" :b 2}' | jet --from edn --to edn --query '(if (re-find #jet/lit "foo" :a) :a :b)'
+$ echo '{:a "foo bar" :b 2}' | jet --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
 ```
 
 Arithmetic:
 
 ``` shellsession
-$ echo '{:a 3 :b 2}]' | jet --from edn --to edn --query '[(* :a :b) (- (identity) #jet/lit 2)]'
+$ echo '{:a 3 :b 2}]' | jet --query '[(* :a :b) (- (identity) #jet/lit 2)]'
 4
 ```
 
