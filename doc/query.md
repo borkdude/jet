@@ -23,26 +23,19 @@ echo '{:a 1}' | jet --query '(get :a)'
 1
 ```
 
-NOTE: in some places, queries can conflict with key names. E.g:
-
-``` clojure
-echo '{(juxt :a) 1}' | jet --query '(juxt :a)'
-[nil]
-```
-
-In these places, `get` offers an unambiguous way to retrieve the value:
-
-``` clojure
-$ echo '{(juxt :a) 1}' | jet --query '(get (juxt :a))'
-1
-```
-
 Numbers can be used for looking up by position in lists:
 ``` clojure
 $ echo '[1 2 3]' | lein jet --query '0'
 1
 $ echo '[1 2 3]' | lein jet --query '100'
 nil
+```
+
+You can also use `nth` for this:
+
+``` clojure
+$ echo '[1 2 3]' | lein jet --query '(nth 0)'
+1
 ```
 
 A subselection of a map can be made with `select-keys`:
@@ -108,10 +101,10 @@ There are also `assoc-in` and `update-in` which behave in similar ways but allow
 changing nested values:
 
 ``` clojure
-$ echo '{:a 1}' | lein jet --query '(assoc-in [:b :c] :a)'
+$ echo '{:a 1}' | jet --query '(assoc-in [:b :c] :a)'
 {:a 1, :b {:c 1}}
 
-$ echo '{:a {:b [1 2 3]}}' | lein jet --query '(update-in [:a :b] last)'
+$ echo '{:a {:b [1 2 3]}}' | jet --query '(update-in [:a :b] last)'
 {:a {:b 3}}
 ```
 
@@ -148,6 +141,13 @@ notation.
 
 ``` clojure
 $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[(select-keys :a) (update :a :a/a)]'
+{:a 1}
+```
+
+The outer query is implicitly wrapped, so you don't have to wrap it yourself:
+
+``` clojure
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '(select-keys :a) (update :a :a/a)'
 {:a 1}
 ```
 
@@ -341,11 +341,9 @@ $ echo '{:a 3 :b 2}]' | jet --query '(inc :a)'
 ```
 
 ``` shellsession
-$ echo '{:a 3 :b 2}]' | jet --query '[(* :a :b) (- (identity) #jet/lit 2)]'
+$ echo '{:a 3 :b 2}]' | jet --query '(* :a :b) (- (identity) #jet/lit 2)'
 4
 ```
-
-
 
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial
 using jet:

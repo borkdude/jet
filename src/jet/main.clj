@@ -40,7 +40,10 @@
      :keywordize keywordize
      :version version
      :pretty pretty
-     :query (edn/read-string {:readers *data-readers*} query)}))
+     :query (when query
+              (edn/read-string
+               {:readers *data-readers*}
+               (format "[%s]" query)))}))
 
 (defn -main
   [& args]

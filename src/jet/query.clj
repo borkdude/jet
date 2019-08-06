@@ -7,6 +7,14 @@
 
 (defn var-lookup [sym]
   (case sym
+    identity identity
+    count count
+    first first
+    last last
+    vals vals
+    keys keys
+    inc inc
+    dec dec
     = =
     < <
     <= <=
@@ -15,14 +23,13 @@
     map map
     filter filter
     remove remove
+    distinct distinct
+    dedupe dedupe
     + +
     - -
     * *
-    / /))
-
-(defn comparator [[c q v]]
-  (let [c-f (var-lookup c)]
-    #(c-f (query % q) v)))
+    / /
+    nil))
 
 (defn promote-function-query [q]
   (if (symbol? q)
@@ -40,20 +47,52 @@
        (catch Exception _e
          nil)))
 
-(defn sexpr-query [x q]
+(defn function-query [x q]
   (let [[op & args] q
+        f (var-lookup op)
         [arg1 arg2 arg3] args
         res (case op
+              ;; special case
+              quote arg1
+              ;; accessors, arg is not a query
+              nth (safe-nth x arg1)
+              get (get x arg1)
+
+              ;; functions with 1 arg
+              (first last keys vals inc dec identity count
+                     distinct dedupe)
+              (if arg1
+                (f (query x arg1))
+                (f x))
+              ;; macros with 1 arg
+              not (if arg1
+                    (not (query x arg1))
+                    (not x))
+
+              ;; functions with 2 args
               take (take arg1 x)
               drop (drop arg1 x)
-              nth (safe-nth x arg1)
-              keys (keys x)
-              vals (vals x)
-              first (first x)
-              last (last x)
-              inc (inc (query x arg1))
-              dec (dec (query x arg1))
-              identity x
+              map-vals (zipmap (keys x)
+                               (map #(query % arg1) (vals x)))
+              zipmap (zipmap (first x) (second x))
+              (map filter remove)
+              (f #(query % (promote-function-query arg1)) x)
+              select-keys (select-keys x args)
+              rename-keys (set/rename-keys x arg1)
+              update (let [[k update-query] args
+                           update-query (promote-function-query update-query)
+                           v (get x k)]
+                       (assoc x k (query v update-query)))
+              assoc-in (let [[path assoc-in-query] args
+                             v (query x assoc-in-query)]
+                         (assoc-in x path v))
+              update-in (let [[path update-in-query] args
+                              update-in-query (promote-function-query update-in-query)
+                              v (get-in x path)
+                              v (query v update-in-query)]
+                          (assoc-in x path v))
+
+              ;; functions/macros  with varargs
               juxt (vec (for [q args
                               :let [q (promote-function-query q)]]
                           (query x q)))
@@ -65,45 +104,21 @@
                               :let [v (query x q)]
                               :when v]
                           v))
-              not (not (query x arg1))
-              map-vals (zipmap (keys x)
-                               (map #(query % arg1) (vals x)))
-              zipmap (zipmap (first x) (second x))
-              (map filter remove)
-              (let [op-f (var-lookup op)]
-                (op-f #(query % (promote-function-query arg1)) x))
-              count (count x)
-              select-keys (select-keys x args)
               dissoc (apply dissoc x (rest q))
-              rename-keys (set/rename-keys x arg1)
-              quote arg1
               hash-map (create-map x args)
               assoc (let [args args
                           keys (take-nth 2 args)
                           vals (take-nth 2 (rest args))
                           vals (map #(query x %) vals)]
                       (merge x (zipmap keys vals)))
-              update (let [[k update-query] args
-                           update-query (promote-function-query update-query)
-                           v (get x k)]
-                       (assoc x k (query v update-query)))
-              assoc-in (let [[path assoc-in-query] args
-                             v (query x assoc-in-query)]
-                         (assoc-in x path v))
-              update-in (let [[path update-in-query] args
-                              update-in-query (promote-function-query update-in-query)
-                             v (get-in x path)
-                             v (query v update-in-query)]
-                          (assoc-in x path v))
-              get (get x arg1)
-              distinct (distinct x)
-              dedupe (dedupe x)
+              (= < <= >= not= + - * /)
+              (apply f (map #(query x %) args))
+
+              ;; special cases
               str (apply str (map #(query x %) args))
               re-find (re-find (re-pattern (query x arg1)) (query x arg2))
               if (if (query x arg1) (query x arg2) (query x arg3))
-              (= < <= >= not= + - * /)
-              (let [v (var-lookup op)]
-                (apply v (map #(query x %) args)))
+
               ;; fallback
               (get x q))]
     (if (and (vector? x) (sequential? res))
@@ -120,17 +135,20 @@
 
 (defn query
   [x q]
-  (cond
-    (not q) nil
-    (vector? q)
-    (if-let [next-op (first q)]
-      (recur (query x next-op) (vec (rest q)))
-      x)
-    (list? q) (sexpr-query x q)
-    (map? q) (create-map x (apply concat (seq q)))
-    (map? x) (get x q)
-    (number? q) (safe-nth x q)
-    :else (get x q)))
+  (if-let [[_ v]
+           (when (map? x)
+             (find x q))]
+    v
+    (cond
+      (not q) nil
+      (vector? q)
+      (if-let [next-op (first q)]
+        (recur (query x next-op) (vec (rest q)))
+        x)
+      (list? q) (function-query x q)
+      (symbol? q) (function-query x [q])
+      (map? q) (create-map x (apply concat (seq q)))
+      (number? q) (safe-nth x q))))
 
 ;;;; Scratch
 

@@ -4,6 +4,7 @@
    [jet.query :refer [query]]))
 
 (deftest query-test
+  ;; TODO: rewrite with clojure.test/are...
   (is (= nil (query [] false)))
   (is (= '1 (query {:a 1 :b 2} :a)))
   (is (= '1 (query {1 1} 1)))
@@ -17,8 +18,10 @@
   (is (= {:a [1]} (query {:a [1 2 3]} '(update :a (take 1)))))
   (is (= {:a 2} (query {:a [1 2 3]} '(update :a (nth 1)))))
   (is (= {:a 1} (query {:a [1 2 3]} '(update :a first))))
+  (is (= 3 (query {:a [1 2 3]} '(last :a))))
   (is (= {:a 3} (query {:a [1 2 3]} '(update :a last))))
   (is (= {:foo [:bar]} (query {:foo {:bar 2}} '(update :foo keys))))
+  (is (= {:a [:a :b]} (query {:b {:a 1 :b 2}} '{:a (keys :b)})))
   (is (= {:foo [2]} (query {:foo {:bar 2}} '(update :foo vals))))
   (is (= [3 6] (query [[1 2 3] [4 5 6]] '(map last))))
   (is (= [1 2] (query [{:a 1} {:a 2}] '(map :a))))
@@ -85,10 +88,13 @@
   (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b))))
   (is (= {:input {:a 3, :b 2}, :product 6}
          (query {:a 3 :b 2} '{:input (identity) :product (* :a :b)})))
+  (is (= 2 (query {:a 3 :b 2} '(identity :b))))
   (is (= nil (query {:b 3} '(and :a :b))))
   (is (= false (query {:a false} '(and :a :b))))
   (is (= 2 (query {:a 1 :b 2} '(and :a :b))))
   (is (= 3 (query {:b 3} '(or :a :b))))
   (is (= true (query {:b 3} '(not :a))))
   (is (= 4 (query {:b 3} '(inc :b))))
-  (is (= 2 (query {:b 3} '(dec :b)))))
+  (is (= 2 (query {:b 3} '(dec :b))))
+  (is (= 3 (query [1 2 3] 'last)))
+  (is (= 4 (query '{(inc :a) 4} '(inc :a)))))
