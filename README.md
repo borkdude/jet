@@ -60,7 +60,7 @@ $ echo '{"a": 1}' | jet --from json --to transit
 ["^ ","a",1]
 
 $ echo '[{:a {:b 1}} {:a {:b 2}}]' \
-| jet --from edn --to edn --query '(filter (= [:a :b] 1))'
+| jet --from edn --to edn --query '(filter (= [:a :b] #jet/lit 1))'
 [{:a {:b 1}}]
 ```
 

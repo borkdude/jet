@@ -5,13 +5,20 @@
 
 (declare query)
 
+(defn var-lookup [sym]
+  (case sym
+    = =
+    < <
+    <= <=
+    >= >=
+    not= not=
+    map map
+    filter filter
+    remove remove
+    nil))
+
 (defn comparator [[c q v]]
-  (let [c-f (case c
-              = =
-              < <
-              <= <=
-              >= >=
-              not= not=)]
+  (let [c-f (var-lookup c)]
     #(c-f (query % q) v)))
 
 (defn promote-function-query [q]
@@ -41,8 +48,6 @@
               vals (vec (vals x))
               first (first x)
               last (last x)
-              map (map #(query % (let [f arg1]
-                                   (promote-function-query f))) x)
               juxt (vec (for [q args]
                           (if (symbol? q)
                             (sexpr-query x (list q))
@@ -50,14 +55,8 @@
               map-vals (zipmap (keys x)
                                (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
-              (filter remove) (let [op-f (case op
-                                           filter filter
-                                           remove remove)
-                                    f arg1
-                                    c (if (list? f)
-                                        (comparator f)
-                                        #(query % f))]
-                                (op-f c x))
+              (map filter remove) (let [op-f (var-lookup op)]
+                                    (op-f #(query % (promote-function-query arg1)) x))
               count (count x)
               select-keys (select-keys x args)
               dissoc (apply dissoc x (rest q))
@@ -85,9 +84,13 @@
               distinct (distinct x)
               dedupe (dedupe x)
               str (apply str (map #(query x %) args))
-              re-find (re-find (re-pattern arg1) (query x arg2))
+              re-find (re-find (re-pattern (query x arg1)) (query x arg2))
               if (if (query x arg1) (query x arg2) (query x arg3))
-              x)]
+              (= < <= >= not=)
+              (let [v (var-lookup op)]
+                (apply v (map #(query x %) args)))
+              ;; fallback
+              (get x q))]
     (if (and (vector? x) (sequential? res))
       (vec res)
       res)))

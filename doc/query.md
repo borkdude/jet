@@ -259,10 +259,10 @@ $ curl -s https://jsonplaceholder.typicode.com/todos \
 Remove duplicate values with `distinct` and `dedupe`:
 
 ``` clojure
-$ echo '{:a [1 1 2 2 3 3 1 1]}' | lein jet --from edn --to edn --query '[:a (distinct)]'
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --from edn --to edn --query '[:a (distinct)]'
 [1 2 3]
 
-$ echo '{:a [1 1 2 2 3 3 1 1]}' | lein jet --from edn --to edn --query '[:a (dedupe)]'
+$ echo '{:a [1 1 2 2 3 3 1 1]}' | jet --from edn --to edn --query '[:a (dedupe)]'
 [1 2 3 1]
 ```
 
@@ -276,27 +276,27 @@ Producing a string can be done with `str`:
 Comparing values can be done with `=`, `not=`, `>`, `>=`, `<` and `<=`.
 
 ``` clojure
-$ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a 2))'
+$ echo '[{:a 1} {:a 2} {:a 3}]' | jet --from edn --to edn --query '(filter (>= :a #jet/lit 2))'
 [{:a 2} {:a 3}]
 ```
 
 ``` clojure
 echo '[{:a {:b 1}} {:a {:b 2}}]' \
-| jet --from edn --to edn --query '(filter (= [:a :b] 1))'
+| jet --from edn --to edn --query '(filter (= [:a :b] #jet/lit 1))'
 [{:a {:b 1}}]
 ```
 
 Applying a regex can be done with `re-find`:
 
 ``` shellsession
-$ echo '{:a "foo bar" :b 2}' | lein jet --from edn --to edn --query '(re-find "foo" :a)'
+$ echo '{:a "foo bar" :b 2}' | lein jet --from edn --to edn --query '(re-find #jet/lit "foo" :a)'
 "foo"
 ```
 
 A conditional query can be made with `if`:
 
 ``` shellsession
-$ echo '{:a "foo bar" :b 2}' | jet --from edn --to edn --query '(if (re-find "foo" :a) :a :b)'
+$ echo '{:a "foo bar" :b 2}' | jet --from edn --to edn --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
 ```
 

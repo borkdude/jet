@@ -35,13 +35,18 @@
                     {:name bar :private false}] '[(filter :private) (count)])))
   (is (= '[{:name foo, :private true}]
          (query '[{:name foo :private true}
-                  {:name bar :private false}] '(filter (= :name foo)))))
+                  {:name bar :private false}] '(filter (= :name (quote foo))))))
   (is (= '[{:a 2} {:a 3}]
-         (query '[{:a 1} {:a 2} {:a 3}] '(filter (>= :a 2)))))
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (>= :a (quote 2))))))
   (is (= '[{:a 1} {:a 2}]
-         (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a 2)))))
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (<= :a (quote 2))))))
   (is (= '[{:a 1} {:a 2}]
-         (query '[{:a 1} {:a 2} {:a 3}] '(filter (not= :a 3)))))
+         (query '[{:a 1} {:a 2} {:a 3}] '(filter (not= :a (quote 3))))))
+  (is (= '[{:a 1} {:a 2}]
+         (query '[{:a 1} {:a 2} {:a 3}] '(remove (= :a (quote 3))))))
+  (is (= '[{:a 1}]
+         (query '[{:a 1} [] []] '(filter first))))
+  (is (= false (query {:a 1 :b 1 :c 1} '(not= :a :b :c))))
   (is (= '{:a 1 :b 2}
          (query '{:a 1 :b 2 :c 3} '(select-keys :a :b))))
   (is (= '{:c 3}
@@ -75,6 +80,6 @@
   (is (= 1 (query (list 1 2 3) '0)))
   (is (= [1 2 3] (query {:a [1 1 2 2 3 3 1 1]} '[:a (distinct)])))
   (is (= [1 2 3 1] (query {:a [1 1 2 2 3 3 1 1]} '[:a (dedupe)])))
-  (is (= "foo bar" (query {:a "foo bar" :b 2} '(if (re-find "foo" :a) :a :b))))
-  (is (= 2 (query {:a "foo bar" :b 2} '(if (re-find "baz" :a) :a :b))))
+  (is (= "foo bar" (query {:a "foo bar" :b 2} '(if (re-find #jet/lit "foo" :a) :a :b))))
+  (is (= 2 (query {:a "foo bar" :b 2} '(if (re-find #jet/lit "baz" :a) :a :b))))
   (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b)))))
