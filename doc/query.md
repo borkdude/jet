@@ -160,6 +160,17 @@ In addition to the functions we've already covered, these Clojure-like functions
 - working with strings: `str`, `re-find`
 - logic: `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
 - literal values: `quote`/`#jet/lit`.
+- copy the entire input value: `identity`.
+- arithmetic: `+`, `-`, `*`, `/`.
+
+Copy the input value:
+
+``` shellsession
+$ echo '{:a 1}' | jet --from edn --to edn --query '{:input (identity)}'
+{:input {:a 1}}
+```
+
+Keys and values:
 
 ``` clojure
 $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(keys)'
@@ -175,6 +186,15 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --from edn --to edn --query '(vals)'
 echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo bar" "foo-bar"})'
 {"foo-bar":1}
 ```
+
+To apply a function on a all map values, use `map-vals`:
+
+``` clojure
+$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
+{:foo 1 :bar 2}
+```
+
+Miscellaneous list functions:
 
 ``` clojure
 echo '[1 2 3]' | jet --from edn --to edn --query '(first)'
@@ -207,13 +227,6 @@ echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(count)'
 ``` clojure
 echo '[{:a 1} {:a 2}]' | jet --from edn --to edn --query '(map count)'
 [1 1]
-```
-
-To apply a function on a all map values, use `map-vals`:
-
-``` clojure
-$ echo '{:foo {:a 1 :b 2} :bar {:a 1 :b 2}}' | jet --from edn --to edn --query '(map-vals :a)'
-{:foo 1 :bar 2}
 ```
 
 Use `juxt` to apply multiple queries to the same element. The result is a list
@@ -298,6 +311,13 @@ A conditional query can be made with `if`:
 ``` shellsession
 $ echo '{:a "foo bar" :b 2}' | jet --from edn --to edn --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
+```
+
+Arithmetic:
+
+``` shellsession
+$ echo '{:a 3 :b 2}]' | jet --from edn --to edn --query '[(* :a :b) (- (identity) #jet/lit 2)]'
+4
 ```
 
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial

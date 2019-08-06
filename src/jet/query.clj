@@ -15,7 +15,10 @@
     map map
     filter filter
     remove remove
-    nil))
+    + +
+    - -
+    * *
+    / /))
 
 (defn comparator [[c q v]]
   (let [c-f (var-lookup c)]
@@ -44,10 +47,11 @@
               take (take arg1 x)
               drop (drop arg1 x)
               nth (safe-nth x arg1)
-              keys (vec (keys x))
-              vals (vec (vals x))
+              keys (keys x)
+              vals (vals x)
               first (first x)
               last (last x)
+              identity x
               juxt (vec (for [q args]
                           (if (symbol? q)
                             (sexpr-query x (list q))
@@ -86,7 +90,7 @@
               str (apply str (map #(query x %) args))
               re-find (re-find (re-pattern (query x arg1)) (query x arg2))
               if (if (query x arg1) (query x arg2) (query x arg3))
-              (= < <= >= not=)
+              (= < <= >= not= + - * /)
               (let [v (var-lookup op)]
                 (apply v (map #(query x %) args)))
               ;; fallback

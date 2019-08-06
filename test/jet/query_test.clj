@@ -82,4 +82,6 @@
   (is (= [1 2 3 1] (query {:a [1 1 2 2 3 3 1 1]} '[:a (dedupe)])))
   (is (= "foo bar" (query {:a "foo bar" :b 2} '(if (re-find #jet/lit "foo" :a) :a :b))))
   (is (= 2 (query {:a "foo bar" :b 2} '(if (re-find #jet/lit "baz" :a) :a :b))))
-  (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b)))))
+  (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b))))
+  (is (= {:input {:a 3, :b 2}, :product 6}
+         (query {:a 3 :b 2} '{:input (identity) :product (* :a :b)}))))
