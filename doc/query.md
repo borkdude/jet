@@ -158,10 +158,10 @@ In addition to the functions we've already covered, these Clojure-like functions
 - for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
   `remove`, `juxt`, `count`, `distinct`, `dedupe`.
 - working with strings: `str`, `re-find`
-- logic: `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
+- logic: `and`, `or`, `not`, `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
 - literal values: `quote`/`#jet/lit`.
 - copy the entire input value: `identity`.
-- arithmetic: `+`, `-`, `*`, `/`.
+- arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
 
 Copy the input value:
 
@@ -306,19 +306,46 @@ $ echo '{:a "foo bar" :b 2}' | lein jet --query '(re-find #jet/lit "foo" :a)'
 "foo"
 ```
 
-A conditional query can be made with `if`:
+Logic:
 
 ``` shellsession
 $ echo '{:a "foo bar" :b 2}' | jet --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
 ```
 
+``` shellsession
+$ echo '{:a 1 :b 3}' | jet --query '(and :a :b)'
+3
+```
+
+``` shellsession
+$ echo '{:a 1 :b 3}' | jet --query '(or :a :b)'
+1
+```
+
+``` shellsession
+$ echo '{:a 1 :b 3}' | jet --query '(not :a)'
+false
+```
+
+``` shellsession
+$ echo '{:a 1 :b 3}' | jet --query '(not :a)'
+false
+```
+
 Arithmetic:
+
+``` shellsession
+$ echo '{:a 3 :b 2}]' | jet --query '(inc :a)'
+4
+```
 
 ``` shellsession
 $ echo '{:a 3 :b 2}]' | jet --query '[(* :a :b) (- (identity) #jet/lit 2)]'
 4
 ```
+
+
 
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial
 using jet:

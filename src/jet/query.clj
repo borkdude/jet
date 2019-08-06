@@ -51,16 +51,27 @@
               vals (vals x)
               first (first x)
               last (last x)
+              inc (inc (query x arg1))
+              dec (dec (query x arg1))
               identity x
-              juxt (vec (for [q args]
-                          (if (symbol? q)
-                            (sexpr-query x (list q))
-                            (query x q))))
+              juxt (vec (for [q args
+                              :let [q (promote-function-query q)]]
+                          (query x q)))
+              and (reduce (fn [_ q]
+                            (let [v (query x q)]
+                              (if v v (reduced v))))
+                          nil args)
+              or (first (for [q args
+                              :let [v (query x q)]
+                              :when v]
+                          v))
+              not (not (query x arg1))
               map-vals (zipmap (keys x)
                                (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
-              (map filter remove) (let [op-f (var-lookup op)]
-                                    (op-f #(query % (promote-function-query arg1)) x))
+              (map filter remove)
+              (let [op-f (var-lookup op)]
+                (op-f #(query % (promote-function-query arg1)) x))
               count (count x)
               select-keys (select-keys x args)
               dissoc (apply dissoc x (rest q))

@@ -84,4 +84,11 @@
   (is (= 2 (query {:a "foo bar" :b 2} '(if (re-find #jet/lit "baz" :a) :a :b))))
   (is (= "1/2" (query {:a 1 :b 2} '(str :a #jet/lit "/" :b))))
   (is (= {:input {:a 3, :b 2}, :product 6}
-         (query {:a 3 :b 2} '{:input (identity) :product (* :a :b)}))))
+         (query {:a 3 :b 2} '{:input (identity) :product (* :a :b)})))
+  (is (= nil (query {:b 3} '(and :a :b))))
+  (is (= false (query {:a false} '(and :a :b))))
+  (is (= 2 (query {:a 1 :b 2} '(and :a :b))))
+  (is (= 3 (query {:b 3} '(or :a :b))))
+  (is (= true (query {:b 3} '(not :a))))
+  (is (= 4 (query {:b 3} '(inc :b))))
+  (is (= 2 (query {:b 3} '(dec :b)))))
