@@ -41,12 +41,17 @@ $ echo '[1 2 3]' | lein jet --query '(nth 0)'
 A subselection of a map can be made with `select-keys`:
 
 ``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --query '(select-keys :a :b)'
+echo '{:a 1 :b 2 :c 3}' | jet --query '(select-keys [:a :b])'
 {:a 1, :b 2}
 ```
 
-NOTE: unlike in Clojure, the keys for `select-keys` are not wrapped in a
-sequence.
+The function `$` is a short-hand for `select-keys` that doesn't wrap the keys in
+a sequence:
+
+``` clojure
+echo '{:a 1 :b 2 :c 3}' | jet --query '($ :a :b)'
+{:a 1, :b 2}
+```
 
 Removing keys can be achieved with `dissoc`:
 
@@ -58,7 +63,7 @@ echo '{:a 1 :b 2 :c 3}' | jet --query '(dissoc :c)'
 A query can be applied to every element in a list using `map`:
 
 ``` clojure
-$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --query '(map (select-keys :a))'
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --query '(map ($ :a))'
 [{:a 1} {:a 2}]
 ```
 
@@ -140,14 +145,14 @@ Applying multiple queries after one another can be achieved using vector
 notation.
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[(select-keys :a) (update :a :a/a)]'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[($ :a) (update :a :a/a)]'
 {:a 1}
 ```
 
 The outer query is implicitly wrapped, so you don't have to wrap it yourself:
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '(select-keys :a) (update :a :a/a)'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) (update :a :a/a)'
 {:a 1}
 ```
 

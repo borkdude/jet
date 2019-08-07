@@ -9,9 +9,9 @@
   (is (= '1 (query {:a 1 :b 2} :a)))
   (is (= '1 (query {1 1} 1)))
   (is (= '1 (query {"1" 1} "1")))
-  (is (= '{:a 1} (query {:a 1 :b 2} '(select-keys :a))))
-  (is (= {:a #:a{:a 1}} (query {:a {:a/a 1 :a/b 2} :b 2} '[(select-keys :a) (update :a (select-keys :a/a))])))
-  (is (= {:a [#:a{:a 1}]} (query {:a [{:a/a 1 :a/b 2}] :b 2} '[(select-keys :a) (update :a (map (select-keys :a/a)))])))
+  (is (= '{:a 1} (query {:a 1 :b 2} '(select-keys [:a]))))
+  (is (= {:a #:a{:a 1}} (query {:a {:a/a 1 :a/b 2} :b 2} '[(select-keys [:a]) (update :a (select-keys [:a/a]))])))
+  (is (= {:a [#:a{:a 1}]} (query {:a [{:a/a 1 :a/b 2}] :b 2} '[(select-keys [:a]) (update :a (map (select-keys [:a/a])))])))
   (is (= {:a 1, :c 3} (query {:a 1 :b 2 :c 3} '(dissoc :b))))
   (is (= [1] (query [1 2 3] '(take 1))))
   (is (= [2 3] (query [1 2 3] '(drop 1))))
@@ -51,7 +51,7 @@
          (query '[{:a 1} [] []] '(filter first))))
   (is (= false (query {:a 1 :b 1 :c 1} '(not= :a :b :c))))
   (is (= '{:a 1 :b 2}
-         (query '{:a 1 :b 2 :c 3} '(select-keys :a :b))))
+         (query '{:a 1 :b 2 :c 3} '(select-keys [:a :b]))))
   (is (= '{:c 3}
          (query '{:a 1 :b 2 :c 3} '(dissoc :a :b))))
   (is (= '{:b 1}
@@ -97,4 +97,5 @@
   (is (= 4 (query {:b 3} '(inc :b))))
   (is (= 2 (query {:b 3} '(dec :b))))
   (is (= 3 (query [1 2 3] 'last)))
-  (is (= 4 (query '{(inc :a) 4} '(inc :a)))))
+  (is (= 4 (query '{(inc :a) 4} '(inc :a))))
+  (is (= {:a 1 :b 2} (query {:a 1 :b 2 :c 3 :d 4} '($ :a :b)))))

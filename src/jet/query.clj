@@ -31,7 +31,7 @@
     / /
     nil))
 
-(defn promote-function-query [q]
+(defn promote-query* [q]
   (if (symbol? q)
     (list q)
     q))
@@ -47,7 +47,7 @@
        (catch Exception _e
          nil)))
 
-(defn function-query [x q]
+(defn query* [x q]
   (let [[op & args] q
         f (var-lookup op)
         [arg1 arg2 arg3] args
@@ -76,25 +76,25 @@
                                (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
               (map filter remove)
-              (f #(query % (promote-function-query arg1)) x)
-              select-keys (select-keys x args)
+              (f #(query % (promote-query* arg1)) x)
+              select-keys (select-keys x arg1)
               rename-keys (set/rename-keys x arg1)
               update (let [[k update-query] args
-                           update-query (promote-function-query update-query)
+                           update-query (promote-query* update-query)
                            v (get x k)]
                        (assoc x k (query v update-query)))
               assoc-in (let [[path assoc-in-query] args
                              v (query x assoc-in-query)]
                          (assoc-in x path v))
               update-in (let [[path update-in-query] args
-                              update-in-query (promote-function-query update-in-query)
+                              update-in-query (promote-query* update-in-query)
                               v (get-in x path)
                               v (query v update-in-query)]
                           (assoc-in x path v))
 
-              ;; functions/macros  with varargs
+              ;; functions/macros with varargs
               juxt (vec (for [q args
-                              :let [q (promote-function-query q)]]
+                              :let [q (promote-query* q)]]
                           (query x q)))
               and (reduce (fn [_ q]
                             (let [v (query x q)]
@@ -113,6 +113,7 @@
                       (merge x (zipmap keys vals)))
               (= < <= >= not= + - * /)
               (apply f (map #(query x %) args))
+              $ (select-keys x args)
 
               ;; special cases
               str (apply str (map #(query x %) args))
@@ -145,8 +146,8 @@
       (if-let [next-op (first q)]
         (recur (query x next-op) (vec (rest q)))
         x)
-      (list? q) (function-query x q)
-      (symbol? q) (function-query x [q])
+      (list? q) (query* x q)
+      (symbol? q) (query* x [q])
       (map? q) (create-map x (apply concat (seq q)))
       (number? q) (safe-nth x q))))
 
