@@ -1,4 +1,4 @@
-# Query
+# jet-lang: a query language you probably already know
 
 NOTE: This query language is work in progress. Consider it experimental, suited
 for exploratory programming, but not suited for production usage yet
@@ -9,7 +9,7 @@ NOTE: In this document, the word list also applies to arrays and vectors.
 The `--query` option allows to select or remove specific parts of the output. A
 query is written in EDN.
 
-These Clojure-like functions are supported:
+These Clojure-like functions are supported in jet-lang:
 
 - for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
   `set/rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
