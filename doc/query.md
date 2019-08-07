@@ -12,14 +12,14 @@ query is written in EDN.
 These Clojure-like functions are supported:
 
 - for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
-  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
+  `set/rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
 - for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
   `remove`, `juxt`, `count`, `distinct`, `dedupe`, `conj`, `into`.
 - working with strings: `str`, `re-find`.
 - logic: `and`, `or`, `not`, `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
 - literal values: `quote`/`#jet/lit`.
 - copy the entire input value: `identity` (for short `id`, thanks Haskell).
-- print the result of an intermediate query: `debug`.
+- print the result of an intermediate query: `jet/debug`.
 - arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
 
 To learn more about how to use them, read the [tutorial](#tutorial) or go
@@ -196,10 +196,10 @@ $ echo '{:a 1}' | jet --query '{:input id}'
 {:input {:a 1}}
 ```
 
-You can print the result of an intermediate query using `debug`:
+You can print the result of an intermediate query using `jet/debug`:
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) debug (update :a :a/a)'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) jet/debug (update :a :a/a)'
 {:a #:a{:a 1, :b 2}}
 {:a 1}
 ```
@@ -217,7 +217,7 @@ $ echo '{:a [1 2 3] :b [4 5 6]}' | jet --query '(vals)'
 ```
 
 ``` clojure
-echo '{"foo bar": 1}' | jet --from json --to json --query '(rename-keys {"foo bar" "foo-bar"})'
+echo '{"foo bar": 1}' | jet --from json --to json --query '(set/rename-keys {"foo bar" "foo-bar"})'
 {"foo-bar":1}
 ```
 

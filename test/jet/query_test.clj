@@ -1,7 +1,9 @@
 (ns jet.query-test
   (:require
    [clojure.test :as test :refer [deftest is]]
-   [jet.query :refer [query]]))
+   [jet.data-readers]
+   [jet.query :refer [query]]
+   [clojure.set :as set]))
 
 (deftest query-test
   ;; TODO: rewrite with clojure.test/are...
@@ -55,7 +57,7 @@
   (is (= '{:c 3}
          (query '{:a 1 :b 2 :c 3} '(dissoc :a :b))))
   (is (= '{:b 1}
-         (query '{:a 1} '(rename-keys {:a :b}))))
+         (query '{:a 1} '(set/rename-keys {:a :b}))))
   (is (= '{:foo 1 :bar 2}
          (query '{:a 1 :b 2} '(hash-map :foo :a :bar :b))))
   (is (= '{:a 1 :b 3}
@@ -106,4 +108,6 @@
                     {:fib0 :fib1 :fib1 (+ :fib0 :fib1) :n (inc :n) :fib (conj :fib :fib0)})
                   :fib])))
   (is (= [1 2 3 4 5 6] (query {:a [1 2 3] :b [4 5 6]} '(into :a :b))))
-  (is (= {:x 1 :y 2} (query {:a {:x 1} :b {:y 2}} '(into :a :b)))))
+  (is (= {:x 1 :y 2} (query {:a {:x 1} :b {:y 2}} '(into :a :b))))
+  (is (= "{:b {:c 10}}\n{:c 10}\n"
+         (with-out-str (query {:a {:b {:c 10}}} '[:a jet/debug :b jet/debug :c])))))

@@ -60,10 +60,10 @@
               ;; special case
               quote arg1
               ;; spy
-              debug (do (println (if arg1
-                                   (query x arg1)
-                                   x))
-                        x)
+              jet/debug (do (println (if arg1
+                                       (query x arg1)
+                                       x))
+                            x)
               ;; accessor, arg is not a query
               get (get x arg1)
               ;; control flow
@@ -99,7 +99,7 @@
               (map filter remove)
               (f #(query % (promote-query* arg1)) x)
               select-keys (select-keys x arg1)
-              rename-keys (set/rename-keys x arg1)
+              set/rename-keys (set/rename-keys x arg1)
               update (let [[k update-query] args
                            update-query (promote-query* update-query)
                            v (get x k)]
