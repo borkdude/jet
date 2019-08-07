@@ -159,19 +159,34 @@ $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) (update :a :a/a)'
 In addition to the functions we've already covered, these Clojure-like functions are supported:
 
 - for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
-  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`.
+  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
 - for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
-  `remove`, `juxt`, `count`, `distinct`, `dedupe`.
+  `remove`, `juxt`, `count`, `distinct`, `dedupe`, `conj`, `into`.
 - working with strings: `str`, `re-find`
 - logic: `and`, `or`, `not`, `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
 - literal values: `quote`/`#jet/lit`.
-- copy the entire input value: `identity`.
+- copy the entire input value: `identity` (for short `id`, thanks Haskell).
 - arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
 
 Copy the input value:
 
 ``` shellsession
 $ echo '{:a 1}' | jet --query '{:input (identity)}'
+{:input {:a 1}}
+```
+
+Or for short:
+
+``` shellsession
+$ echo '{:a 1}' | jet --query '{:input (id)}'
+{:input {:a 1}}
+```
+
+When functions with only one (implicit input) argument are used, the wrapping
+parens may be left out, so even shorter:
+
+``` shellsession
+$ echo '{:a 1}' | jet --query '{:input id}'
 {:input {:a 1}}
 ```
 
@@ -311,12 +326,25 @@ $ echo '{:a "foo bar" :b 2}' | lein jet --query '(re-find #jet/lit "foo" :a)'
 "foo"
 ```
 
-Boolean logic:
+Control flow with `if`:
 
 ``` shellsession
 $ echo '{:a "foo bar" :b 2}' | jet --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
 ```
+
+There is also `while`, which repeats a query until the condition is not met. The
+Fibonacci sequence:
+
+``` shellsession
+$ echo '{:fib0 0 :fib1 1 :n 0 :fib []}' | lein jet --query '
+(while (<= :n #jet/lit 10)
+ {:fib0 :fib1 :fib1 (+ :fib0 :fib1) :n (inc :n) :fib (conj :fib :fib0)})
+:fib'
+[0 1 1 2 3 5 8 13 21 34 55]
+```
+
+Boolean logic:
 
 ``` shellsession
 $ echo '{:a 1 :b 3}' | jet --query '(and :a :b)'
@@ -341,8 +369,26 @@ $ echo '{:a 3 :b 2}]' | jet --query '(inc :a)'
 ```
 
 ``` shellsession
-$ echo '{:a 3 :b 2}]' | jet --query '(* :a :b) (- (identity) #jet/lit 2)'
+$ echo '{:a 3 :b 2}]' | jet --query '(* :a :b) (- id #jet/lit 2)'
 4
+```
+
+Use `conj` for adding elements to a list:
+
+``` shellsession
+$ echo '[1 2 3]' | jet --query '(conj id #jet/lit 4)'
+[1 2 3 4]
+```
+
+Because `conj` is varargs, it always takes an explicit input query.
+
+Concatenating two lists or merging two maps can be done with `into`:
+
+``` shellsession
+$ echo '{:a [1 2 3] :b [4 5 6]}' | jet --query '(into :a :b)'
+[1 2 3 4 5 6]
+$ echo '{:a {:x 1} :b {:y 2}}' | jet --query '(into :a :b)'
+{:x 1, :y 2}
 ```
 
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial

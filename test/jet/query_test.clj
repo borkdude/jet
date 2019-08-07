@@ -98,4 +98,11 @@
   (is (= 2 (query {:b 3} '(dec :b))))
   (is (= 3 (query [1 2 3] 'last)))
   (is (= 4 (query '{(inc :a) 4} '(inc :a))))
-  (is (= {:a 1 :b 2} (query {:a 1 :b 2 :c 3 :d 4} '($ :a :b)))))
+  (is (= {:a 1 :b 2} (query {:a 1 :b 2 :c 3 :d 4} '($ :a :b))))
+  (is (= [0 1 1 2 3 5 8 13 21 34 55]
+         (query {:fib0 0 :fib1 1 :n 0 :fib []}
+                '[(while (<= :n #jet/lit 10)
+                    {:fib0 :fib1 :fib1 (+ :fib0 :fib1) :n (inc :n) :fib (conj :fib :fib0)})
+                  :fib])))
+  (is (= [1 2 3 4 5 6] (query {:a [1 2 3] :b [4 5 6]} '(into :a :b))))
+  (is (= {:x 1 :y 2} (query {:a {:x 1} :b {:y 2}} '(into :a :b)))))

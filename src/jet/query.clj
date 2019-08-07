@@ -7,7 +7,9 @@
 
 (defn var-lookup [sym]
   (case sym
+    id identity
     identity identity
+    conj conj
     count count
     first first
     last last
@@ -57,10 +59,14 @@
               ;; accessors, arg is not a query
               nth (safe-nth x arg1)
               get (get x arg1)
-
+              ;; control flow
+              if (if (query x arg1) (query x arg2) (query x arg3))
+              while (if (query x arg1)
+                      (query* (query x arg2)
+                              (list 'while arg1 arg2))
+                      x)
               ;; functions with 1 arg
-              (first last keys vals inc dec identity count
-                     distinct dedupe)
+              (first last keys vals inc dec identity id count distinct dedupe)
               (if arg1
                 (f (query x arg1))
                 (f x))
@@ -93,6 +99,11 @@
                           (assoc-in x path v))
 
               ;; functions/macros with varargs
+              ;; vector (into [] (map #(query x %) args))
+              into (if-not arg2
+                     (into x (query x arg1))
+                     (into (query x arg1) (query x arg2)))
+              conj (apply conj (query x arg1) (map #(query x %) (rest args)))
               juxt (vec (for [q args
                               :let [q (promote-query* q)]]
                           (query x q)))
@@ -118,7 +129,6 @@
               ;; special cases
               str (apply str (map #(query x %) args))
               re-find (re-find (re-pattern (query x arg1)) (query x arg2))
-              if (if (query x arg1) (query x arg2) (query x arg3))
 
               ;; fallback
               (get x q))]
