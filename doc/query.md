@@ -1,4 +1,6 @@
-# jet-lang: a query language you probably already know
+# jet-lang
+
+A Clojure-like query language for processing EDN.
 
 NOTE: This query language is work in progress. Consider it experimental, suited
 for exploratory programming, but not suited for production usage yet
