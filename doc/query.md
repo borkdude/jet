@@ -5,7 +5,7 @@ An EDN query language.
 ## Caution
 
 This query language is work in progress. Consider it experimental, suited
-for exploratory programming, but not suited for production usage yet. The latest breaking change happend on (2019-08-05).
+for exploratory programming, but not suited for production usage yet. The latest breaking change happened on (2019-08-05).
 
 ## Introduction
 
