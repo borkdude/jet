@@ -1,7 +1,8 @@
 (ns jet.query
   {:no-doc true}
   (:refer-clojure :exclude [comparator])
-  (:require [clojure.set :as set]))
+  (:require [clojure.set :as set]
+            [jet.utils :as utils]))
 
 (declare query)
 
@@ -22,6 +23,7 @@
     keys keys
     take take
     drop drop
+    type type
     inc inc
     dec dec
     nth safe-nth
@@ -60,10 +62,19 @@
               ;; special case
               quote arg1
               ;; spy
-              jet/debug (do (println (if arg1
-                                       (query x arg1)
-                                       x))
+              jet/debug (do (utils/prn (if arg1
+                                         (query x arg1)
+                                         x))
                             x)
+              jet/describe (do (let [v (if arg1
+                                         (query x arg1)
+                                         x)]
+                                 (println "Type: " (type v))
+                                 (when (counted? v)
+                                   (println "Count:" (count v)))
+                                 (when (map? v)
+                                   (utils/println "Keys:" (keys v))))
+                               x)
               ;; accessor, arg is not a query
               get (get x arg1)
               ;; control flow
@@ -73,7 +84,9 @@
                               (list 'while arg1 arg2))
                       x)
               ;; functions with 1 arg
-              (first last keys vals inc dec identity id count distinct dedupe)
+              (first last keys vals inc dec
+                     identity id count distinct dedupe
+                     type)
               (if arg1
                 (f (query x arg1))
                 (f x))
