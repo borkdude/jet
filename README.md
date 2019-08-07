@@ -45,7 +45,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
-   - `--interactive` if present, starts an interactive shell.
+   - `--interactive`: if present, starts an interactive shell.
    - `--version`: if present, prints current version of `jet` and exits.
 
 Examples:
