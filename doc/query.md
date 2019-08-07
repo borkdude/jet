@@ -430,7 +430,7 @@ jet --from json --keywordize --to edn --pretty --query '
 ### Latest commit SHA
 
 Get the latest commit SHA and date for a project from Github:
-``` shellsession
+``` clojure
 $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
 --query '[0 {:sha :sha :date [:commit :author :date]}]'
@@ -439,7 +439,7 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 
 ### Find unused private vars using clj-kondo analysis output
 
-``` shellsession
+``` clojure
 cat << EOF > /tmp/test.clj
 (ns foo)
 (defn- foo []) ;; NOTE: unused
