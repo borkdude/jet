@@ -1,13 +1,16 @@
-# jet-lang: a query language you probably already know
+# jet-lang
 
-NOTE: This query language is work in progress. Consider it experimental, suited
-for exploratory programming, but not suited for production usage yet
-(2019-08-04).
+An EDN query language.
 
-NOTE: In this document, the word list also applies to arrays and vectors.
+## Caution
+
+This query language is work in progress. Consider it experimental, suited
+for exploratory programming, but not suited for production usage yet. The latest breaking change happened on (2019-08-05).
+
+## Introduction
 
 The `--query` option allows to select or remove specific parts of the output. A
-query is written in EDN.
+query is written in jet-lang which uses EDN syntax.
 
 These Clojure-like functions are supported in jet-lang:
 
@@ -26,6 +29,8 @@ To learn more about how to use them, read the [tutorial](#tutorial) or go
 straight to the [gallery](#gallery).
 
 ## Tutorial
+
+In this tutorial the word list also applies to arrays and vectors.
 
 Single values can be selected by using a key:
 
@@ -63,14 +68,6 @@ echo '{:a 1 :b 2 :c 3}' | jet --query '(select-keys [:a :b])'
 {:a 1, :b 2}
 ```
 
-The function `$` is a short-hand for `select-keys` that doesn't wrap the keys in
-a sequence:
-
-``` clojure
-echo '{:a 1 :b 2 :c 3}' | jet --query '($ :a :b)'
-{:a 1, :b 2}
-```
-
 Removing keys can be achieved with `dissoc`:
 
 ``` clojure
@@ -81,7 +78,7 @@ echo '{:a 1 :b 2 :c 3}' | jet --query '(dissoc :c)'
 A query can be applied to every element in a list using `map`:
 
 ``` clojure
-$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --query '(map ($ :a))'
+$ echo '[{:a 1 :b 2} {:a 2 :b 3}]' | jet --query '(map (select-keys [:a]))'
 [{:a 1} {:a 2}]
 ```
 
@@ -163,14 +160,14 @@ Applying multiple queries after one another can be achieved using vector
 notation.
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[($ :a) (update :a :a/a)]'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '[(select-keys [:a]) (update :a :a/a)]'
 {:a 1}
 ```
 
 The outer query is implicitly wrapped, so you don't have to wrap it yourself:
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) (update :a :a/a)'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '(select-keys [:a]) (update :a :a/a)'
 {:a 1}
 ```
 
@@ -199,7 +196,7 @@ $ echo '{:a 1}' | jet --query '{:input id}'
 You can print the result of an intermediate query using `jet/debug`:
 
 ``` clojure
-$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) jet/debug (update :a :a/a)'
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '(select-keys [:a]) jet/debug (update :a :a/a)'
 {:a #:a{:a 1, :b 2}}
 {:a 1}
 ```
@@ -438,4 +435,31 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
 --query '[0 {:sha :sha :date [:commit :author :date]}]'
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
+```
+
+### Find unused private vars using clj-kondo analysis output
+
+``` shellsession
+cat << EOF > /tmp/test.clj
+(ns foo)
+(defn- foo []) ;; NOTE: unused
+(defn- bar []) ;; NOTE: unused
+(defn- baz [])
+
+(defn -main []
+  (baz))
+EOF
+
+clj-kondo --lint /tmp/test.clj --config '{:output {:analysis true :format :edn}}' | \
+lein jet --pretty --query '
+;; select the analysis part of the clj-kondo output
+:analysis
+
+;; create a map with private vars and used vars
+{:private-vars [:var-definitions (filter :private) (map (select-keys [:name :ns]))]
+ :used-vars [:var-usages (map (select-keys [:name :to])) (map (set/rename-keys {:to :ns}))]}
+
+;; private vars that are not used:
+(set/difference :private-vars :used-vars)
+'
 ```
