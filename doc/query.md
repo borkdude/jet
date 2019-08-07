@@ -1,15 +1,16 @@
 # jet-lang
 
-A Clojure-like query language for processing EDN.
+An EDN query language.
 
-NOTE: This query language is work in progress. Consider it experimental, suited
-for exploratory programming, but not suited for production usage yet
-(2019-08-04).
+## Caution
 
-NOTE: In this document, the word list also applies to arrays and vectors.
+This query language is work in progress. Consider it experimental, suited
+for exploratory programming, but not suited for production usage yet. The latest breaking change happend on (2019-08-05).
+
+## Introduction
 
 The `--query` option allows to select or remove specific parts of the output. A
-query is written in EDN.
+query is written in jet-lang which uses EDN syntax.
 
 These Clojure-like functions are supported in jet-lang:
 
@@ -28,6 +29,8 @@ To learn more about how to use them, read the [tutorial](#tutorial) or go
 straight to the [gallery](#gallery).
 
 ## Tutorial
+
+In this tutorial the word list also applies to arrays and vectors.
 
 Single values can be selected by using a key:
 
