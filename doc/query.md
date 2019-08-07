@@ -22,7 +22,8 @@ These Clojure-like functions are supported:
 - print the result of an intermediate query: `debug`.
 - arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
 
-To learn more about how to use them, read the tutorial.
+To learn more about how to use them, read the [tutorial](#tutorial) or go
+straight to the [gallery](#gallery).
 
 ## Tutorial
 
