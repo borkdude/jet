@@ -32,7 +32,9 @@ straight to the [gallery](#gallery).
 ## Tutorial
 
 Tip: to follow along, you can use the jet interactive shell. To start it, type
-`jet --interactive`.
+`jet --interactive`. Using `rlwrap` is recommended.
+
+<img src="../assets/jeti.png">
 
 In this tutorial the word list also applies to arrays and vectors.
 
