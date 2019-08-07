@@ -457,7 +457,7 @@ jet --query '
 
 ;; create a map with private vars and used vars
 {:private-vars [:var-definitions (filter :private) (map (select-keys [:name :ns]))]
- :used-vars [:var-usages (map (select-keys [:name :to])) (map (set/rename-keys {:to :ns}))]}
+ :used-vars [:var-usages (map [(select-keys [:name :to]) (set/rename-keys {:to :ns})])]}
 
 ;; private vars that are not used:
 (set/difference :private-vars :used-vars)
