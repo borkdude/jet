@@ -31,6 +31,9 @@ straight to the [gallery](#gallery).
 
 ## Tutorial
 
+Tip: to follow along, you can use the jet interactive shell. To start it, type
+`jet --interactive`.
+
 In this tutorial the word list also applies to arrays and vectors.
 
 Single values can be selected by using a key:
