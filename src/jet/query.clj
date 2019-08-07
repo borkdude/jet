@@ -108,8 +108,8 @@
                                 (set/rename-keys (query x arg1) arg2)
                                 (set/rename-keys x arg1))
               set/difference (if arg2
-                               (set/difference (query x arg1) (query x arg2))
-                               (set/difference x (query x arg1)))
+                               (set/difference (set (query x arg1)) (set (query x arg2)))
+                               (set/difference (set x) (set (query x arg1))))
               update (let [[k update-query] args
                            update-query (promote-query* update-query)
                            v (get x k)]
@@ -124,9 +124,10 @@
                           (assoc-in x path v))
 
               ;; functions/macros with varargs
+              ;; juxt may be preferred over vector
               ;; vector (into [] (map #(query x %) args))
               into (if-not arg2
-                     (into x (query x arg1))
+                     (into (query x arg1) x)
                      (into (query x arg1) (query x arg2)))
               conj (apply conj (query x arg1) (map #(query x %) (rest args)))
               juxt (vec (for [q args
@@ -149,7 +150,7 @@
                       (merge x (zipmap keys vals)))
               (= < <= >= not= + - * /)
               (apply f (map #(query x %) args))
-              
+
               ;; special cases
               str (apply str (map #(query x %) args))
               re-find (re-find (re-pattern (query x arg1)) (query x arg2))

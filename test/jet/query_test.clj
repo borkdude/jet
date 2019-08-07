@@ -110,4 +110,7 @@
   (is (= [1 2 3 4 5 6] (query {:a [1 2 3] :b [4 5 6]} '(into :a :b))))
   (is (= {:x 1 :y 2} (query {:a {:x 1} :b {:y 2}} '(into :a :b))))
   (is (= "{:b {:c 10}}\n{:c 10}\n"
-         (with-out-str (query {:a {:b {:c 10}}} '[:a jet/debug :b jet/debug :c])))))
+         (with-out-str (query {:a {:b {:c 10}}} '[:a jet/debug :b jet/debug :c]))))
+  (is (= #{3} (query nil '(set/difference #jet/lit #{1 2 3} #jet/lit #{1 2}))))
+  (is (= #{3} (query #{1 2 3} '(set/difference #jet/lit #{1 2}))))
+  (is (= #{3} (query #{1 2 3} '(set/difference #jet/lit #{1 2})))))

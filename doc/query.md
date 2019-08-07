@@ -436,3 +436,30 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 --query '[0 {:sha :sha :date [:commit :author :date]}]'
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
+
+### Find unused private vars using clj-kondo analysis output
+
+``` shellsession
+cat << EOF > /tmp/test.clj
+(ns foo)
+(defn- foo []) ;; NOTE: unused
+(defn- bar []) ;; NOTE: unused
+(defn- baz [])
+
+(defn -main []
+  (baz))
+EOF
+
+clj-kondo --lint /tmp/test.clj --config '{:output {:analysis true :format :edn}}' | \
+lein jet --pretty --query '
+;; select the analysis part of the clj-kondo output
+:analysis
+
+;; create a map with private vars and used vars
+{:private-vars [:var-definitions (filter :private) (map (select-keys [:name :ns]))]
+ :used-vars [:var-usages (map (select-keys [:name :to])) (map (set/rename-keys {:to :ns}))]}
+
+;; private vars that are not used:
+(set/difference :private-vars :used-vars)
+'
+```
