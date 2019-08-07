@@ -462,4 +462,5 @@ lein jet --pretty --query '
 ;; private vars that are not used:
 (set/difference :private-vars :used-vars)
 '
+#{{:name bar, :ns foo} {:name foo, :ns foo}}
 ```
