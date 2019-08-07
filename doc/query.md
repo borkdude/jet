@@ -451,7 +451,7 @@ cat << EOF > /tmp/test.clj
 EOF
 
 clj-kondo --lint /tmp/test.clj --config '{:output {:analysis true :format :edn}}' | \
-lein jet --pretty --query '
+jet --query '
 ;; select the analysis part of the clj-kondo output
 :analysis
 
