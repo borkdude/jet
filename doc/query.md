@@ -332,9 +332,14 @@ Control flow with `if`:
 $ echo '{:a "foo bar" :b 2}' | jet --query '(if (re-find #jet/lit "foo" :a) :a :b)'
 "foo bar"
 ```
+There is also `while`, which repeats a query until the condition is not met.
 
-There is also `while`, which repeats a query until the condition is not met. The
-Fibonacci sequence:
+``` shellsession
+$ echo '0' | jet --query '(while (< id #jet/lit 10) (inc id))'
+10
+```
+
+The Fibonacci sequence using `while`:
 
 ``` shellsession
 $ echo '{:fib0 0 :fib1 1 :n 0 :fib []}' | lein jet --query '
