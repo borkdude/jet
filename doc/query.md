@@ -15,7 +15,8 @@ query is written in jet-lang which uses EDN syntax.
 These Clojure-like functions are supported in jet-lang:
 
 - for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
-  `set/rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
+  `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`,
+  `set/rename-keys`, `set/join`.
 - for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
   `remove`, `juxt`, `count`, `distinct`, `dedupe`, `conj`, `into`.
 - working with strings: `str`, `re-find`.
