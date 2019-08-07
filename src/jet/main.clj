@@ -1,13 +1,12 @@
 (ns jet.main
   {:no-doc true}
   (:require
-   [cheshire.core :as cheshire]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.string :as str :refer [starts-with?]]
-   [cognitect.transit :as transit]
-   [fipp.edn :refer [pprint] :rename {pprint fipp}]
    [jet.data-readers]
+   [jet.formats :as formats]
+   [jet.jeti :refer [start-jeti!]]
    [jet.query :as q])
   (:gen-class))
 
@@ -34,7 +33,8 @@
                            :else false))
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
-        query (first (get opts "--query"))]
+        query (first (get opts "--query"))
+        interactive (boolean (get opts "--interactive"))]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -43,34 +43,30 @@
      :query (when query
               (edn/read-string
                {:readers *data-readers*}
-               (format "[%s]" query)))}))
+               (format "[%s]" query)))
+     :interactive interactive}))
 
 (defn -main
   [& args]
   (let [{:keys [:from :to :keywordize
-                :pretty :version :query]} (parse-opts args)]
-    (if version
+                :pretty :version :query
+                :interactive]} (parse-opts args)]
+    (cond version
       (println (str/trim (slurp (io/resource "JET_VERSION"))))
+      interactive (start-jeti!)
+      :else
       (let [in (slurp *in*)
             input (case from
-                    :edn (edn/read-string in)
-                    :json (cheshire/parse-string in keywordize)
-                    :transit (transit/read
-                              (transit/reader (io/input-stream (.getBytes in)) :json)))
+                    :edn (formats/parse-edn in)
+                    :json (formats/parse-json in keywordize)
+                    :transit (formats/parse-transit in))
             input (if query (q/query input query)
                       input)]
         (case to
-          :edn (if pretty (fipp input) (prn input))
-          :json (println (cheshire/generate-string input {:pretty pretty}))
-          :transit (let [bos (java.io.ByteArrayOutputStream. 1024)
-                         writer (transit/writer bos :json)]
-                     (transit/write writer input)
-                     (println (String. (.toByteArray bos) "UTF-8"))))))))
+          :edn (println (formats/generate-edn input pretty))
+          :json (println (formats/generate-json input pretty))
+          :transit (println (formats/generate-transit input)))))))
 
 ;;;; Scratch
 
-(comment
-  *out*
-  System/out
-  (io/writer *out*)
-  (fipp {:a 1}))
+(comment)
