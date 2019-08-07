@@ -9,6 +9,23 @@ NOTE: In this document, the word list also applies to arrays and vectors.
 The `--query` option allows to select or remove specific parts of the output. A
 query is written in EDN.
 
+These Clojure-like functions are supported:
+
+- for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
+  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
+- for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
+  `remove`, `juxt`, `count`, `distinct`, `dedupe`, `conj`, `into`.
+- working with strings: `str`, `re-find`.
+- logic: `and`, `or`, `not`, `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
+- literal values: `quote`/`#jet/lit`.
+- copy the entire input value: `identity` (for short `id`, thanks Haskell).
+- print the result of an intermediate query: `debug`.
+- arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
+
+To learn more about how to use them, read the tutorial.
+
+## Tutorial
+
 Single values can be selected by using a key:
 
 ``` clojure
@@ -34,7 +51,7 @@ nil
 You can also use `nth` for this:
 
 ``` clojure
-$ echo '[1 2 3]' | lein jet --query '(nth 0)'
+$ echo '[1 2 3]' | lein jet --query '(nth #jet/lit 0)'
 1
 ```
 
@@ -84,17 +101,17 @@ $ echo '{:a {:b 1}}' | jet --query '(update :a :b)'
 <!-- Like any query, functions can be applied in a nested fashion: -->
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --query '(update :a (take 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (take #jet/lit 2))'
 {:a [1 2]}
 ```
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --query '(update :a (drop 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (drop #jet/lit 2))'
 {:a [3]}
 ```
 
 ``` clojure
-echo '{:a [1 2 3]}' | jet --query '(update :a (nth 2))'
+echo '{:a [1 2 3]}' | jet --query '(update :a (nth #jet/lit 2))'
 {:a 3}
 ```
 
@@ -156,18 +173,6 @@ $ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) (update :a :a/a)'
 {:a 1}
 ```
 
-In addition to the functions we've already covered, these Clojure-like functions are supported:
-
-- for maps: `assoc`, `assoc-in`, `update`, `update-in`, `keys`, `vals`,
-  `rename-keys`, `select-keys`, `dissoc`, `map-vals`, `juxt`, `count`, `into`.
-- for lists: `first`, `last`, `take`, `drop`, `nth`, `map`, `zipmap`, `filter`,
-  `remove`, `juxt`, `count`, `distinct`, `dedupe`, `conj`, `into`.
-- working with strings: `str`, `re-find`
-- logic: `and`, `or`, `not`, `if`, `=`, `not=`, `>`, `>=`, `<`, `<=`.
-- literal values: `quote`/`#jet/lit`.
-- copy the entire input value: `identity` (for short `id`, thanks Haskell).
-- arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
-
 Copy the input value:
 
 ``` shellsession
@@ -188,6 +193,14 @@ parens may be left out, so even shorter:
 ``` shellsession
 $ echo '{:a 1}' | jet --query '{:input id}'
 {:input {:a 1}}
+```
+
+You can print the result of an intermediate query using `debug`:
+
+``` clojure
+$ echo '{:a {:a/a 1 :a/b 2} :b 2}' | jet --query '($ :a) debug (update :a :a/a)'
+{:a #:a{:a 1, :b 2}}
+{:a 1}
 ```
 
 Keys and values:
@@ -396,6 +409,10 @@ $ echo '{:a {:x 1} :b {:y 2}}' | jet --query '(into :a :b)'
 {:x 1, :y 2}
 ```
 
+## Gallery
+
+### jq example
+
 The last example of the [jq](https://stedolan.github.io/jq/tutorial/) tutorial
 using jet:
 
@@ -410,4 +427,14 @@ jet --from json --keywordize --to edn --pretty --query '
 ({:message "Merge pull request #1948 from eli-schwartz/no-pacman-sy\n\ndocs: fix seriously dangerous download instructions for Arch Linux",
   :name "GitHub",
 ...
+```
+
+### Latest commit SHA
+
+Get the latest commit SHA and date for a project from Github:
+``` shellsession
+$ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
+| jet --from json --keywordize --to edn \
+--query '[0 {:sha :sha :date [:commit :author :date]}]'
+{:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```

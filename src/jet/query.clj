@@ -5,6 +5,11 @@
 
 (declare query)
 
+(defn safe-nth [x n]
+  (try (nth x n)
+       (catch Exception _e
+         nil)))
+
 (defn var-lookup [sym]
   (case sym
     id identity
@@ -15,8 +20,11 @@
     last last
     vals vals
     keys keys
+    take take
+    drop drop
     inc inc
     dec dec
+    nth safe-nth
     = =
     < <
     <= <=
@@ -44,11 +52,6 @@
         vals (map #(query x %) vals)]
     (zipmap keys vals)))
 
-(defn safe-nth [x n]
-  (try (nth x n)
-       (catch Exception _e
-         nil)))
-
 (defn query* [x q]
   (let [[op & args] q
         f (var-lookup op)
@@ -56,8 +59,12 @@
         res (case op
               ;; special case
               quote arg1
-              ;; accessors, arg is not a query
-              nth (safe-nth x arg1)
+              ;; spy
+              debug (do (println (if arg1
+                                   (query x arg1)
+                                   x))
+                        x)
+              ;; accessor, arg is not a query
               get (get x arg1)
               ;; control flow
               if (if (query x arg1) (query x arg2) (query x arg3))
@@ -76,8 +83,16 @@
                     (not x))
 
               ;; functions with 2 args
-              take (take arg1 x)
-              drop (drop arg1 x)
+              ;; index first
+              (take drop)
+              (if arg2
+                (f (query x arg1) (query x arg2))
+                ;; index first
+                (f (query x arg1) x))
+              nth (if arg2
+                    (f (query x arg1) (query x arg2))
+                    ;; index last
+                    (f x (query x arg1)))
               map-vals (zipmap (keys x)
                                (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
