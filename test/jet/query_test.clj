@@ -100,7 +100,7 @@
   (is (= 2 (query {:b 3} '(dec :b))))
   (is (= 3 (query [1 2 3] 'last)))
   (is (= 4 (query '{(inc :a) 4} '(inc :a))))
-  (is (= {:a 1 :b 2} (query {:a 1 :b 2 :c 3 :d 4} '($ :a :b))))
+  (is (= {:a 1 :b 2} (query {:a 1 :b 2 :c 3 :d 4} '(select-keys [:a :b]))))
   (is (= 10 (query 0 '(while (< id #jet/lit 10) (inc id)))))
   (is (= [0 1 1 2 3 5 8 13 21 34 55]
          (query {:fib0 0 :fib1 1 :n 0 :fib []}
