@@ -4,7 +4,17 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-CLI to transform between JSON, EDN and Transit.
+CLI to transform between JSON, EDN and Transit, powered with a minimal query
+language.
+
+## Rationale
+
+Rationale for the query language, a.k.a. jet-lang: a minimal language for
+transformation of input, before writing out to JSON, EDN, or Transit.
+
+Rationale for the interactive shell: learn jet-lang and work out the correctness
+of query. It can also be useful on servers where you want to inspect data, but
+don't have REPL.
 
 ## Installation
 
