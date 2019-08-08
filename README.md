@@ -11,12 +11,12 @@ language.
 
 - This CLI is suited for shell-scripting because it has proper startup time.
 
-- The query language jet-lang: a minimal language for transformation of input,
+- The query language jet-lang is a minimal language for transformation of input,
 before writing out to JSON, EDN, or Transit.
 
-- The interactive shell: learn jet-lang and work out the correctness of
-query. It can also be useful on servers where you want to inspect data, but
-don't have REPL.
+- The interactive shell enables you to learn jet-lang and work out the
+correctness of query. It can also be useful on servers where you want to inspect
+data, but don't have REPL.
 
 ## Installation
 
