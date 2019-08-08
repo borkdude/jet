@@ -34,7 +34,7 @@ straight to the [gallery](#gallery).
 Tip: to follow along, you can use the jet interactive shell. To start it, type
 `jet --interactive`. Using `rlwrap` is recommended.
 
-[![asciicast](https://asciinema.org/a/261497.svg)](https://asciinema.org/a/261497)
+<a href="https://asciinema.org/a/261497" target="_blank"><img src="https://asciinema.org/a/261497.svg" /></a>
 
 In this tutorial the word list also applies to arrays and vectors.
 
