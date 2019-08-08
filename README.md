@@ -15,7 +15,7 @@ language.
 before writing out to JSON, EDN, or Transit.
 
 - The interactive shell enables you to learn jet-lang and work out the
-correctness of query. It can also be useful on servers where you want to inspect
+correctness of a query. It can also be useful on servers where you want to inspect
 data, but don't have REPL.
 
 ## Installation
