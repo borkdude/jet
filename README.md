@@ -77,7 +77,8 @@ $ echo '[{:a {:b 1}} {:a {:b 2}}]' \
 [{:a {:b 1}}]
 ```
 
-Get the latest commit SHA and date for a project from Github:
+- Get the latest commit SHA and date for a project from Github:
+
 ``` shellsession
 $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
@@ -85,7 +86,7 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
 
-## [Query](doc/query.md)
+## [Query language](doc/query.md)
 
 ## Caveats
 
