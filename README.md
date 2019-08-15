@@ -108,6 +108,11 @@ Test the native version:
 You will need leiningen and GraalVM.
 
     script/compile
+    
+## Support this project
+
+Do you enjoy this project? Consider buying me a [hot
+beverage](https://ko-fi.com/borkdude).
 
 ## License
 
