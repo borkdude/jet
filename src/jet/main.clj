@@ -52,20 +52,26 @@
                 :pretty :version :query
                 :interactive]} (parse-opts args)]
     (cond version
-      (println (str/trim (slurp (io/resource "JET_VERSION"))))
-      interactive (start-jeti!)
-      :else
-      (let [in (slurp *in*)
-            input (case from
-                    :edn (formats/parse-edn in)
-                    :json (formats/parse-json in keywordize)
-                    :transit (formats/parse-transit in))
-            input (if query (q/query input query)
-                      input)]
-        (case to
-          :edn (println (formats/generate-edn input pretty))
-          :json (println (formats/generate-json input pretty))
-          :transit (println (formats/generate-transit input)))))))
+          (println (str/trim (slurp (io/resource "JET_VERSION"))))
+          interactive (start-jeti!)
+          :else
+          (let [reader (case from
+                         :json (formats/json-parser)
+                         :transit (formats/transit-reader)
+                         :edn nil)]
+            (loop []
+              (let [input (case from
+                            :edn (formats/parse-edn *in*)
+                            :json (formats/parse-json reader keywordize)
+                            :transit (formats/parse-transit reader))]
+                (when-not (identical? ::formats/EOF input)
+                  (let [input (if query (q/query input query)
+                                  input)]
+                    (case to
+                      :edn (println (formats/generate-edn input pretty))
+                      :json (println (formats/generate-json input pretty))
+                      :transit (println (formats/generate-transit input))))
+                  (recur))))))))
 
 ;;;; Scratch
 
