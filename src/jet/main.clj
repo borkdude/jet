@@ -51,9 +51,8 @@
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
                 :interactive]} (parse-opts args)]
-    (cond version
-      (println (str/trim (slurp (io/resource "JET_VERSION"))))
-      interactive (start-jeti!)
+    (cond
+      version (println (str/trim (slurp (io/resource "JET_VERSION"))))
       :else
       (let [in (slurp *in*)
             input (case from
@@ -62,10 +61,15 @@
                     :transit (formats/parse-transit in))
             input (if query (q/query input query)
                       input)]
-        (case to
-          :edn (println (formats/generate-edn input pretty))
-          :json (println (formats/generate-json input pretty))
-          :transit (println (formats/generate-transit input)))))))
+        (cond
+          interactive (binding [*in* (clojure.lang.LineNumberingPushbackReader.
+                                      (clojure.java.io/reader "/dev/tty"))]
+                        (start-jeti! input))
+          :else
+          (case to
+            :edn (println (formats/generate-edn input pretty))
+            :json (println (formats/generate-json input pretty))
+            :transit (println (formats/generate-transit input))))))))
 
 ;;;; Scratch
 

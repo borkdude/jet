@@ -59,19 +59,19 @@
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))
 
-(defn start-jeti! []
+(defn start-jeti! [init-val]
   (println "Welcome to jeti. The answer is just a few queries away!")
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
   (println)
   (let [init-id (new-id nil)]
     (loop [{:keys [:bookmarks :print-level :print-length] :as state}
-           {init-id ::start
+           {init-id (or init-val ::start)
             :bookmarks []
             :print-length 5
             :print-level 5}
            previous-id nil
-           current-id nil]
+           current-id (when init-val init-id)]
       (let [current-val (get state current-id)
             prev-val (get state previous-id)
             same? (= current-id previous-id)
