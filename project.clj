@@ -10,8 +10,9 @@
   :source-paths ["src"]
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [com.cognitect/transit-clj "0.8.313"]
-                 [cheshire "5.8.1"]
-                 [fipp "0.6.18"]]
+                 [cheshire "5.9.0"]
+                 [fipp "0.6.18"]
+                 [commons-io/commons-io "2.6"]]
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.9.0"]]}
              :clojure-1.10.1 {:dependencies [[org.clojure/clojure "1.10.1"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}
