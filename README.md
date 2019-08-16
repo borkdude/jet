@@ -57,8 +57,11 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
-   - `--interactive`: if present, starts an interactive shell.
    - `--version`: if present, prints current version of `jet` and exits.
+
+Experimental:
+
+   - `--interactive`: if present, starts an interactive shell.
 
 Examples:
 
@@ -84,6 +87,17 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
 --query '[0 {:sha :sha :date [:commit :author :date]}]'
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
+```
+
+## Streaming
+
+Jet supports streaming over multiple values, without reading the entire input
+into memory:
+
+``` shellsession
+$ echo '{"a": 1} {"a": 1}' | jet --from json --keywordize --query ':a' --to edn
+1
+1
 ```
 
 ## [Query language](doc/query.md)
