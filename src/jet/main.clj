@@ -51,25 +51,37 @@
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
                 :interactive]} (parse-opts args)]
-    (cond
-      version (println (str/trim (slurp (io/resource "JET_VERSION"))))
-      :else
-      (let [in (slurp *in*)
-            input (case from
-                    :edn (formats/parse-edn in)
-                    :json (formats/parse-json in keywordize)
-                    :transit (formats/parse-transit in))
-            input (if query (q/query input query)
-                      input)]
-        (cond
-          interactive (binding [*in* (clojure.lang.LineNumberingPushbackReader.
-                                      (clojure.java.io/reader "/dev/tty"))]
-                        (start-jeti! input))
+    (cond version
+          (println (str/trim (slurp (io/resource "JET_VERSION"))))
           :else
-          (case to
-            :edn (println (formats/generate-edn input pretty))
-            :json (println (formats/generate-json input pretty))
-            :transit (println (formats/generate-transit input))))))))
+          (let [reader (case from
+                         :json (formats/json-parser)
+                         :transit (formats/transit-reader)
+                         :edn nil)]
+            (loop [interactive-inputs []]
+              (let [input (case from
+                            :edn (formats/parse-edn *in*)
+                            :json (formats/parse-json reader keywordize)
+                            :transit (formats/parse-transit reader))]
+                (if-not (identical? ::formats/EOF input)
+                  (let [input (if query (q/query input query)
+                                  input)]
+                    (if interactive
+                      (recur (conj interactive-inputs input))
+                      (do
+                        (case to
+                          :edn (println (formats/generate-edn input pretty))
+                          :json (println (formats/generate-json input pretty))
+                          :transit (println (formats/generate-transit input)))
+                        (recur interactive-inputs))))
+                  (when interactive
+                    (binding [*in* (clojure.lang.LineNumberingPushbackReader.
+                                    (clojure.java.io/reader "/dev/tty"))]
+                      (start-jeti!
+                       (if (next interactive-inputs)
+                         interactive-inputs
+                         (first interactive-inputs))))))))))))
+
 
 ;;;; Scratch
 

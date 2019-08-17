@@ -39,9 +39,11 @@
   (try (let [next-id (new-id state)
              file-as-string (slurp file)
              file-as-edn (case format
-                           :edn (formats/parse-edn file-as-string)
-                           :transit (formats/parse-transit file-as-string)
-                           :json (formats/parse-json file-as-string keywordize))]
+                           :edn (with-in-str file-as-string (formats/parse-edn *in*))
+                           :transit (with-in-str file-as-string (formats/parse-transit
+                                                                 (formats/transit-reader)))
+                           :json (with-in-str file-as-string
+                                   (formats/parse-json (formats/json-parser) keywordize)))]
          {:state (assoc state next-id file-as-edn)
           :next-id next-id})
        (catch Exception e
