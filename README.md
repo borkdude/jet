@@ -7,6 +7,14 @@
 CLI to transform between JSON, EDN and Transit, powered with a minimal query
 language.
 
+## Quickstart
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
+$ echo '{:a 1}' | jet --to json
+{"a":1}
+```
+
 ## Rationale
 
 - This CLI is suited for shell-scripting because it has proper startup time.
@@ -20,6 +28,8 @@ data, but don't have REPL.
 
 ## Installation
 
+### Brew
+
 Linux and macOS binaries are provided via brew.
 
 Install:
@@ -30,7 +40,25 @@ Upgrade:
 
     brew upgrade jet
 
+### Installer script
+
+Install via the installer script:
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
+```
+
+By default this will install into `/usr/local/bin`. To change this, provide the directory name:
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install) /tmp
+```
+
+### Download
+
 You may also download a binary from [Github](https://github.com/borkdude/jet/releases).
+
+### JVM
 
 This tool can also be used via the JVM. If you use leiningen, you can put the
 following in your `.lein/profiles`:
