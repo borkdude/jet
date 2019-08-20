@@ -17,14 +17,10 @@ $ echo '{:a 1}' | jet --to json
 
 ## Rationale
 
-- This CLI is suited for shell-scripting because it has proper startup time.
-
-- The query language jet-lang is a minimal language for transformation of input,
-before writing out to JSON, EDN, or Transit.
-
-- The interactive shell enables you to learn jet-lang and work out the
-correctness of a query. It can also be useful on servers where you want to inspect
-data, but don't have REPL.
+This is a command line tool to transform between JSON, EDN and Transit, powered
+with a minimal query language. It runs as a GraalVM binary. With fast startup
+it's well suited for shell scripting. It comes with a query language to do
+intermediate transformation. It may seem familiar to users of `jq`.
 
 ## Installation
 
