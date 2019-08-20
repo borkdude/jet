@@ -18,8 +18,8 @@ $ echo '{:a 1}' | jet --to json
 ## Rationale
 
 This is a command line tool to transform between JSON, EDN and Transit, powered
-with a minimal query language. It runs as a GraalVM binary. With fast startup
-it's well suited for shell scripting. It comes with a query language to do
+with a minimal query language. It runs as a GraalVM binary with fast startup time
+which makes it suited for shell scripting. It comes with a query language to do
 intermediate transformation. It may seem familiar to users of `jq`.
 
 ## Installation
