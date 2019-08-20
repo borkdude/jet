@@ -34,7 +34,8 @@
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
-        interactive (boolean (get opts "--interactive"))]
+        interactive (boolean (get opts "--interactive"))
+        collect (boolean (get opts "--collect"))]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -44,13 +45,14 @@
               (edn/read-string
                {:readers *data-readers*}
                (format "[%s]" query)))
-     :interactive interactive}))
+     :interactive interactive
+     :collect collect}))
 
 (defn -main
   [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
-                :interactive]} (parse-opts args)]
+                :interactive :collect]} (parse-opts args)]
     (cond version
           (println (str/trim (slurp (io/resource "JET_VERSION"))))
           interactive (start-jeti!)
@@ -58,12 +60,15 @@
           (let [reader (case from
                          :json (formats/json-parser)
                          :transit (formats/transit-reader)
-                         :edn nil)]
+                         :edn nil)
+                next-val (case from
+                           :edn #(formats/parse-edn *in*)
+                           :json #(formats/parse-json reader keywordize)
+                           :transit #(formats/parse-transit reader))
+                collected (when collect (vec (take-while #(not= % ::formats/EOF)
+                                                         (repeatedly next-val))))]
             (loop []
-              (let [input (case from
-                            :edn (formats/parse-edn *in*)
-                            :json (formats/parse-json reader keywordize)
-                            :transit (formats/parse-transit reader))]
+              (let [input (if collect collected (next-val))]
                 (when-not (identical? ::formats/EOF input)
                   (let [input (if query (q/query input query)
                                   input)]
@@ -71,7 +76,7 @@
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
                       :transit (println (formats/generate-transit input))))
-                  (recur))))))))
+                  (when-not collect (recur)))))))))
 
 ;;;; Scratch
 

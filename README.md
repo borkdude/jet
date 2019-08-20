@@ -57,6 +57,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
+   - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
 
 Experimental:
@@ -98,6 +99,13 @@ into memory:
 $ echo '{"a": 1} {"a": 1}' | jet --from json --keywordize --query ':a' --to edn
 1
 1
+```
+
+When you want to collect multiple values into a vector, you can use `--collect`:
+
+``` shellsession
+$ echo '{"a": 1} {"a": 1}' | lein jet --from json --keywordize --collect --to edn
+[{:a 1} {:a 1}]
 ```
 
 ## [Query language](doc/query.md)
