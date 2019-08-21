@@ -34,7 +34,7 @@
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
-        interactive (boolean (get opts "--interactive"))
+        interactive (str (first (get opts "--interactive")))
         collect (boolean (get opts "--collect"))]
     {:from (or from :edn)
      :to (or to :edn)
@@ -55,7 +55,7 @@
                 :interactive :collect]} (parse-opts args)]
     (cond version
           (println (str/trim (slurp (io/resource "JET_VERSION"))))
-          interactive (start-jeti!)
+          interactive (start-jeti! interactive from keywordize)
           :else
           (let [reader (case from
                          :json (formats/json-parser)

@@ -61,12 +61,22 @@
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))
 
-(defn start-jeti! [init-val]
+(defn start-jeti! [^String jeti-arg from keywordize]
   (println "Welcome to jeti. The answer is just a few queries away!")
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
   (println)
-  (let [init-id (new-id nil)]
+  (let [init-id (new-id nil)
+        {:keys [init-val]
+         :as jeti-opt
+         } (with-in-str jeti-arg
+             (case from
+               :edn (formats/parse-edn *in*)
+               :json (formats/parse-json (formats/json-parser) keywordize)
+               :transit (formats/parse-transit (formats/transit-reader))))
+        init-val (cond
+                   (= ::formats/EOF jeti-opt) nil
+                   (and (nil? init-val) jeti-opt) jeti-opt)]
     (loop [{:keys [:bookmarks :print-level :print-length] :as state}
            {init-id (or init-val ::start)
             :bookmarks []
