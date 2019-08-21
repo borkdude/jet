@@ -34,7 +34,9 @@
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
-        interactive (str (first (get opts "--interactive")))
+        interactive (when-let [opt (get opts "--interactive")]
+                      (cond (empty? opt) ""
+                            :else (str (not-empty (first opt)))))
         collect (boolean (get opts "--collect"))]
     {:from (or from :edn)
      :to (or to :edn)

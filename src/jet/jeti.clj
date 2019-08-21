@@ -76,7 +76,8 @@
                :transit (formats/parse-transit (formats/transit-reader))))
         init-val (cond
                    (= ::formats/EOF jeti-opt) nil
-                   (and (nil? init-val) jeti-opt) jeti-opt)]
+                   (and (nil? init-val) jeti-opt) jeti-opt
+                   :else init-val)]
     (loop [{:keys [:bookmarks :print-level :print-length] :as state}
            {init-id (or init-val ::start)
             :bookmarks []
