@@ -6,7 +6,6 @@
    [clojure.set :as set]))
 
 (deftest query-test
-  ;; TODO: rewrite with clojure.test/are...
   (is (= nil (query [] false)))
   (is (= '1 (query {:a 1 :b 2} :a)))
   (is (= '1 (query {1 1} 1)))

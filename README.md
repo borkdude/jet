@@ -7,18 +7,24 @@
 CLI to transform between JSON, EDN and Transit, powered with a minimal query
 language.
 
+## Quickstart
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
+$ echo '{:a 1}' | jet --to json
+{"a":1}
+```
+
 ## Rationale
 
-- This CLI is suited for shell-scripting because it has proper startup time.
-
-- The query language jet-lang is a minimal language for transformation of input,
-before writing out to JSON, EDN, or Transit.
-
-- The interactive shell enables you to learn jet-lang and work out the
-correctness of a query. It can also be useful on servers where you want to inspect
-data, but don't have REPL.
+This is a command line tool to transform between JSON, EDN and Transit, powered
+with a minimal query language. It runs as a GraalVM binary with fast startup time
+which makes it suited for shell scripting. It comes with a query language to do
+intermediate transformation. It may seem familiar to users of `jq`.
 
 ## Installation
+
+### Brew
 
 Linux and macOS binaries are provided via brew.
 
@@ -30,7 +36,25 @@ Upgrade:
 
     brew upgrade jet
 
+### Installer script
+
+Install via the installer script:
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
+```
+
+By default this will install into `/usr/local/bin`. To change this, provide the directory name:
+
+``` shellsession
+$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install) /tmp
+```
+
+### Download
+
 You may also download a binary from [Github](https://github.com/borkdude/jet/releases).
+
+### JVM
 
 This tool can also be used via the JVM. If you use leiningen, you can put the
 following in your `.lein/profiles`:
@@ -57,6 +81,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--keywordize`: if present, keywordizes JSON keys.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
+   - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
 
 Experimental:
@@ -98,6 +123,13 @@ into memory:
 $ echo '{"a": 1} {"a": 1}' | jet --from json --keywordize --query ':a' --to edn
 1
 1
+```
+
+When you want to collect multiple values into a vector, you can use `--collect`:
+
+``` shellsession
+$ echo '{"a": 1} {"a": 1}' | lein jet --from json --keywordize --collect --to edn
+[{:a 1} {:a 1}]
 ```
 
 ## [Query language](doc/query.md)
