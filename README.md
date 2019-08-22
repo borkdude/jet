@@ -163,7 +163,21 @@ $ jet --interactive ':jeti/slurp "/tmp/commits.json" {:format :json}'
 ```
 
 Note that a jeti command has to be valid EDN.  To see a list of available
-commands, type `:jeti/help`.
+commands, type `:jeti/help` in the shell:
+
+``` shellsession
+> :jeti/help
+Available commands:
+:jeti/set-val {:a 1}   : set value.
+:jeti/jump "34d4"      : jump to a previous state.
+:jeti/quit, :jeti/exit : exit this shell.
+:jeti/slurp            : read a file from disk. Type :jeti/help :jeti/slurp for more details.
+:jeti/spit             : writes file to disk. Type :jeti/help :jeti/spit for more details.
+:jeti/bookmark "name"  : save a bookmark.
+:jeti/bookmarks        : show bookmarks.
+:jeti/print-length     : set *print-length*
+:jeti/print-level      : set *print-level*
+```
 
 ## Test
 
