@@ -23,8 +23,8 @@
                                   factory/json-factory)
                  ^Reader *in*))
 
-(defn parse-json [json-reader keywordize?]
-  (cheshire-parse/parse-strict json-reader keywordize? ::EOF nil))
+(defn parse-json [json-reader keywordize]
+  (cheshire-parse/parse-strict json-reader keywordize ::EOF nil))
 
 (defn generate-json [o pretty]
   (cheshire/generate-string o {:pretty pretty}))
