@@ -1,7 +1,8 @@
 (ns jet.main-test
   (:require
    [clojure.test :as test :refer [deftest is testing]]
-   [jet.test-utils :refer [jet]]))
+   [jet.test-utils :refer [jet]]
+   [clojure.string :as str]))
 
 (deftest main-test
   (is (= "{\"a\" 1}\n"
@@ -47,25 +48,21 @@
     (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b")))))
 
 (deftest interactive-test
-  ;; piped-input will be interpreted as query through jeti loop.
-  (testing "empty input will exit --interactive repl"
-    (is (re-find #"\n\n> $"
-                 (jet "" "--from" "json" "--to" "edn" "--interactive"))))
   (testing "passing correct query will please jeti"
-    (is (re-find #" [0-9a-f]{4,}> $"
-                 (jet ":a\nY" "--from" "json" "--to" "edn" "--interactive"))))
+    (is (re-find #"[0-9a-f]{4}> 1"
+                 (jet (str/join "\n" [{:a 1} "Y" :a "Y"]) "--interactive"))))
   (testing "passing --interactive arg as edn"
-    (is (re-find #" [0-9a-f]{4,}> 100\n"
-                 (jet "Y\n:a\nY" "--interactive" "{:init-val {:a 100}}"))))
-  (testing "passing --interactive shortcut-map"
-    (is (re-find #" [0-9a-f]{4,}> 100\n"
-                 (jet "Y\n:a\nY" "--from" "edn" "--interactive" "{:a 100}"))))
-  (testing "passing --interactive shortcut-map - json"
-    (is (re-find #" [0-9a-f]{4,}> 100\n"
-                 (jet "Y\n\"a\"\nY" "--from" "json" "--interactive" "{\"a\": 100}"))))
-  (testing "passing --interactive shortcut-map - json, keywordize"
-    (is (re-find #" [0-9a-f]{4,}> 100\n"
-                 (jet "Y\n:a\nY" "--from" "json" "--keywordize" "--interactive" "{\"a\": 100}")))))
+    (is (re-find #"[0-9a-f]{4}> 1"
+                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" "{:a 1}"))))
+  (testing "passing --interactive arg as edn"
+    (is (re-find #"[0-9a-f]{4}> 1"
+                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" ":jeti/set-val {:a 1}"))))
+  (testing "slurping json file"
+    (is (re-find #"[0-9a-f]{4}> 30"
+                 (jet (str/join "\n" ["Y" "count" "Y"]) "--interactive" ":jeti/slurp test/data/commits.json {:format :json}"))))
+  (testing "jeti doesn't get stuck in a loop and executes the command only once"
+    (is (re-find #"Available commands"
+                 (jet "" "--interactive" ":jeti/help")))))
 
 (deftest stream-test
   (is (= "2\n3\n4\n" (jet "2 3 4")))

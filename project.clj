@@ -20,8 +20,8 @@
              :uberjar {:global-vars {*assert* false}
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"
                                   "-Dclojure.spec.skip-macros=true"]
-                       :main jet.main
                        :aot :all}}
+  :main jet.main
   :aliases {"jet" ["run" "-m" "jet.main"]}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_user

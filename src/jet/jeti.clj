@@ -24,20 +24,30 @@
       (println ":jeti/spit <file> [{:format ..., :pretty ...}]: spits a file to disk. :format is one of :json, :edn or :transit (defaults to :edn) and :pretty is a boolean that indicates if the output should be pretty printed.")
       (println "Help for" sub-command "not found."))
     (do (println "Available commands:")
+        (println ":jeti/set-val {:a 1}   : set value.")
         (println ":jeti/jump \"34d4\"      : jump to a previous state.")
         (println ":jeti/quit, :jeti/exit : exit this shell.")
         (println ":jeti/slurp            : read a file from disk. Type :jeti/help :jeti/slurp for more details.")
         (println ":jeti/spit             : writes file to disk. Type :jeti/help :jeti/spit for more details.")
-        (println ":jeti/bookmark \"name\": save a bookmark.")
+        (println ":jeti/bookmark \"name\"  : save a bookmark.")
         (println ":jeti/bookmarks        : show bookmarks.")
         (println ":jeti/print-length     : set *print-length*")
         (println ":jeti/print-level      : set *print-level*")
         (println))))
 
+(defn jeti-set! [state current-id init-val]
+  (try (let [next-id (new-id state)]
+         {:state (assoc state next-id init-val)
+          :next-id next-id})
+       (catch Exception e
+         (println "Could not read" format init-val e)
+         {:state state
+          :next-id current-id})))
+
 (defn read-file [state current-id file {:keys [:format :keywordize]
                                         :or {format :edn}}]
   (try (let [next-id (new-id state)
-             file-as-string (slurp file)
+             file-as-string (slurp (str file))
              file-as-edn (case format
                            :edn (with-in-str file-as-string (formats/parse-edn *in*))
                            :transit (with-in-str file-as-string (formats/parse-transit
@@ -61,60 +71,64 @@
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))
 
-(defn start-jeti! [^String jeti-arg from keywordize]
+(defn start-jeti! [init-cmd]
   (println "Welcome to jeti. The answer is just a few queries away!")
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
   (println)
-  (let [init-id (new-id nil)
-        {:keys [init-val]
-         :as jeti-opt
-         } (with-in-str jeti-arg
-             (case from
-               :edn (formats/parse-edn *in*)
-               :json (formats/parse-json (formats/json-parser) keywordize)
-               :transit (formats/parse-transit (formats/transit-reader))))
-        init-val (cond
-                   (= ::formats/EOF jeti-opt) nil
-                   (and (nil? init-val) jeti-opt) jeti-opt
-                   :else init-val)]
-    (loop [{:keys [:bookmarks :print-level :print-length] :as state}
-           {init-id (or init-val ::start)
+  (let [init-cmd (when (string? init-cmd) init-cmd)
+        init-id (new-id nil)]
+    (loop [{:keys [:bookmarks :print-level :print-length :init-cmd] :as state}
+           {:init-cmd init-cmd
+            init-id ::start
             :bookmarks []
             :print-length 5
             :print-level 5}
            previous-id nil
-           current-id (when init-val init-id)]
+           current-id init-id]
       (let [current-val (get state current-id)
-            prev-val (get state previous-id)
+            start? (identical? ::start current-val)
             same? (= current-id previous-id)
-            _ (when (and (not (identical? current-val ::start))
+            _ (when (and (not start?)
                          (not same?))
                 (println (binding [*print-length* print-length
                                    *print-level* print-level]
                            (formats/generate-edn current-val true)))
                 (println))
-            proceed? (if same? false
-                         (= "Y" (str/trim
-                                 (do
-                                   (print "Type Y to enter this state. ")
-                                   (flush)
-                                   (read-line)))))
-            current-id (if proceed? current-id previous-id)
-            current-val (if-not proceed? prev-val current-val)
+            proceed? (cond (and start? init-cmd)
+                           (do (println ">" init-cmd)
+                               true)
+                           same? false
+                           start? true
+                           :else
+                           (= "Y" (str/trim
+                                   (do
+                                     (print "Type Y to enter this state. ")
+                                     (flush)
+                                     (read-line)))))
+            current-id (cond start? current-id
+                             proceed? current-id
+                             :else previous-id)
+            current-val (get state current-id)
+            start-val? (identical? ::start current-val)
             bookmark-name (some #(when (= current-id (:id %))
                                    (:name %))
                                 bookmarks)]
-        (print (str current-id (when bookmark-name
-                                 (format " (%s) " bookmark-name))
-                    "> "))
+        (when-not (and init-cmd start?)
+          (print (str (when-not start-val? current-id)
+                      (when bookmark-name
+                        (format "(%s)" bookmark-name))
+                      "> ")))
         (flush)
-        (when-let [q (read-line)]
-          (let [[fst :as q] (try (edn/read-string
+        (when-let [q (if (and start? init-cmd)
+                       (do #_(vreset! cmd-executed? true) init-cmd)
+                       (read-line))]
+          (let [state (dissoc state :init-cmd)
+                [fst :as q] (try (edn/read-string
                                   {:readers *data-readers*}
                                   (format "[%s]" q))
-                                 (catch Exception _
-                                   (println "Invalid input.")
+                                 (catch Exception e
+                                   (println "Invalid input:" (.getMessage e))
                                    nil))
                 [cmd & opts] (when fst
                                (when
@@ -142,6 +156,9 @@
                     (do (print-help first-opts)
                         (recur state current-id current-id))
                     (:jeti/quit :jeti/exit) (println "Goodbye for now!")
+                    :jeti/set-val (let [{:keys [:state :next-id]}
+                                        (jeti-set! state current-id first-opts )]
+                                    (recur state current-id next-id))
                     :jeti/slurp
                     (let [{:keys [:state :next-id]}
                           (read-file state current-id first-opts (second opts))]
@@ -171,11 +188,15 @@
                                       (do (println "You didn't enter a number:" first-opts)
                                           print-level)))
                            current-id current-id)
+                    :jeti/debug (do (prn state)
+                                    (recur state current-id current-id)            )
                     (do
                       (println "I did not understand your command.")
                       (recur state current-id current-id)))
                   :else
-                  (let [next-input (try (query current-val q)
+                  (let [next-input (try (if start?
+                                          (first q)
+                                          (query current-val q))
                                         (catch Exception e
                                           (println "Error while executing query:"
                                                    (.getMessage e))
