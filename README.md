@@ -78,7 +78,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 
    - `--from`: `edn`, `transit` or `json`, defaults to `edn`
    - `--to`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--keywordize`: if present, keywordizes JSON keys.
+   - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
+     transformation function is `keyword` unless you provide your own.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
@@ -94,6 +95,9 @@ $ echo '{"a": 1}' | jet --from json --to edn
 
 $ echo '{"a": 1}' | jet --from json --keywordize --to edn
 {:a 1}
+
+$ echo '{"my key": 1}' | jet --from json --keywordize '#(keyword (str/replace % " " "_"))' --to edn
+{:my_key 1}
 
 $ echo '{"a": 1}' | jet --from json --to transit
 ["^ ","a",1]
