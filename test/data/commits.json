@@ -1,0 +1,1650 @@
+[
+  {
+    "sha": "653b8465845a78ef7543e0a250078eea2d56b659",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjY1M2I4NDY1ODQ1YTc4ZWY3NTQzZTBhMjUwMDc4ZWVhMmQ1NmI2NTk=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-06-06T13:41:22Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-06-06T13:41:22Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "17151fe9803d2683d3dda0e64a7072627ae1a395",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/17151fe9803d2683d3dda0e64a7072627ae1a395"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/653b8465845a78ef7543e0a250078eea2d56b659",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/653b8465845a78ef7543e0a250078eea2d56b659",
+    "html_url": "https://github.com/clojure/clojure/commit/653b8465845a78ef7543e0a250078eea2d56b659",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/653b8465845a78ef7543e0a250078eea2d56b659/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+        "html_url": "https://github.com/clojure/clojure/commit/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d"
+      }
+    ]
+  },
+  {
+    "sha": "38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjM4YmFmY2E5ZTc2Y2Q2NjI1ZDhkY2U1ZmI2ZDE2Yjg3ODQ1YzhiOWQ=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-06-06T13:41:22Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-06-06T13:41:22Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.1",
+      "tree": {
+        "sha": "217a84aec47eac83bc848bd91514cc4d3d9a57ad",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/217a84aec47eac83bc848bd91514cc4d3d9a57ad"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+    "html_url": "https://github.com/clojure/clojure/commit/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/38bafca9e76cd6625d8dce5fb6d16b87845c8b9d/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+        "html_url": "https://github.com/clojure/clojure/commit/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf"
+      }
+    ]
+  },
+  {
+    "sha": "8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjhjNDAyYThjOTY5NWE0ZWRkYzA3Y2JiZTBkOTVkNDRlMTM3MmYwYmY=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-21T18:40:32Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-21T18:40:32Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "17151fe9803d2683d3dda0e64a7072627ae1a395",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/17151fe9803d2683d3dda0e64a7072627ae1a395"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+    "html_url": "https://github.com/clojure/clojure/commit/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/8c402a8c9695a4eddc07cbbe0d95d44e1372f0bf/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+        "html_url": "https://github.com/clojure/clojure/commit/a8b4559ad73aec131d26884ffcb5bb790cf28ec2"
+      }
+    ]
+  },
+  {
+    "sha": "a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmE4YjQ1NTlhZDczYWVjMTMxZDI2ODg0ZmZjYjViYjc5MGNmMjhlYzI=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-21T18:40:32Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-21T18:40:32Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.1-RC1",
+      "tree": {
+        "sha": "04107af599c7270173fdf181fb168bba219c9fc6",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/04107af599c7270173fdf181fb168bba219c9fc6"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+    "html_url": "https://github.com/clojure/clojure/commit/a8b4559ad73aec131d26884ffcb5bb790cf28ec2",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/a8b4559ad73aec131d26884ffcb5bb790cf28ec2/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+        "html_url": "https://github.com/clojure/clojure/commit/8f03ff0078dda9fb3923ff0c4ee5a101570b8485"
+      }
+    ]
+  },
+  {
+    "sha": "8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjhmMDNmZjAwNzhkZGE5ZmIzOTIzZmYwYzRlZTVhMTAxNTcwYjg0ODU=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-05-21T15:15:11Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-05-21T17:56:00Z"
+      },
+      "message": "update changelog for 1.10.1\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "17151fe9803d2683d3dda0e64a7072627ae1a395",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/17151fe9803d2683d3dda0e64a7072627ae1a395"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+    "html_url": "https://github.com/clojure/clojure/commit/8f03ff0078dda9fb3923ff0c4ee5a101570b8485",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/8f03ff0078dda9fb3923ff0c4ee5a101570b8485/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "076e88449f2bf738c01803c3661d06f12d3cbaea",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/076e88449f2bf738c01803c3661d06f12d3cbaea",
+        "html_url": "https://github.com/clojure/clojure/commit/076e88449f2bf738c01803c3661d06f12d3cbaea"
+      }
+    ]
+  },
+  {
+    "sha": "076e88449f2bf738c01803c3661d06f12d3cbaea",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjA3NmU4ODQ0OWYyYmY3MzhjMDE4MDNjMzY2MWQwNmYxMmQzY2JhZWE=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-16T13:45:58Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-16T13:45:58Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "b485fe18a2919136a5221cfa2ec577ce1114da20",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/b485fe18a2919136a5221cfa2ec577ce1114da20"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/076e88449f2bf738c01803c3661d06f12d3cbaea",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/076e88449f2bf738c01803c3661d06f12d3cbaea",
+    "html_url": "https://github.com/clojure/clojure/commit/076e88449f2bf738c01803c3661d06f12d3cbaea",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/076e88449f2bf738c01803c3661d06f12d3cbaea/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "fb5facf8855ff04aa98c36271b01ea634d337730",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/fb5facf8855ff04aa98c36271b01ea634d337730",
+        "html_url": "https://github.com/clojure/clojure/commit/fb5facf8855ff04aa98c36271b01ea634d337730"
+      }
+    ]
+  },
+  {
+    "sha": "fb5facf8855ff04aa98c36271b01ea634d337730",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmZiNWZhY2Y4ODU1ZmYwNGFhOThjMzYyNzFiMDFlYTYzNGQzMzc3MzA=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-16T13:45:58Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-05-16T13:45:58Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.1-beta3",
+      "tree": {
+        "sha": "264aa4b012d9baf5ab3d008280e3b3c4d9df4efb",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/264aa4b012d9baf5ab3d008280e3b3c4d9df4efb"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/fb5facf8855ff04aa98c36271b01ea634d337730",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/fb5facf8855ff04aa98c36271b01ea634d337730",
+    "html_url": "https://github.com/clojure/clojure/commit/fb5facf8855ff04aa98c36271b01ea634d337730",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/fb5facf8855ff04aa98c36271b01ea634d337730/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "38524061dcb14c598c239be87184b3378ffc5bac",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/38524061dcb14c598c239be87184b3378ffc5bac",
+        "html_url": "https://github.com/clojure/clojure/commit/38524061dcb14c598c239be87184b3378ffc5bac"
+      }
+    ]
+  },
+  {
+    "sha": "38524061dcb14c598c239be87184b3378ffc5bac",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjM4NTI0MDYxZGNiMTRjNTk4YzIzOWJlODcxODRiMzM3OGZmYzViYWM=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-05-07T14:53:37Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-05-14T22:11:56Z"
+      },
+      "message": "CLJ-2504 More options to configure error reporting\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "b485fe18a2919136a5221cfa2ec577ce1114da20",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/b485fe18a2919136a5221cfa2ec577ce1114da20"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/38524061dcb14c598c239be87184b3378ffc5bac",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/38524061dcb14c598c239be87184b3378ffc5bac",
+    "html_url": "https://github.com/clojure/clojure/commit/38524061dcb14c598c239be87184b3378ffc5bac",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/38524061dcb14c598c239be87184b3378ffc5bac/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+        "html_url": "https://github.com/clojure/clojure/commit/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe"
+      }
+    ]
+  },
+  {
+    "sha": "75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjc1ZjhiYzk4YjRlOGQ0NmRiYWEyOGU1NGFkZmEyNDk0NmUzMTRiYmU=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-04-11T14:52:13Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-04-11T14:52:13Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "23870ccd6a161425a3a9a3a99af970a05678837b",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/23870ccd6a161425a3a9a3a99af970a05678837b"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+    "html_url": "https://github.com/clojure/clojure/commit/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/75f8bc98b4e8d46dbaa28e54adfa24946e314bbe/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "96c78e294f742bfd756f0c37e3956578eec675cb",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/96c78e294f742bfd756f0c37e3956578eec675cb",
+        "html_url": "https://github.com/clojure/clojure/commit/96c78e294f742bfd756f0c37e3956578eec675cb"
+      }
+    ]
+  },
+  {
+    "sha": "96c78e294f742bfd756f0c37e3956578eec675cb",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjk2Yzc4ZTI5NGY3NDJiZmQ3NTZmMGMzN2UzOTU2NTc4ZWVjNjc1Y2I=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-04-11T14:52:13Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-04-11T14:52:13Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.1-beta2",
+      "tree": {
+        "sha": "b37701cd0c4edd3c3a82a733466ce3d8838f7206",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/b37701cd0c4edd3c3a82a733466ce3d8838f7206"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/96c78e294f742bfd756f0c37e3956578eec675cb",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/96c78e294f742bfd756f0c37e3956578eec675cb",
+    "html_url": "https://github.com/clojure/clojure/commit/96c78e294f742bfd756f0c37e3956578eec675cb",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/96c78e294f742bfd756f0c37e3956578eec675cb/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+        "html_url": "https://github.com/clojure/clojure/commit/b19b781b1f0f3f46aee5e951f415e0456a39cbcb"
+      }
+    ]
+  },
+  {
+    "sha": "b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmIxOWI3ODFiMWYwZjNmNDZhZWU1ZTk1MWY0MTVlMDQ1NmEzOWNiY2I=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-03-26T19:10:40Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-04-11T13:34:51Z"
+      },
+      "message": "CLJ-2497 - Print error report location on its own line\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "23870ccd6a161425a3a9a3a99af970a05678837b",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/23870ccd6a161425a3a9a3a99af970a05678837b"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+    "html_url": "https://github.com/clojure/clojure/commit/b19b781b1f0f3f46aee5e951f415e0456a39cbcb",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/b19b781b1f0f3f46aee5e951f415e0456a39cbcb/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "f86ff71836d2e3878c242631e9cc084f45593fea",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/f86ff71836d2e3878c242631e9cc084f45593fea",
+        "html_url": "https://github.com/clojure/clojure/commit/f86ff71836d2e3878c242631e9cc084f45593fea"
+      }
+    ]
+  },
+  {
+    "sha": "f86ff71836d2e3878c242631e9cc084f45593fea",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmY4NmZmNzE4MzZkMmUzODc4YzI0MjYzMWU5Y2MwODRmNDU1OTNmZWE=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-04-01T18:17:24Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-04-11T13:34:25Z"
+      },
+      "message": "CLJ-2499 Compiler expr eval methods should not report as compiler errors\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "99679eccd31fd0f1aef8652784e5a1266ebeea78",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/99679eccd31fd0f1aef8652784e5a1266ebeea78"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/f86ff71836d2e3878c242631e9cc084f45593fea",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/f86ff71836d2e3878c242631e9cc084f45593fea",
+    "html_url": "https://github.com/clojure/clojure/commit/f86ff71836d2e3878c242631e9cc084f45593fea",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/f86ff71836d2e3878c242631e9cc084f45593fea/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "8e7213781a1a45db966898835b8f41f545c64d52",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/8e7213781a1a45db966898835b8f41f545c64d52",
+        "html_url": "https://github.com/clojure/clojure/commit/8e7213781a1a45db966898835b8f41f545c64d52"
+      }
+    ]
+  },
+  {
+    "sha": "8e7213781a1a45db966898835b8f41f545c64d52",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjhlNzIxMzc4MWExYTQ1ZGI5NjY4OTg4MzViOGY0MWY1NDVjNjRkNTI=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-03-22T03:39:22Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-03-22T03:39:22Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "321333435f8304c0f13754d80e21ea07d66f6a8c",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/321333435f8304c0f13754d80e21ea07d66f6a8c"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/8e7213781a1a45db966898835b8f41f545c64d52",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/8e7213781a1a45db966898835b8f41f545c64d52",
+    "html_url": "https://github.com/clojure/clojure/commit/8e7213781a1a45db966898835b8f41f545c64d52",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/8e7213781a1a45db966898835b8f41f545c64d52/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "07f9c2c230e5477eaec976468a892282add7d843",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/07f9c2c230e5477eaec976468a892282add7d843",
+        "html_url": "https://github.com/clojure/clojure/commit/07f9c2c230e5477eaec976468a892282add7d843"
+      }
+    ]
+  },
+  {
+    "sha": "07f9c2c230e5477eaec976468a892282add7d843",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjA3ZjljMmMyMzBlNTQ3N2VhZWM5NzY0NjhhODkyMjgyYWRkN2Q4NDM=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-03-22T03:39:22Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2019-03-22T03:39:22Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.1-beta1",
+      "tree": {
+        "sha": "ca5f76818927ef5bbe83d1eac0f2d0eabf5b28fd",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/ca5f76818927ef5bbe83d1eac0f2d0eabf5b28fd"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/07f9c2c230e5477eaec976468a892282add7d843",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/07f9c2c230e5477eaec976468a892282add7d843",
+    "html_url": "https://github.com/clojure/clojure/commit/07f9c2c230e5477eaec976468a892282add7d843",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/07f9c2c230e5477eaec976468a892282add7d843/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "d07ef175c700329f7afbef8770332b6247a34a49",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/d07ef175c700329f7afbef8770332b6247a34a49",
+        "html_url": "https://github.com/clojure/clojure/commit/d07ef175c700329f7afbef8770332b6247a34a49"
+      }
+    ]
+  },
+  {
+    "sha": "d07ef175c700329f7afbef8770332b6247a34a49",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmQwN2VmMTc1YzcwMDMyOWY3YWZiZWY4NzcwMzMyYjYyNDdhMzRhNDk=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-03-19T15:01:19Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-03-21T15:10:39Z"
+      },
+      "message": "CLJ-2484 Move user.clj initialization out of RT<clinit>\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "321333435f8304c0f13754d80e21ea07d66f6a8c",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/321333435f8304c0f13754d80e21ea07d66f6a8c"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/d07ef175c700329f7afbef8770332b6247a34a49",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/d07ef175c700329f7afbef8770332b6247a34a49",
+    "html_url": "https://github.com/clojure/clojure/commit/d07ef175c700329f7afbef8770332b6247a34a49",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/d07ef175c700329f7afbef8770332b6247a34a49/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+        "html_url": "https://github.com/clojure/clojure/commit/578a031b70d43d277d9c6adb3a2e1d07ba612db2"
+      }
+    ]
+  },
+  {
+    "sha": "578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjU3OGEwMzFiNzBkNDNkMjc3ZDljNmFkYjNhMmUxZDA3YmE2MTJkYjI=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-03-20T15:23:26Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-03-21T13:42:05Z"
+      },
+      "message": "CLJ-2463 - clojure.main uncaught exception handling\n\nAdd err->msg helper to capture exception print pipeline.\nAdd :clojure.error/path to ex-triage output.\nChange ex-str message loc from name to path.\nOn uncaught exception, print nice exception, print full data to tmp dir, exit with return code 1.\nAdd main option --report-stderr to force print to stderr.\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "e12cb3d2791c1619d7ad38bfc8d88fa798f1b583",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/e12cb3d2791c1619d7ad38bfc8d88fa798f1b583"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+    "html_url": "https://github.com/clojure/clojure/commit/578a031b70d43d277d9c6adb3a2e1d07ba612db2",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/578a031b70d43d277d9c6adb3a2e1d07ba612db2/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "df503a67e8f282a38c1177fce57543b1543dd158",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/df503a67e8f282a38c1177fce57543b1543dd158",
+        "html_url": "https://github.com/clojure/clojure/commit/df503a67e8f282a38c1177fce57543b1543dd158"
+      }
+    ]
+  },
+  {
+    "sha": "df503a67e8f282a38c1177fce57543b1543dd158",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmRmNTAzYTY3ZThmMjgyYTM4YzExNzdmY2U1NzU0M2IxNTQzZGQxNTg=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2019-03-19T20:48:23Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2019-03-21T13:41:18Z"
+      },
+      "message": "CLJ-2491 - Make fragile tests work under Java 12 and less fragile\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "f2cc52b0874d6b5424188d1c9f85aafc19d43654",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/f2cc52b0874d6b5424188d1c9f85aafc19d43654"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/df503a67e8f282a38c1177fce57543b1543dd158",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/df503a67e8f282a38c1177fce57543b1543dd158",
+    "html_url": "https://github.com/clojure/clojure/commit/df503a67e8f282a38c1177fce57543b1543dd158",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/df503a67e8f282a38c1177fce57543b1543dd158/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+        "html_url": "https://github.com/clojure/clojure/commit/28b87d53909774af28f9f9ba6dfa2d4b94194a57"
+      }
+    ]
+  },
+  {
+    "sha": "28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjI4Yjg3ZDUzOTA5Nzc0YWYyOGY5ZjliYTZkZmEyZDRiOTQxOTRhNTc=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-17T16:48:36Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-17T16:48:36Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "d0abe4174e9e525d1ed7c9cc158835dc5127dc2d",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/d0abe4174e9e525d1ed7c9cc158835dc5127dc2d"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+    "html_url": "https://github.com/clojure/clojure/commit/28b87d53909774af28f9f9ba6dfa2d4b94194a57",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/28b87d53909774af28f9f9ba6dfa2d4b94194a57/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+        "html_url": "https://github.com/clojure/clojure/commit/e72ffdcd039189e3fe230d160e093ae6ba8f24cf"
+      }
+    ]
+  },
+  {
+    "sha": "e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmU3MmZmZGNkMDM5MTg5ZTNmZTIzMGQxNjBlMDkzYWU2YmE4ZjI0Y2Y=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-17T16:48:36Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-17T16:48:36Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.0",
+      "tree": {
+        "sha": "bdf46d5707182903cb37984464df497746158282",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/bdf46d5707182903cb37984464df497746158282"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+    "html_url": "https://github.com/clojure/clojure/commit/e72ffdcd039189e3fe230d160e093ae6ba8f24cf",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/e72ffdcd039189e3fe230d160e093ae6ba8f24cf/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+        "html_url": "https://github.com/clojure/clojure/commit/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe"
+      }
+    ]
+  },
+  {
+    "sha": "982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjk4MmQxMTIzZmRmNzliOThlOWE4NTU2YmRiMzZkMmZiZWIwNmZiYmU=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-11T20:57:46Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-11T20:57:46Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "94682714fa1823b9a1f05055e45ef669be55a9f0",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/94682714fa1823b9a1f05055e45ef669be55a9f0"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+    "html_url": "https://github.com/clojure/clojure/commit/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/982d1123fdf79b98e9a8556bdb36d2fbeb06fbbe/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "cf315a863361fe938a927ec7ab4c685bba177c53",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/cf315a863361fe938a927ec7ab4c685bba177c53",
+        "html_url": "https://github.com/clojure/clojure/commit/cf315a863361fe938a927ec7ab4c685bba177c53"
+      }
+    ]
+  },
+  {
+    "sha": "cf315a863361fe938a927ec7ab4c685bba177c53",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmNmMzE1YTg2MzM2MWZlOTM4YTkyN2VjN2FiNGM2ODViYmExNzdjNTM=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-11T20:57:46Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-11T20:57:46Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.0-RC5",
+      "tree": {
+        "sha": "d8653f8db4834182f90ca6829bc92c3c14a1b502",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/d8653f8db4834182f90ca6829bc92c3c14a1b502"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/cf315a863361fe938a927ec7ab4c685bba177c53",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/cf315a863361fe938a927ec7ab4c685bba177c53",
+    "html_url": "https://github.com/clojure/clojure/commit/cf315a863361fe938a927ec7ab4c685bba177c53",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/cf315a863361fe938a927ec7ab4c685bba177c53/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+        "html_url": "https://github.com/clojure/clojure/commit/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d"
+      }
+    ]
+  },
+  {
+    "sha": "b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmI3YWVkNWE3MjBlOTNjZTgxZGM2NGY3ZjJmNzRlNDVmZGFmYmE5NGQ=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2018-12-11T18:00:56Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2018-12-11T18:46:51Z"
+      },
+      "message": "CLJ-2454 When reflectively finding a matching method, also check whether the method is module accessible to call, and if not use an accessible super method\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "94682714fa1823b9a1f05055e45ef669be55a9f0",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/94682714fa1823b9a1f05055e45ef669be55a9f0"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+    "html_url": "https://github.com/clojure/clojure/commit/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/b7aed5a720e93ce81dc64f7f2f74e45fdafba94d/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c4dc8815272382725ca3d3d06f195e57c3228109",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/c4dc8815272382725ca3d3d06f195e57c3228109",
+        "html_url": "https://github.com/clojure/clojure/commit/c4dc8815272382725ca3d3d06f195e57c3228109"
+      }
+    ]
+  },
+  {
+    "sha": "c4dc8815272382725ca3d3d06f195e57c3228109",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmM0ZGM4ODE1MjcyMzgyNzI1Y2EzZDNkMDZmMTk1ZTU3YzMyMjgxMDk=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-07T14:06:34Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-07T14:06:34Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "50f2fb12cc7490285d230a665cc31f085dfd5734",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/50f2fb12cc7490285d230a665cc31f085dfd5734"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/c4dc8815272382725ca3d3d06f195e57c3228109",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/c4dc8815272382725ca3d3d06f195e57c3228109",
+    "html_url": "https://github.com/clojure/clojure/commit/c4dc8815272382725ca3d3d06f195e57c3228109",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/c4dc8815272382725ca3d3d06f195e57c3228109/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "9d2031ff883592b63430d4296ee4b332baa714c0",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/9d2031ff883592b63430d4296ee4b332baa714c0",
+        "html_url": "https://github.com/clojure/clojure/commit/9d2031ff883592b63430d4296ee4b332baa714c0"
+      }
+    ]
+  },
+  {
+    "sha": "9d2031ff883592b63430d4296ee4b332baa714c0",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjlkMjAzMWZmODgzNTkyYjYzNDMwZDQyOTZlZTRiMzMyYmFhNzE0YzA=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-07T14:06:33Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-07T14:06:33Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.0-RC4",
+      "tree": {
+        "sha": "3a7ae48b13f9706533e0fe2576087dc26fc2f8cd",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/3a7ae48b13f9706533e0fe2576087dc26fc2f8cd"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/9d2031ff883592b63430d4296ee4b332baa714c0",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/9d2031ff883592b63430d4296ee4b332baa714c0",
+    "html_url": "https://github.com/clojure/clojure/commit/9d2031ff883592b63430d4296ee4b332baa714c0",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/9d2031ff883592b63430d4296ee4b332baa714c0/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+        "html_url": "https://github.com/clojure/clojure/commit/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c"
+      }
+    ]
+  },
+  {
+    "sha": "ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmVlMzU1MzM2MmRlOWJjM2JmZDE4ZDRiMGIzMzgxZTM0ODNjMmEzNGM=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2018-12-06T14:34:09Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2018-12-07T13:41:19Z"
+      },
+      "message": "CLJ-2449 Make serialized-require private\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "50f2fb12cc7490285d230a665cc31f085dfd5734",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/50f2fb12cc7490285d230a665cc31f085dfd5734"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+    "html_url": "https://github.com/clojure/clojure/commit/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/ee3553362de9bc3bfd18d4b0b3381e3483c2a34c/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "33712e9a56abc628f12ff12b07097cbd9422c499",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/33712e9a56abc628f12ff12b07097cbd9422c499",
+        "html_url": "https://github.com/clojure/clojure/commit/33712e9a56abc628f12ff12b07097cbd9422c499"
+      }
+    ]
+  },
+  {
+    "sha": "33712e9a56abc628f12ff12b07097cbd9422c499",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjMzNzEyZTlhNTZhYmM2MjhmMTJmZjEyYjA3MDk3Y2JkOTQyMmM0OTk=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-03T15:50:33Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-03T15:50:33Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "14a09eb912065789c225c6447558585a36796696",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/14a09eb912065789c225c6447558585a36796696"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/33712e9a56abc628f12ff12b07097cbd9422c499",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/33712e9a56abc628f12ff12b07097cbd9422c499",
+    "html_url": "https://github.com/clojure/clojure/commit/33712e9a56abc628f12ff12b07097cbd9422c499",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/33712e9a56abc628f12ff12b07097cbd9422c499/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+        "html_url": "https://github.com/clojure/clojure/commit/8a6064232c5ed7bd73cba6437f5075e7cf89f021"
+      }
+    ]
+  },
+  {
+    "sha": "8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjhhNjA2NDIzMmM1ZWQ3YmQ3M2NiYTY0MzdmNTA3NWU3Y2Y4OWYwMjE=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-03T15:50:33Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-12-03T15:50:33Z"
+      },
+      "message": "[maven-release-plugin] prepare release clojure-1.10.0-RC3",
+      "tree": {
+        "sha": "d9122cb1188ad0ae5a2f0abd1fef21017ed69c0e",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/d9122cb1188ad0ae5a2f0abd1fef21017ed69c0e"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+    "html_url": "https://github.com/clojure/clojure/commit/8a6064232c5ed7bd73cba6437f5075e7cf89f021",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/8a6064232c5ed7bd73cba6437f5075e7cf89f021/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+        "html_url": "https://github.com/clojure/clojure/commit/b70db9639f9acddcabf7f760ea4bb050d6bfaa16"
+      }
+    ]
+  },
+  {
+    "sha": "b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmI3MGRiOTYzOWY5YWNkZGNhYmY3Zjc2MGVhNGJiMDUwZDZiZmFhMTY=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2018-12-01T11:15:18Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2018-12-03T15:36:29Z"
+      },
+      "message": "CLJ-2447 clojure.datafy docstring is misplaced\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "14a09eb912065789c225c6447558585a36796696",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/14a09eb912065789c225c6447558585a36796696"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+    "html_url": "https://github.com/clojure/clojure/commit/b70db9639f9acddcabf7f760ea4bb050d6bfaa16",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/b70db9639f9acddcabf7f760ea4bb050d6bfaa16/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ca92f9d18f924ad94a49ab30cf16d124caa41732",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/ca92f9d18f924ad94a49ab30cf16d124caa41732",
+        "html_url": "https://github.com/clojure/clojure/commit/ca92f9d18f924ad94a49ab30cf16d124caa41732"
+      }
+    ]
+  },
+  {
+    "sha": "ca92f9d18f924ad94a49ab30cf16d124caa41732",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOmNhOTJmOWQxOGY5MjRhZDk0YTQ5YWIzMGNmMTZkMTI0Y2FhNDE3MzI=",
+    "commit": {
+      "author": {
+        "name": "Alex Miller",
+        "email": "alex.miller@cognitect.com",
+        "date": "2018-12-03T15:23:13Z"
+      },
+      "committer": {
+        "name": "Stuart Halloway",
+        "email": "stu@cognitect.com",
+        "date": "2018-12-03T15:36:26Z"
+      },
+      "message": "CLJ-2448 Change async-require to serialized-require\n\nSigned-off-by: Stuart Halloway <stu@cognitect.com>",
+      "tree": {
+        "sha": "ab6d6cf482fcf98ada8fc1551f681d1c56c55d5d",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/ab6d6cf482fcf98ada8fc1551f681d1c56c55d5d"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/ca92f9d18f924ad94a49ab30cf16d124caa41732",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/ca92f9d18f924ad94a49ab30cf16d124caa41732",
+    "html_url": "https://github.com/clojure/clojure/commit/ca92f9d18f924ad94a49ab30cf16d124caa41732",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/ca92f9d18f924ad94a49ab30cf16d124caa41732/comments",
+    "author": {
+      "login": "puredanger",
+      "id": 171129,
+      "node_id": "MDQ6VXNlcjE3MTEyOQ==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/171129?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/puredanger",
+      "html_url": "https://github.com/puredanger",
+      "followers_url": "https://api.github.com/users/puredanger/followers",
+      "following_url": "https://api.github.com/users/puredanger/following{/other_user}",
+      "gists_url": "https://api.github.com/users/puredanger/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/puredanger/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/puredanger/subscriptions",
+      "organizations_url": "https://api.github.com/users/puredanger/orgs",
+      "repos_url": "https://api.github.com/users/puredanger/repos",
+      "events_url": "https://api.github.com/users/puredanger/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/puredanger/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stuarthalloway",
+      "id": 2590,
+      "node_id": "MDQ6VXNlcjI1OTA=",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stuarthalloway",
+      "html_url": "https://github.com/stuarthalloway",
+      "followers_url": "https://api.github.com/users/stuarthalloway/followers",
+      "following_url": "https://api.github.com/users/stuarthalloway/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stuarthalloway/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stuarthalloway/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stuarthalloway/subscriptions",
+      "organizations_url": "https://api.github.com/users/stuarthalloway/orgs",
+      "repos_url": "https://api.github.com/users/stuarthalloway/repos",
+      "events_url": "https://api.github.com/users/stuarthalloway/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stuarthalloway/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+        "html_url": "https://github.com/clojure/clojure/commit/8e2b1398d1720197a2e3970bd511450a4f2a0ab4"
+      }
+    ]
+  },
+  {
+    "sha": "8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+    "node_id": "MDY6Q29tbWl0NzQ3NTEyOjhlMmIxMzk4ZDE3MjAxOTdhMmUzOTcwYmQ1MTE0NTBhNGYyYTBhYjQ=",
+    "commit": {
+      "author": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-11-26T23:16:11Z"
+      },
+      "committer": {
+        "name": "Hudson @ build.clojure.org",
+        "email": "build@clojure.com",
+        "date": "2018-11-26T23:16:11Z"
+      },
+      "message": "[maven-release-plugin] prepare for next development iteration",
+      "tree": {
+        "sha": "cd8ab7675968b062a46bd981d27e035bb6c575e0",
+        "url": "https://api.github.com/repos/clojure/clojure/git/trees/cd8ab7675968b062a46bd981d27e035bb6c575e0"
+      },
+      "url": "https://api.github.com/repos/clojure/clojure/git/commits/8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/clojure/clojure/commits/8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+    "html_url": "https://github.com/clojure/clojure/commit/8e2b1398d1720197a2e3970bd511450a4f2a0ab4",
+    "comments_url": "https://api.github.com/repos/clojure/clojure/commits/8e2b1398d1720197a2e3970bd511450a4f2a0ab4/comments",
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "48d886426c871623cd3b153d145f2567f57ff385",
+        "url": "https://api.github.com/repos/clojure/clojure/commits/48d886426c871623cd3b153d145f2567f57ff385",
+        "html_url": "https://github.com/clojure/clojure/commit/48d886426c871623cd3b153d145f2567f57ff385"
+      }
+    ]
+  }
+]

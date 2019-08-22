@@ -34,9 +34,7 @@
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
-        interactive (when-let [opt (get opts "--interactive")]
-                      (cond (empty? opt) ""
-                            :else (str (not-empty (first opt)))))
+        interactive (get opts "--interactive")
         collect (boolean (get opts "--collect"))]
     {:from (or from :edn)
      :to (or to :edn)
@@ -47,7 +45,8 @@
               (edn/read-string
                {:readers *data-readers*}
                (format "[%s]" query)))
-     :interactive interactive
+     :interactive (or (and interactive (empty? interactive))
+                      (not-empty (str/join " " interactive)))
      :collect collect}))
 
 (defn -main
@@ -57,7 +56,7 @@
                 :interactive :collect]} (parse-opts args)]
     (cond version
           (println (str/trim (slurp (io/resource "JET_VERSION"))))
-          interactive (start-jeti! interactive from keywordize)
+          interactive (start-jeti! interactive)
           :else
           (let [reader (case from
                          :json (formats/json-parser)
@@ -83,29 +82,4 @@
 ;;;; Scratch
 
 (comment
-
-  (loop [interactive-inputs []]
-    (let [input (case from
-                  :edn (formats/parse-edn *in*)
-                  :json (formats/parse-json reader keywordize)
-                  :transit (formats/parse-transit reader))]
-      (if-not (identical? ::formats/EOF input)
-        (let [input (if query (q/query input query)
-                        input)]
-          (if interactive
-            (recur (conj interactive-inputs input))
-            (do
-              (case to
-                :edn (println (formats/generate-edn input pretty))
-                :json (println (formats/generate-json input pretty))
-                :transit (println (formats/generate-transit input)))
-              (recur interactive-inputs))))
-        (when interactive
-          (binding [*in* (clojure.lang.LineNumberingPushbackReader.
-                          (clojure.java.io/reader "/dev/tty"))]
-            (start-jeti!
-             (if (next interactive-inputs)
-               interactive-inputs
-               (first interactive-inputs))))))))
-
 )
