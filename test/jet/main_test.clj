@@ -75,3 +75,7 @@
 
 (deftest collect-test
   (is (= "[{:x 2} {:x 3} {:x 4}]\n" (jet "{:x 2} {:x 3} {:x 4}" "--collect"))))
+
+(deftest key-fn-test
+  (is (= "[{:x 2} {:x 3} {:x 4}]\n"
+         (jet "{\" x \": 2} {\" x \": 3} {\" x \": 4}" "--collect" "--from" "json" "--keywordize" "(comp keyword str/trim)"))))
