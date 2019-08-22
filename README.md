@@ -85,7 +85,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
    - `--interactive [ cmd ]`: if present, starts an interactive shell. An
-     initial command may be provided. See [#interactive-shell].
+     initial command may be provided. See [#interactive-shell](here).
 
 Examples:
 
