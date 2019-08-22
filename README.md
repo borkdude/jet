@@ -84,8 +84,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
-   - `--interactive [init-val | jeti-opts ]`: if present, starts an interactive
-     shell. An initial value may be provided. See below.
+   - `--interactive [ cmd ]`: if present, starts an interactive shell. An
+     initial command may be provided. See [#interactive-shell].
 
 Examples:
 
