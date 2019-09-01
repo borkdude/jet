@@ -62,7 +62,7 @@
 (defn get-usage
   "Gets the usage of the tool"
   []
-  (str "Usage: jet [--help ] [--version ] [--from  [\"from-format\"]] [--to [\"to-format\"]] [--keywordize [key-fn]] [--pretty] [--query] [--collect] [--interactive [cmd]]"))
+  (str "Usage: jet [ --from <format> ] [ --to <format> ] [ --keywordize [ <key-fn> ] ] [ --pretty ] [--query <query> ] [ --collect ] | [ --interactive <cmd> ]"))
 
 (defn print-help
   "Prints the help text"
@@ -76,13 +76,11 @@
   --version: print the current version of jet.
   --from: edn, transit or json, defaults to edn.
   --to: edn, transit or json, defaults to edn.
-  --keywordize [ <key-fn> ]: if present, keywordizes JSON keys.
-      The default transformation function is keyword unless you provide your own.
+  --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --pretty: if present, pretty-prints JSON and EDN output.
-  --query: given a jet-lang query, transforms input. Checkout doc/query.md
+  --query: given a jet-lang query, transforms input. See doc/query.md for more.
   --collect: given separate values, collects them in a vector.
-  --interactive [ cmd ]: if present, starts an interactive shell.
-          An initial command may be provided. Check readme for more."))
+  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more."))
 
 (defn -main
   [& args]
