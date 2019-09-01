@@ -38,7 +38,8 @@
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
         interactive (get opts "--interactive")
-        collect (boolean (get opts "--collect"))]
+        collect (boolean (get opts "--collect"))
+        help (boolean (get opts "--help"))]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -50,16 +51,46 @@
                (format "[%s]" query)))
      :interactive (or (and interactive (empty? interactive))
                       (not-empty (str/join " " interactive)))
-     :collect collect}))
+     :collect collect
+     :help help}))
+
+(defn get-version
+ "Gets the current version of the tool"
+ []
+ (str/trim (slurp (io/resource "JET_VERSION"))))
+
+(defn get-usage
+  "Gets the usage of the tool"
+  []
+  (str "Usage: jet [ --from <format> ] [ --to <format> ] [ --keywordize [ <key-fn> ] ] [ --pretty ] [--query <query> ] [ --collect ] | [ --interactive <cmd> ]"))
+
+(defn print-help
+  "Prints the help text"
+  []
+  (println (str "jet v" (get-version)))
+  (println)
+  (println (get-usage))
+  (println)
+  (println "
+  --help: print this help text.
+  --version: print the current version of jet.
+  --from: edn, transit or json, defaults to edn.
+  --to: edn, transit or json, defaults to edn.
+  --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
+  --pretty: if present, pretty-prints JSON and EDN output.
+  --query: given a jet-lang query, transforms input. See doc/query.md for more.
+  --collect: given separate values, collects them in a vector.
+  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more."))
 
 (defn -main
   [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
-                :interactive :collect]} (parse-opts args)]
+                :interactive :collect :help]} (parse-opts args)]
     (cond version
-          (println (str/trim (slurp (io/resource "JET_VERSION"))))
+          (println (get-version))
           interactive (start-jeti! interactive)
+          help (print-help)
           :else
           (let [reader (case from
                          :json (formats/json-parser)
