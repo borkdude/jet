@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
-if [ -z "$GRAALVM_HOME" ]; then
-    echo "Please set GRAALVM_HOME"
-    exit 1
-fi
 
-"$GRAALVM_HOME/bin/gu" install native-image
+NATIVE_IMAGE=`which native-image`
+
+if [ -z "$NATIVE_IMAGE" ]; then
+  if [ -z "$GRAALVM_HOME" ]; then
+      echo "Please set GRAALVM_HOME"
+      exit 1
+  fi
+
+  "$GRAALVM_HOME/bin/gu" install native-image
+
+  NATIVE_IMAGE="$GRAALVM_HOME/bin/native-image"
+fi
 
 JET_VERSION=$(cat resources/JET_VERSION)
 
 lein with-profiles +clojure-1.10.1 do clean, uberjar
-$GRAALVM_HOME/bin/native-image \
+$NATIVE_IMAGE \
   -jar target/jet-$JET_VERSION-standalone.jar \
   -H:Name=jet \
   -H:+ReportExceptionStackTraces \
