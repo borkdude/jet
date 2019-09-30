@@ -75,7 +75,7 @@
   --help: print this help text.
   --version: print the current version of jet.
   --from: edn, transit or json, defaults to edn.
-  --to: edn, transit or json, defaults to edn.
+  --to: edn, transit, json or raw, defaults to edn.
   --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --pretty: if present, pretty-prints JSON and EDN output.
   --query: given a jet-lang query, transforms input. See doc/query.md for more.
@@ -110,7 +110,8 @@
                     (case to
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))))
+                      :transit (println (formats/generate-transit input))
+                      :raw (println input)))
                   (when-not collect (recur)))))))))
 
 ;;;; Scratch

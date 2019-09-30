@@ -45,7 +45,9 @@
   (testing "from and to default to edn"
     (is (= "1\n" (jet "{:a 1 :b 2}" "--query" ":a"))))
   (testing "implicity wrapping multiple queries"
-    (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b")))))
+    (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b"))))
+  (testing "raw output"
+    (is (= "b\nc\n" (jet "{:a \"b\\nc\"}" "--query" ":a" "--to" "raw")))))
 
 (deftest interactive-test
   (testing "passing correct query will please jeti"

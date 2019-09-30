@@ -77,7 +77,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 `jet` supports the following options:
 
    - `--from`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--to`: `edn`, `transit` or `json`, defaults to `edn`
+   - `--to`: `edn`, `transit`, `json` or `raw`, defaults to `edn`
    - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
