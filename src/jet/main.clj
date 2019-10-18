@@ -95,9 +95,11 @@
           (let [reader (case from
                          :json (formats/json-parser)
                          :transit (formats/transit-reader)
-                         :edn nil)
+                         :edn nil
+                         :html nil)
                 next-val (case from
                            :edn #(formats/parse-edn *in*)
+                           :html #(formats/parse-html *in*)
                            :json #(formats/parse-json reader keywordize)
                            :transit #(formats/parse-transit reader))
                 collected (when collect (vec (take-while #(not= % ::formats/EOF)
@@ -110,7 +112,8 @@
                     (case to
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))))
+                      :transit (println (formats/generate-transit input))
+                      :html (println (formats/generate-html input))))
                   (when-not collect (recur)))))))))
 
 ;;;; Scratch

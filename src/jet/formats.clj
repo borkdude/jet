@@ -8,6 +8,8 @@
    [clojure.string :as str]
    [cognitect.transit :as transit]
    [fipp.edn :as fipp]
+   [hiccup.core :as hiccup]
+   [hickory.core :as hickory]
    [jet.data-readers])
   (:import [com.fasterxml.jackson.core JsonParser JsonFactory
             JsonGenerator PrettyPrinter
@@ -53,3 +55,15 @@
         writer (transit/writer bos :json)]
     (transit/write writer o)
     (String. (.toByteArray bos) "UTF-8")))
+
+(def html-read? (atom false))
+
+(defn parse-html [*in*]
+  (if-not @html-read?
+    (let [html (first (hickory/parse-fragment (slurp *in*)))]
+      (reset! html-read? true)
+      (hickory/as-hiccup html))
+    ::EOF))
+
+(defn generate-html [edn]
+  (hiccup/html edn))

@@ -13,7 +13,10 @@
                  [cheshire "5.9.0"]
                  [fipp "0.6.18"]
                  [commons-io/commons-io "2.6"]
-                 [borkdude/sci "0.0.7"]]
+                 [borkdude/sci "0.0.10"]
+                 [hiccup "1.0.5"]
+                 #_[clj-tagsoup "0.3.0"]
+                 [hickory "0.7.1"]]
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.9.0"]]}
              :clojure-1.10.1 {:dependencies [[org.clojure/clojure "1.10.1"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}
