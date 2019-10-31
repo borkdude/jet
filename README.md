@@ -1,4 +1,4 @@
-# jet
+<img src="logo/logo-300dpi.png" width="140px">
 
 [![CircleCI](https://circleci.com/gh/borkdude/jet/tree/master.svg?style=shield)](https://circleci.com/gh/borkdude/jet/tree/master)
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/borkdude/jet)
