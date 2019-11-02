@@ -45,7 +45,13 @@
   (testing "from and to default to edn"
     (is (= "1\n" (jet "{:a 1 :b 2}" "--query" ":a"))))
   (testing "implicity wrapping multiple queries"
-    (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b")))))
+    (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b"))))
+  (testing "csv"
+    (is (= "[\"1\" \"2\" \"3\"]\n" (jet "1,2,3" "--from" "csv")))
+    (is (= "1,2,\"hello,world\"\n" (jet "[1 2 \"hello,world\"]" "--to" "csv"))))
+  (testing "tsv"
+    (is (= "[\"1\" \"2\" \"3\"]\n" (jet "1\t2\t3" "--from" "tsv")))
+    (is (= "1\t2\thello,world\n" (jet "[1 2 \"hello,world\"]" "--to" "tsv")))))
 
 (deftest interactive-test
   (testing "passing correct query will please jeti"
