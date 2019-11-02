@@ -76,3 +76,13 @@
 (deftest key-fn-test
   (is (= "[{:x 2} {:x 3} {:x 4}]\n"
          (jet "{\" x \": 2} {\" x \": 3} {\" x \": 4}" "--collect" "--from" "json" "--keywordize" "(comp keyword str/trim)"))))
+
+(deftest html-test
+  (is (= "[:a {:href \"foo\"} \"hello\"]\n"
+         (jet "<a href=\"foo\">hello</a>" "--from" "html-fragment" "--to" "edn")))
+  (is (= "[:a {:href \"foo\"} \"hello\"]\n"
+         (jet "<a href=\"foo\">hello</a>" "--from" "html-fragment" "--to" "edn+hiccup")))
+  (is (= "[:html {} [:head {}] [:body {} [:a {:href \"foo\"} \"hello\"]]]\n"
+         (jet "<html><body><a href=\"foo\">hello</a></body></html>" "--from" "html" "--to" "edn+hiccup")))
+  #_(is (= "[:a {:href \"foo\"} \"hello\"]\n"
+         (jet "<a href=\"foo\">hello</a>" "--from" "html" "--to" "edn+hickory"))))

@@ -95,28 +95,45 @@
           (let [reader (case from
                          :json (formats/json-parser)
                          :transit (formats/transit-reader)
-                         :edn nil
-                         :html nil)
+                         (:edn :edn+hiccup :edn+hickory :html :html-fragment) nil)
                 next-val (case from
-                           :edn #(formats/parse-edn *in*)
-                           :html #(formats/parse-html *in*)
+                           (:edn :edn+hiccup :edn+hickory) #(formats/parse-edn *in*)
+                           :html #(formats/parse-html-document *in*)
+                           :html-fragment #(formats/parse-html-fragment *in*)
                            :json #(formats/parse-json reader keywordize)
                            :transit #(formats/parse-transit reader))
                 collected (when collect (vec (take-while #(not= % ::formats/EOF)
                                                          (repeatedly next-val))))]
+            (reset! formats/html-read? false)
             (loop []
               (let [input (if collect collected (next-val))]
+                (def i input)
                 (when-not (identical? ::formats/EOF input)
                   (let [input (if query (q/query input query)
                                   input)]
-                    (case to
-                      :edn (println (formats/generate-edn input pretty))
-                      :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))
-                      :html (println (formats/generate-html input))))
+                    (case from
+                      (:html :html-fragment)
+                      (case to
+                        (:edn :edn+hiccup) (println (formats/generate-hiccup input pretty))
+                        :edn+hickory (println (formats/generate-hickory input pretty)))
+                      (case to
+                        :edn (println (formats/generate-edn input pretty))
+                        :json (println (formats/generate-json input pretty))
+                        :transit (println (formats/generate-transit input))
+                        :html (println (formats/generate-html input)))))
                   (when-not collect (recur)))))))))
 
 ;;;; Scratch
 
 (comment
+  (with-out-str
+    (with-in-str "[1 2 3]"
+      (-main "--from" "edn" "--to" "json")))
+  (with-out-str
+    (with-in-str "<a href=\"foo\">hello</a>"
+      (-main "--from" "html-fragment" "--to" "edn+hiccup")))
+  (with-out-str
+    (with-in-str "<html><body><a href=\"foo\">hello</a></body></html>"
+      (-main "--from" "html" "--to" "edn+hiccup")))
+  i
 )

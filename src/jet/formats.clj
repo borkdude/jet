@@ -58,12 +58,27 @@
 
 (def html-read? (atom false))
 
-(defn parse-html [*in*]
+(defn parse-html-document [*in*]
+  (if-not @html-read?
+    (let [html (hickory/parse (slurp *in*))]
+      (reset! html-read? true)
+      html)
+    ::EOF))
+
+(defn parse-html-fragment [*in*]
   (if-not @html-read?
     (let [html (first (hickory/parse-fragment (slurp *in*)))]
       (reset! html-read? true)
-      (hickory/as-hiccup html))
+      html)
     ::EOF))
 
-(defn generate-html [edn]
-  (hiccup/html edn))
+(defn generate-html [jsoup-node]
+  (hiccup/html (hickory/as-hiccup jsoup-node)))
+
+(defn generate-hiccup [jsoup-node pretty]
+  (let [edn (hickory/as-hiccup jsoup-node)
+        edn (if (seq? edn) (first edn) edn)]
+    (generate-edn edn pretty)))
+
+(defn generate-hickory [jsoup-node pretty]
+  (generate-edn (hickory/as-hickory jsoup-node) pretty))
