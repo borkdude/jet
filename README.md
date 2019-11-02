@@ -4,8 +4,8 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/borkdude/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-CLI to transform between JSON, EDN and Transit, powered with a minimal query
-language.
+CLI to transform between JSON, EDN, Transit, and CSV, powered with a minimal
+query language.
 
 ## Quickstart
 
@@ -17,10 +17,11 @@ $ echo '{:a 1}' | jet --to json
 
 ## Rationale
 
-This is a command line tool to transform between JSON, EDN and Transit, powered
-with a minimal query language. It runs as a GraalVM binary with fast startup time
-which makes it suited for shell scripting. It comes with a query language to do
-intermediate transformation. It may seem familiar to users of `jq`.
+This is a command line tool to transform between JSON, EDN, Transit, and CSV,
+powered with a minimal query language. It runs as a GraalVM binary with fast
+startup time which makes it suited for shell scripting. It comes with a query
+language to do intermediate transformation. It may seem familiar to users of
+`jq`.
 
 ## Installation
 
@@ -76,8 +77,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 
 `jet` supports the following options:
 
-   - `--from`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--to`: `edn`, `transit` or `json`, defaults to `edn`
+   - `--from`: `edn`, `transit`, `json`, `csv`, or `tsv`, defaults to `edn`
+   - `--to`: `edn`, `transit` or `json`, `csv`, or `tsv`, defaults to `edn`
    - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
    - `--pretty`: if present, pretty-prints JSON and EDN output.

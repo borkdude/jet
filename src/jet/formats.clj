@@ -6,6 +6,7 @@
    [cheshire.parse :as cheshire-parse]
    [clojure.edn :as edn]
    [clojure.string :as str]
+   [jet.csv :as csv]
    [cognitect.transit :as transit]
    [fipp.edn :as fipp]
    [jet.data-readers])
@@ -13,7 +14,7 @@
             JsonGenerator PrettyPrinter
             JsonGenerator$Feature]
            [java.io StringWriter StringReader BufferedReader BufferedWriter
-            ByteArrayOutputStream OutputStream Reader Writer]
+            ByteArrayOutputStream OutputStream Reader Writer PushbackReader]
            [org.apache.commons.io.input ReaderInputStream]))
 
 (set! *warn-on-reflection* true)
@@ -53,3 +54,34 @@
         writer (transit/writer bos :json)]
     (transit/write writer o)
     (String. (.toByteArray bos) "UTF-8")))
+
+(defn push-back-reader []
+  (PushbackReader. *in*))
+
+(defn parse-csv [rdr]
+  (let [[record sentinel] (csv/read-record rdr (int \,)  (int \"))]
+    (if (and (= [""] record) (= :eof sentinel))
+      ::EOF
+      record)))
+
+(defn parse-tsv [rdr]
+  (let [[record sentinel] (csv/read-record rdr (int \tab)  (int \"))]
+    (if (and (= [""] record) (= :eof sentinel))
+      ::EOF
+      record)))
+
+(defn generate-csv [o]
+  (let [s (StringWriter.)
+        sep \,
+        quote \"
+        quote? #(some #{sep quote \return \newline} %)]
+    (csv/write-record s o sep quote quote?)
+    (str s)))
+
+(defn generate-tsv [o]
+  (let [s (StringWriter.)
+        sep \tab
+        quote \"
+        quote? #(some #{sep quote \return \newline} %)]
+    (csv/write-record s o sep quote quote?)
+    (str s)))

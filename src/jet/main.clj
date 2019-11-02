@@ -74,8 +74,8 @@
   (println "
   --help: print this help text.
   --version: print the current version of jet.
-  --from: edn, transit or json, defaults to edn.
-  --to: edn, transit or json, defaults to edn.
+  --from: edn, transit, json, csv, or tsv, defaults to edn.
+  --to: edn, transit, json, csv, or tsv, defaults to edn.
   --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --pretty: if present, pretty-prints JSON and EDN output.
   --query: given a jet-lang query, transforms input. See doc/query.md for more.
@@ -95,10 +95,14 @@
           (let [reader (case from
                          :json (formats/json-parser)
                          :transit (formats/transit-reader)
+                         :csv (formats/push-back-reader)
+                         :tsv (formats/push-back-reader)
                          :edn nil)
                 next-val (case from
                            :edn #(formats/parse-edn *in*)
                            :json #(formats/parse-json reader keywordize)
+                           :csv #(formats/parse-csv reader)
+                           :tsv #(formats/parse-tsv reader)
                            :transit #(formats/parse-transit reader))
                 collected (when collect (vec (take-while #(not= % ::formats/EOF)
                                                          (repeatedly next-val))))]
@@ -110,7 +114,9 @@
                     (case to
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))))
+                      :transit (println (formats/generate-transit input))
+                      :csv (println (formats/generate-csv input))
+                      :tsv (println (formats/generate-tsv input))))
                   (when-not collect (recur)))))))))
 
 ;;;; Scratch
