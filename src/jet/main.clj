@@ -34,6 +34,10 @@
                              (= "true" f) true
                              (= "false" f) false
                              :else (eval-string f))))
+        csv (when-let [k (get opts "--csv")]
+              (if (empty? k)
+                {}
+                (eval-string (first k))))
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))
@@ -43,6 +47,7 @@
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
+     :csv csv
      :version version
      :pretty pretty
      :query (when query
@@ -84,7 +89,7 @@
 
 (defn -main
   [& args]
-  (let [{:keys [:from :to :keywordize
+  (let [{:keys [:from :to :keywordize :csv
                 :pretty :version :query
                 :interactive :collect :help]} (parse-opts args)]
     (cond version
@@ -101,8 +106,8 @@
                 next-val (case from
                            :edn #(formats/parse-edn *in*)
                            :json #(formats/parse-json reader keywordize)
-                           :csv #(formats/parse-csv reader)
-                           :tsv #(formats/parse-tsv reader)
+                           :csv #(formats/parse-csv reader csv)
+                           :tsv #(formats/parse-tsv reader csv)
                            :transit #(formats/parse-transit reader))
                 collected (when collect (vec (take-while #(not= % ::formats/EOF)
                                                          (repeatedly next-val))))]
@@ -115,8 +120,8 @@
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
                       :transit (println (formats/generate-transit input))
-                      :csv (println (formats/generate-csv input))
-                      :tsv (println (formats/generate-tsv input))))
+                      :csv (print (str (formats/generate-csv input csv) (:newline csv "\n")))
+                      :tsv (print (str (formats/generate-tsv input csv) (:newline csv "\n")))))
                   (when-not collect (recur)))))))))
 
 ;;;; Scratch

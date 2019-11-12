@@ -47,11 +47,34 @@
   (testing "implicity wrapping multiple queries"
     (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b"))))
   (testing "csv"
-    (is (= "[\"1\" \"2\" \"3\"]\n" (jet "1,2,3" "--from" "csv")))
-    (is (= "1,2,\"hello,world\"\n" (jet "[1 2 \"hello,world\"]" "--to" "csv"))))
-  (testing "tsv"
-    (is (= "[\"1\" \"2\" \"3\"]\n" (jet "1\t2\t3" "--from" "tsv")))
-    (is (= "1\t2\thello,world\n" (jet "[1 2 \"hello,world\"]" "--to" "tsv")))))
+    (is (= "[\"1\" \"2\" \"3\"]\n"
+           (jet "1,2,3"
+                "--from" "csv")))
+    (is (= "1,2,\"hello,world\"\n"
+           (jet "[1 2 \"hello,world\"]"
+                "--to" "csv")))
+    (is (= "1|2|\"hello,world\"\n"
+           (jet "[1 2 \"hello,world\"]"
+                "--to" "csv"
+                "--csv" "{:separator \\|}")))
+    (is (= "1,2,'hello,world'\n"
+           (jet "[1 2 \"hello,world\"]"
+                "--to" "csv"
+                "--csv" "{:quote \\'}")))
+    (is (= "\"1\",\"2\",\"hello,world\"\n"
+           (jet "[1 2 \"hello,world\"]"
+                "--to" "csv"
+                "--csv" "{:quote? (constantly true)}")))
+    (is (= "1,2,\"hello,world\"\r\n3,4,5\r\n"
+           (jet "[1 2 \"hello,world\"] [3 4 5]"
+                "--to" "csv"
+                "--csv" "{:newline \"\r\n\"}")))
+    (is (= "[\"1\" \"2\" \"3\"]\n"
+           (jet "1\t2\t3"
+                "--from" "tsv")))
+    (is (= "1\t2\t\"hello,world\"\n"
+           (jet "[1 2 \"hello,world\"]"
+                "--to" "tsv")))))
 
 (deftest interactive-test
   (testing "passing correct query will please jeti"
