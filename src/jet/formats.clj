@@ -58,30 +58,25 @@
 (defn push-back-reader []
   (PushbackReader. *in*))
 
-(defn parse-csv [rdr]
-  (let [[record sentinel] (csv/read-record rdr (int \,)  (int \"))]
+(defn parse-csv [rdr opts]
+  (let [{:keys [separator quote]
+         :or {separator \, quote \"}} opts
+        [record sentinel] (csv/read-record rdr (int separator) (int quote))]
     (if (and (= [""] record) (= :eof sentinel))
       ::EOF
       record)))
 
-(defn parse-tsv [rdr]
-  (let [[record sentinel] (csv/read-record rdr (int \tab)  (int \"))]
-    (if (and (= [""] record) (= :eof sentinel))
-      ::EOF
-      record)))
+(defn parse-tsv [rdr opts]
+  (parse-csv rdr (merge {:separator \tab} opts)))
 
-(defn generate-csv [o]
-  (let [s (StringWriter.)
-        sep \,
-        quote \"
-        quote? #(some #{sep quote \return \newline} %)]
-    (csv/write-record s o sep quote quote?)
+(defn generate-csv [o opts]
+  (let [{:keys [separator quote quote?]
+         :or {separator \,
+              quote \"
+              quote? #(some #{\, \" \tab \return \newline} %)}} opts
+        s (StringWriter.)]
+    (csv/write-record s o separator quote quote?)
     (str s)))
 
-(defn generate-tsv [o]
-  (let [s (StringWriter.)
-        sep \tab
-        quote \"
-        quote? #(some #{sep quote \return \newline} %)]
-    (csv/write-record s o sep quote quote?)
-    (str s)))
+(defn generate-tsv [o opts]
+  (generate-csv o (merge {:separator \tab} opts)))
