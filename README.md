@@ -81,6 +81,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--to`: `edn`, `transit` or `json`, `csv`, or `tsv`, defaults to `edn`
    - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
+   - `--csv <csv-opts>`: takes a map of CSV specific options, with defaults
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
@@ -179,6 +180,25 @@ Available commands:
 :jeti/print-length     : set *print-length*
 :jeti/print-level      : set *print-level*
 ```
+
+## CSV options
+
+You can change the CSV output, or consume input that uses different separators,
+by using the `--csv` command line option followed by a Clojure map.
+
+The default is:
+
+``` clojure
+{:separator \,
+ :newline \newline
+ :quote \"
+ :quote? (fn [s] (some #{\, \tab \" \return \newline} s))}
+```
+
+- `:separator`: the field separator, `\,` for `csv`, `\tab` for `tsv`. Character.
+- `:newline`: the line separator. Character or String. Only used for output.
+- `:quote`: the character used to wrap fields that need quoting.
+- `:quote?`: a function that determines when fields need quoting.
 
 ## Test
 
