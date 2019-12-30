@@ -174,14 +174,6 @@
       (vec res)
       res)))
 
-(defn nested-query [x q]
-  (reduce-kv
-   (fn [m k v]
-     (if (and v (contains? x k))
-       (assoc m k (query (get x k) v))
-       m))
-   x q))
-
 (defn query
   [x q]
   (if-let [[_ v]
