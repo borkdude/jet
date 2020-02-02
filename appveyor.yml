@@ -49,6 +49,8 @@ build_script:
 
     call script/compile.bat
 
+    echo {:a 1} | jet --to json
+
 # - cmd: >-
 #     lein clean
 
