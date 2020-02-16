@@ -46,7 +46,7 @@ jobs:
     working_directory: ~/repo
     environment:
       LEIN_ROOT: "true"
-      GRAALVM_HOME: /home/circleci/graalvm-ce-19.3.1
+      GRAALVM_HOME: /home/circleci/graalvm-ce-java8-19.3.1
       JET_PLATFORM: linux # used in release script
       JET_TEST_ENV: native
     steps:
@@ -93,7 +93,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-            - ~/graalvm-ce-19.3.1
+            - ~/graalvm-ce-java8-19.3.1
           key: buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release
@@ -102,7 +102,7 @@ jobs:
     macos:
       xcode: "9.0"
     environment:
-      GRAALVM_HOME: /Users/distiller/graalvm-ce-19.3.1/Contents/Home
+      GRAALVM_HOME: /Users/distiller/graalvm-ce-java8-19.3.1/Contents/Home
       JET_PLATFORM: macos # used in release script
       JET_TEST_ENV: native
     steps:
@@ -148,7 +148,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-            - ~/graalvm-ce-19.3.1
+            - ~/graalvm-ce-java8-19.3.1
           key: buildmac-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release
