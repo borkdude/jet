@@ -70,7 +70,7 @@ jobs:
           command: |
             cd ~
             if ! [ -d graalvm-ce-java8-19.3.1 ]; then
-              curl -O -sL https://github.com/oracle/graal/releases/download/vm-19.3.1/graalvm-ce-java8-linux-amd64-19.3.1.tar.gz
+              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.1/graalvm-ce-java8-linux-amd64-19.3.1.tar.gz
               tar xzf graalvm-ce-java8-linux-amd64-19.3.1.tar.gz
             fi
       - run:
@@ -125,7 +125,7 @@ jobs:
             cd ~
             ls -la
             if ! [ -d graalvm-ce-java8-19.3.1 ]; then
-              curl -O -sL https://github.com/oracle/graal/releases/download/vm-19.3.1/graalvm-ce-java8-darwin-amd64-19.3.1.tar.gz
+              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.1/graalvm-ce-java8-darwin-amd64-19.3.1.tar.gz
               tar xzf graalvm-ce-java8-darwin-amd64-19.3.1.tar.gz
             fi
       - run:
