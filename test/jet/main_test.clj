@@ -76,3 +76,7 @@
 (deftest key-fn-test
   (is (= "[{:x 2} {:x 3} {:x 4}]\n"
          (jet "{\" x \": 2} {\" x \": 3} {\" x \": 4}" "--collect" "--from" "json" "--keywordize" "(comp keyword str/trim)"))))
+
+(deftest edn-reader-opts-test
+  (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:default tagged-literal}")))
+  (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))

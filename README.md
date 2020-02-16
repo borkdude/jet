@@ -86,6 +86,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
+   - `--edn-reader-opts`: options passed to the EDN reader.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
@@ -119,6 +120,17 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 | jet --from json --keywordize --to edn \
 --query '[0 {:sha :sha :date [:commit :author :date]}]'
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
+```
+
+## Data readers
+
+You can enable data readers by passing options to `--edn-reader-opts`:
+
+``` shell
+$ echo '#foo{:a 1}' | jet --edn-reader-opts '{:default tagged-literal}'
+#foo {:a 1}
+$ echo '#foo{:a 1}' | jet --edn-reader-opts "{:readers {'foo (fn [x] [:foo x])}}"
+[:foo {:a 1}]
 ```
 
 ## Streaming

@@ -9,11 +9,8 @@
    [cognitect.transit :as transit]
    [fipp.edn :as fipp]
    [jet.data-readers])
-  (:import [com.fasterxml.jackson.core JsonParser JsonFactory
-            JsonGenerator PrettyPrinter
-            JsonGenerator$Feature]
-           [java.io StringWriter StringReader BufferedReader BufferedWriter
-            ByteArrayOutputStream OutputStream Reader Writer]
+  (:import [com.fasterxml.jackson.core JsonFactory]
+           [java.io Reader]
            [org.apache.commons.io.input ReaderInputStream]))
 
 (set! *warn-on-reflection* true)
@@ -29,8 +26,8 @@
 (defn generate-json [o pretty]
   (cheshire/generate-string o {:pretty pretty}))
 
-(defn parse-edn [*in*]
-  (edn/read {:eof ::EOF} *in*))
+(defn parse-edn [opts *in*]
+  (edn/read (assoc opts :eof ::EOF) *in*))
 
 (defn generate-edn [o pretty]
   (if pretty (str/trim (with-out-str (fipp/pprint o)))

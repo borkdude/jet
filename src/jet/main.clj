@@ -39,6 +39,9 @@
         query (first (get opts "--query"))
         interactive (get opts "--interactive")
         collect (boolean (get opts "--collect"))
+        edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
+                          (when opts
+                            (eval-string opts)))
         help (boolean (get opts "--help"))]
     {:from (or from :edn)
      :to (or to :edn)
@@ -52,6 +55,7 @@
      :interactive (or (and interactive (empty? interactive))
                       (not-empty (str/join " " interactive)))
      :collect collect
+     :edn-reader-opts edn-reader-opts
      :help help}))
 
 (defn get-version
@@ -62,7 +66,7 @@
 (defn get-usage
   "Gets the usage of the tool"
   []
-  (str "Usage: jet [ --from <format> ] [ --to <format> ] [ --keywordize [ <key-fn> ] ] [ --pretty ] [--query <query> ] [ --collect ] | [ --interactive <cmd> ]"))
+  (str "Usage: jet [ --from <format> ] [ --to <format> ] [ --keywordize [ <key-fn> ] ] [ --pretty ] [ --edn-reader-opts ] [--query <query> ] [ --collect ] | [ --interactive <cmd> ]"))
 
 (defn print-help
   "Prints the help text"
@@ -70,7 +74,6 @@
   (println (str "jet v" (get-version)))
   (println)
   (println (get-usage))
-  (println)
   (println "
   --help: print this help text.
   --version: print the current version of jet.
@@ -78,15 +81,19 @@
   --to: edn, transit or json, defaults to edn.
   --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --pretty: if present, pretty-prints JSON and EDN output.
+  --edn-reader-opts: options passed to the EDN reader.
   --query: given a jet-lang query, transforms input. See doc/query.md for more.
   --collect: given separate values, collects them in a vector.
-  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more."))
+  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
+  (println))
 
 (defn -main
   [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
-                :interactive :collect :help]} (parse-opts args)]
+                :interactive :collect
+                :edn-reader-opts
+                :help]} (parse-opts args)]
     (cond version
           (println (get-version))
           interactive (start-jeti! interactive)
@@ -97,7 +104,7 @@
                          :transit (formats/transit-reader)
                          :edn nil)
                 next-val (case from
-                           :edn #(formats/parse-edn *in*)
+                           :edn #(formats/parse-edn edn-reader-opts *in*)
                            :json #(formats/parse-json reader keywordize)
                            :transit #(formats/parse-transit reader))
                 collected (when collect (vec (take-while #(not= % ::formats/EOF)
