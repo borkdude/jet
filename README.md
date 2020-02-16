@@ -133,7 +133,7 @@ $ echo '#foo{:a 1}' | jet --edn-reader-opts "{:readers {'foo (fn [x] [:foo x])}}
 [:foo {:a 1}]
 ```
 
-See this [blog](https://insideclojure.org/2018/06/21/tagged-literal/) by Alex Miller for the rationale behind `tagged-literal`.
+See this [blog](https://insideclojure.org/2018/06/21/tagged-literal/) by Alex Miller for more information on the `tagged-literal` function.
 
 ## Streaming
 
@@ -213,11 +213,6 @@ Test the native version:
 You will need leiningen and GraalVM.
 
     script/compile
-
-## Support this project
-
-Do you enjoy this project? Consider buying me a [hot
-beverage](https://ko-fi.com/borkdude).
 
 ## License
 
