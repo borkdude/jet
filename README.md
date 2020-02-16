@@ -133,6 +133,8 @@ $ echo '#foo{:a 1}' | jet --edn-reader-opts "{:readers {'foo (fn [x] [:foo x])}}
 [:foo {:a 1}]
 ```
 
+See this [blog](https://insideclojure.org/2018/06/21/tagged-literal/) by Alex Miller for the rationale behind `tagged-literal`.
+
 ## Streaming
 
 Jet supports streaming over multiple values, without reading the entire input
