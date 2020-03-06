@@ -206,11 +206,11 @@ put this function somewhere in your Emacs configuration, highlight a
 region, and press `M-x jet-pretty <enter>`:
 
 ``` emacs-lisp
-(defun jet-pretty ()
+(defun jet ()
   (interactive)
   (shell-command-on-region
-   (point-min)
-   (point-max)
+   (region-beginning)
+   (region-end)
    "jet --pretty --edn-reader-opts '{:default tagged-literal}'"
    (current-buffer)
    t
