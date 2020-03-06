@@ -198,6 +198,29 @@ Available commands:
 :jeti/print-level      : set *print-level*
 ```
 
+## Emacs integration
+
+Sometimes it's useful to reformat REPL output in Emacs to make it more
+readable. You can do this by piping the relevant region via jet. Just
+put this function somewhere in your Emacs configuration, highlight a
+region, and press `M-x jet-pretty <enter>`:
+
+``` emacs-lisp
+(defun jet-pretty ()
+  (interactive)
+  (shell-command-on-region
+   (point-min)
+   (point-max)
+   "jet --pretty --edn-reader-opts '{:default tagged-literal}'"
+   (current-buffer)
+   t
+   "*jet error buffer*"
+   t))
+```
+
+Passing `--edn-reader-opts` ensures that jet will respect any tagged
+literals that are particular to your codebase.
+
 ## Test
 
 Test the JVM version:
