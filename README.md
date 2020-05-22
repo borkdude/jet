@@ -4,7 +4,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/borkdude/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-CLI to transform between JSON, EDN and Transit, powered with a minimal query
+CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com/edn-format/edn) and [Transit](https://github.com/cognitect/transit-format), powered with a minimal query
 language.
 
 ## Quickstart
