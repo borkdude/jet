@@ -96,7 +96,7 @@
                 :help]} (parse-opts args)]
     (if (nil? args)
       (print-help)
-      ((cond version
+      (cond version
           (println (get-version))
           interactive (start-jeti! interactive)
           help (print-help)
@@ -120,7 +120,7 @@
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
                       :transit (println (formats/generate-transit input))))
-                  (when-not collect (recur)))))))))))
+                  (when-not collect (recur))))))))))
 
 ;;;; Scratch
 
