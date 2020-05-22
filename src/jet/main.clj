@@ -94,8 +94,9 @@
                 :interactive :collect
                 :edn-reader-opts
                 :help]} (parse-opts args)]
-    (cond version
-          (println (get-version))
+      (cond
+          (nil? args) (print-help)
+          version (println (get-version))
           interactive (start-jeti! interactive)
           help (print-help)
           :else
