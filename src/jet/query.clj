@@ -41,6 +41,7 @@
     - -
     * *
     / /
+    symbol symbol
     nil))
 
 (defn promote-query* [q]
@@ -167,9 +168,10 @@
               ;; special cases
               str (apply str (map #(query x %) args))
               re-find (re-find (re-pattern (query x arg1)) (query x arg2))
-
               ;; fallback
-              (get x q))]
+              (if f
+                (f x)
+                (get x q)))]
     (if (and (vector? x) (sequential? res))
       (vec res)
       res)))
