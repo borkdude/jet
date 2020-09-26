@@ -122,6 +122,16 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
 
+- Get raw output from query rather than wrapped in quotes
+
+```shellsession
+$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a" --to edn
+"hello there"
+
+$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a symbol" --to edn
+hello there
+```
+
 ## Data readers
 
 You can enable data readers by passing options to `--edn-reader-opts`:
