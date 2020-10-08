@@ -113,4 +113,6 @@
   (is (= #{3} (query nil '(set/difference #jet/lit #{1 2 3} #jet/lit #{1 2}))))
   (is (= #{3} (query #{1 2 3} '(set/difference #jet/lit #{1 2}))))
   (is (= #{3} (query #{1 2 3} '(set/difference #jet/lit #{1 2}))))
-  (is (= (symbol "1.10") (query {:version "1.10"} '[:version symbol]))))
+  (is (= (symbol "1.10") (query {:version "1.10"} '[:version symbol])))
+  (is (= [1 2 3 4] (query [1 2 3 4 5 1 2] '(take-while (< id #jet/lit 5)))))
+  (is (= [5 1 2] (query [1 2 3 4 5 1 2] '(drop-while (< id #jet/lit 5))))))

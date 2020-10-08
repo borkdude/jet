@@ -42,6 +42,8 @@
     * *
     / /
     symbol symbol
+    drop-while drop-while
+    take-while take-while
     nil))
 
 (defn promote-query* [q]
@@ -110,7 +112,7 @@
               map-vals (zipmap (keys x)
                                (map #(query % arg1) (vals x)))
               zipmap (zipmap (first x) (second x))
-              (map filter remove)
+              (map filter remove take-while drop-while)
               (f #(query % (promote-query* arg1)) x)
               select-keys (select-keys x arg1)
               set/join (if arg2

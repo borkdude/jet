@@ -337,6 +337,15 @@ echo '[{:a {:b 1}} {:a {:b 2}}]' \
 [{:a {:b 1}}]
 ```
 
+Examples with `take-while` and `drop-while`:
+
+``` clojure
+$ echo '[1 2 3 4 5 1 2]' | jet --query '(take-while (< id #jet/lit 5))'
+[1 2 3 4]
+$ echo '[1 2 3 4 5 1 2]' | jet --query '(drop-while (< id #jet/lit 5))'
+[5 1 2]
+```
+
 Applying a regex can be done with `re-find`:
 
 ``` shellsession
