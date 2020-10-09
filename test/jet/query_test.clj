@@ -50,6 +50,8 @@
          (query '[{:a 1} {:a 2} {:a 3}] '(remove (= :a (quote 3))))))
   (is (= '[{:a 1}]
          (query '[{:a 1} [] []] '(filter first))))
+  (is (= '[{:a 1, :b 3}]
+         (query '[{:a 1 :b 2} {:a 1 :b 3}] '(filter (> :b #jet/lit 2)))))
   (is (= false (query {:a 1 :b 1 :c 1} '(not= :a :b :c))))
   (is (= '{:a 1 :b 2}
          (query '{:a 1 :b 2 :c 3} '(select-keys [:a :b]))))

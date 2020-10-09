@@ -30,6 +30,7 @@
     = =
     < <
     <= <=
+    > >
     >= >=
     not= not=
     map map
@@ -164,7 +165,7 @@
                           vals (take-nth 2 (rest args))
                           vals (map #(query x %) vals)]
                       (merge x (zipmap keys vals)))
-              (= < <= >= not= + - * /)
+              (= < <= > >= not= + - * /)
               (apply f (map #(query x %) args))
 
               ;; special cases
