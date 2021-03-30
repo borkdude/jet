@@ -16,6 +16,8 @@ echo Building jet %JET_VERSION%
 call lein with-profiles +clojure-1.10.1 do clean, uberjar
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+call %GRAALVM_HOME%\bin\gu.cmd install native-image
+
 Rem the --no-server option is not supported in GraalVM Windows.
 call %GRAALVM_HOME%\bin\native-image.cmd ^
   "-jar" "target/jet-%JET_VERSION%-standalone.jar" ^
