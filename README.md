@@ -18,9 +18,11 @@ $ echo '{:a 1}' | jet --to json
 ## Rationale
 
 This is a command line tool to transform between JSON, EDN and Transit, powered
-with a minimal query language. It runs as a GraalVM binary with fast startup time
-which makes it suited for shell scripting. It comes with a query language to do
-intermediate transformation. It may seem familiar to users of `jq`.
+with a minimal query language. It runs as a GraalVM binary with fast startup
+time which makes it suited for shell scripting. It comes with a query language
+to do intermediate transformation. It may seem familiar to users of `jq`.
+Although in 2021, you may just want to use the `--func` option instead (who
+needs a DSL if you can use normal Clojure?)
 
 ## Installation
 
@@ -87,6 +89,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
      transformation function is `keyword` unless you provide your own.
    - `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
+   - `--func`: a single-arg Clojure function that transforms input.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
    - `--version`: if present, prints current version of `jet` and exits.
@@ -108,9 +111,8 @@ $ echo '{"my key": 1}' | jet --from json --keywordize '#(keyword (str/replace % 
 $ echo '{"a": 1}' | jet --from json --to transit
 ["^ ","a",1]
 
-$ echo '[{:a {:b 1}} {:a {:b 2}}]' \
-| jet --from edn --to edn --query '(filter (= [:a :b] #jet/lit 1))'
-[{:a {:b 1}}]
+$ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
+1
 ```
 
 - Get the latest commit SHA and date for a project from Github:
@@ -164,6 +166,9 @@ $ echo '{"a": 1} {"a": 1}' | lein jet --from json --keywordize --collect --to ed
 ```
 
 ## Query
+
+EDIT 2021: if the query syntax isn't clear, you can now use `--func`to pass a
+normal Clojure function instead.
 
 The `--query` option supports an intermediate EDN transformation.
 
@@ -249,6 +254,6 @@ You will need leiningen and GraalVM.
 
 ## License
 
-Copyright © 2019 Michiel Borkent
+Copyright © 2019-2021 Michiel Borkent
 
 Distributed under the EPL License, same as Clojure. See LICENSE.

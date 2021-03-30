@@ -1,8 +1,8 @@
 (ns jet.main-test
   (:require
+   [clojure.string :as str]
    [clojure.test :as test :refer [deftest is testing]]
-   [jet.test-utils :refer [jet]]
-   [clojure.string :as str]))
+   [jet.test-utils :refer [jet]]))
 
 (deftest main-test
   (is (= "{\"a\" 1}\n"
@@ -80,3 +80,6 @@
 (deftest edn-reader-opts-test
   (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:default tagged-literal}")))
   (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))
+
+(deftest func-test
+  (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "#(-> % :a :b :c)"))))

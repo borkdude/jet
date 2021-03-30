@@ -42,7 +42,8 @@
         edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
                           (when opts
                             (eval-string opts)))
-        help (boolean (get opts "--help"))]
+        help (boolean (get opts "--help"))
+        func (first (get opts "--func"))]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -52,6 +53,7 @@
               (edn/read-string
                {:readers *data-readers*}
                (format "[%s]" query)))
+     :func func
      :interactive (or (and interactive (empty? interactive))
                       (not-empty (str/join " " interactive)))
      :collect collect
@@ -82,6 +84,7 @@
   --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --pretty: if present, pretty-prints JSON and EDN output.
   --edn-reader-opts: options passed to the EDN reader.
+  --func: a single-arg Clojure function that transforms input.
   --query: given a jet-lang query, transforms input. See doc/query.md for more.
   --collect: given separate values, collects them in a vector.
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
@@ -91,7 +94,7 @@
   [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
-                :interactive :collect
+                :func :interactive :collect
                 :edn-reader-opts
                 :help]} (parse-opts args)]
       (cond
@@ -114,7 +117,11 @@
               (let [input (if collect collected (next-val))]
                 (when-not (identical? ::formats/EOF input)
                   (let [input (if query (q/query input query)
-                                  input)]
+                                  input)
+                        input (if func
+                                (let [f (eval-string func)]
+                                  (f input))
+                                input)]
                     (case to
                       :edn (println (formats/generate-edn input pretty))
                       :json (println (formats/generate-json input pretty))
