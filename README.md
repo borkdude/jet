@@ -102,17 +102,23 @@ Examples:
 $ echo '{"a": 1}' | jet --from json --to edn
 {"a" 1}
 
-$ echo '{"a": 1}' | jet --from json --keywordize --to edn
+$ echo '{"a": 1}' | jet -i json --keywordize -o edn
 {:a 1}
 
-$ echo '{"my key": 1}' | jet --from json --keywordize '#(keyword (str/replace % " " "_"))' --to edn
+$ echo '{"my key": 1}' | jet -i json -k '#(keyword (str/replace % " " "_"))' -o edn
 {:my_key 1}
 
-$ echo '{"a": 1}' | jet --from json --to transit
+$ echo '{"a": 1}' | jet -i json -o transit
 ["^ ","a",1]
+
+$ echo '{:a {:b {:c 1}}}' | jet --query ':a :b :c'
+1
 
 $ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
 1
+
+$ echo '[1 2 3]' | jet -f '#(map inc %)'
+(2 3 4)
 ```
 
 - Get the latest commit SHA and date for a project from Github:
@@ -146,6 +152,8 @@ $ echo '#foo{:a 1}' | jet --edn-reader-opts "{:readers {'foo (fn [x] [:foo x])}}
 ```
 
 See this [blog](https://insideclojure.org/2018/06/21/tagged-literal/) by Alex Miller for more information on the `tagged-literal` function.
+
+Since jet 0.0.14 `--edn-reader-opts` defaults to `{:default tagged-literal}`.
 
 ## Streaming
 
