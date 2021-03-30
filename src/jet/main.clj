@@ -18,7 +18,7 @@
                     opts-map {}
                     current-opt nil]
                (if-let [opt (first options)]
-                 (if (starts-with? opt "--")
+                 (if (starts-with? opt "-")
                    (recur (rest options)
                           (assoc opts-map opt [])
                           opt)
@@ -26,24 +26,33 @@
                           (update opts-map current-opt conj opt)
                           current-opt))
                  opts-map))
-        from (some-> (get opts "--from") first keyword)
-        to (some-> (get opts "--to") first keyword)
-        keywordize (when-let [k (get opts "--keywordize")]
+        from (some-> (or (get opts "--from")
+                         (get opts "-i")) first keyword)
+        to (some-> (or (get opts "--to")
+                       (get opts "-o"))
+                   first keyword)
+        keywordize (when-let [k (or (get opts "--keywordize")
+                                    (get opts "-k"))]
                      (if (empty? k) true
                          (let [f (first k)]
                            (cond (= "true" f) true
                                  (= "false" f) false
                                  :else (eval-string f)))))
-        version (boolean (get opts "--version"))
-        pretty (boolean (get opts "--pretty"))
+        version (boolean (or (get opts "--version")
+                             (get opts "-v")))
+        pretty (boolean (or (get opts "--pretty")
+                            (get opts "-p")))
         query (first (get opts "--query"))
         interactive (get opts "--interactive")
         collect (boolean (get opts "--collect"))
         edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
-                          (when opts
-                            (eval-string opts)))
-        help (boolean (get opts "--help"))
-        func (first (get opts "--func"))]
+                          (if opts
+                            (eval-string opts)
+                            {:default tagged-literal}))
+        help (boolean (or (get opts "--help")
+                          (get opts "-h")))
+        func (first (or (get opts "--func")
+                        (get opts "-f")))]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -65,26 +74,19 @@
  []
  (str/trim (slurp (io/resource "JET_VERSION"))))
 
-(defn get-usage
-  "Gets the usage of the tool"
-  []
-  (str "Usage: jet [ --from <format> ] [ --to <format> ] [ --keywordize [ <key-fn> ] ] [ --pretty ] [ --edn-reader-opts ] [--query <query> ] [ --collect ] | [ --interactive <cmd> ]"))
-
 (defn print-help
   "Prints the help text"
   []
   (println (str "jet v" (get-version)))
-  (println)
-  (println (get-usage))
   (println "
-  --help: print this help text.
-  --version: print the current version of jet.
-  --from: edn, transit or json, defaults to edn.
-  --to: edn, transit or json, defaults to edn.
-  --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
-  --pretty: if present, pretty-prints JSON and EDN output.
+  -h, --help: print this help text.
+  -v, --version: print the current version of jet.
+  -i, --from: edn, transit or json, defaults to edn.
+  -o, --to: edn, transit or json, defaults to edn.
+  -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
+  -p, --pretty: if present, pretty-prints JSON and EDN output.
+  -f, --func: a single-arg Clojure function that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
-  --func: a single-arg Clojure function that transforms input.
   --query: given a jet-lang query, transforms input. See doc/query.md for more.
   --collect: given separate values, collects them in a vector.
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")

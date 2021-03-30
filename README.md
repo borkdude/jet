@@ -83,16 +83,16 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 
 `jet` supports the following options:
 
-   - `--from`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--to`: `edn`, `transit` or `json`, defaults to `edn`
-   - `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
+   - `-i`, `--from`: `edn`, `transit` or `json`, defaults to `edn`
+   - `-o`, `--to`: `edn`, `transit` or `json`, defaults to `edn`
+   - `-k`, `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
-   - `--pretty`: if present, pretty-prints JSON and EDN output.
+   - `-p`, `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
-   - `--func`: a single-arg Clojure function that transforms input.
+   - `-f`, `--func`: a single-arg Clojure function that transforms input.
    - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
-   - `--version`: if present, prints current version of `jet` and exits.
+   - `-v`, `--version`: if present, prints current version of `jet` and exits.
    - `--interactive [ cmd ]`: if present, starts an interactive shell. An
      initial command may be provided. See [here](#interactive-shell).
 
