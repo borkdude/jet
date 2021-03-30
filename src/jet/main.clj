@@ -31,9 +31,9 @@
         keywordize (when-let [k (get opts "--keywordize")]
                      (if (empty? k) true
                          (let [f (first k)]
-                             (= "true" f) true
-                             (= "false" f) false
-                             :else (eval-string f))))
+                           (cond (= "true" f) true
+                                 (= "false" f) false
+                                 :else (eval-string f)))))
         version (boolean (get opts "--version"))
         pretty (boolean (get opts "--pretty"))
         query (first (get opts "--query"))

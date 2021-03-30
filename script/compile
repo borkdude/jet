@@ -11,7 +11,7 @@ fi
 
 JET_VERSION=$(cat resources/JET_VERSION)
 
-lein with-profiles +clojure-1.10.2-alpha1 do clean, uberjar
+lein with-profiles +clojure-1.10.3 do clean, uberjar
 
 $GRAALVM_HOME/bin/native-image \
   -jar target/jet-$JET_VERSION-standalone.jar \
