@@ -42,7 +42,8 @@
                              (get opts "-v")))
         pretty (boolean (or (get opts "--pretty")
                             (get opts "-p")))
-        query (first (get opts "--query"))
+        query (first (or (get opts "--query")
+                         (get opts "-q")))
         interactive (get opts "--interactive")
         collect (boolean (get opts "--collect"))
         edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
@@ -87,7 +88,7 @@
   -p, --pretty: if present, pretty-prints JSON and EDN output.
   -f, --func: a single-arg Clojure function that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
-  --query: given a jet-lang query, transforms input. See doc/query.md for more.
+  -q, --query: given a jet-lang query, transforms input. See doc/query.md for more.
   --collect: given separate values, collects them in a vector.
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))

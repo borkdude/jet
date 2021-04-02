@@ -90,7 +90,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `-p`, `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function that transforms input.
-   - `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
+   - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `--collect`: given separate values, collects them in a vector.
    - `-v`, `--version`: if present, prints current version of `jet` and exits.
    - `--interactive [ cmd ]`: if present, starts an interactive shell. An
