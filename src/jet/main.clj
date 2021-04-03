@@ -13,7 +13,7 @@
 
 (set! *warn-on-reflection* true)
 
-(defn- parse-opts [options]
+(defn parse-opts [options]
   (let [opts (loop [options options
                     opts-map {}
                     current-opt nil]
