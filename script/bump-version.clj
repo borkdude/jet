@@ -27,9 +27,9 @@
                          patch (str (inc patch) "-SNAPSHOT")
                          new-version (str/join "." [major minor patch])]
                      (spit version-file new-version)
-                     (-> (p/process ["git" "commit" "-a" "-m" "Version bump"])
+                     (-> (p/process ["git" "commit" "-a" "-m" "Version bump"] {:inherit true})
                          (p/check))
-                     (-> (p/process ["git" "diff" "HEAD^" "HEAD"])
+                     (-> (p/process ["git" "diff" "HEAD^" "HEAD"] {:inherit true})
                          (p/check))
                      nil))
   (println "Expected: release | post-release."))
