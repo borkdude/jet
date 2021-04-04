@@ -87,7 +87,7 @@
   -o, --to: edn, transit or json, defaults to edn.
   -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   -p, --pretty: if present, pretty-prints JSON and EDN output.
-  -f, --func: a single-arg Clojure function that transforms input.
+  -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See doc/query.md for more.
   -c, --collect: given separate values, collects them in a vector.
