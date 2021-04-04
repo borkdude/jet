@@ -1,0 +1,15 @@
+# Changelog
+
+## 0.0.15
+
+- Add short options: `-q` for `--query`, `-c` for `--collect` (@dotemacs)
+- Add tests for option parsing (@dotemacs)
+- The `-f` / `--func` option can now read from a file
+
+## 0.0.14
+
+- Add short options: `-i` (input) for `--from`, `-o` (output) for `--to`
+- Add `--func` / `-f` option for executing function over input
+- Use `{:default tagged-literal}` as default data reader options when none is provided
+- Upgrade GraalVM to 21.0.0
+- Upgrade sci to 0.2.4
