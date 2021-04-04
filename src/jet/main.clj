@@ -123,7 +123,9 @@
               (let [input (if query (q/query input query)
                               input)
                     input (if func
-                            (let [f (eval-string func)]
+                            (let [f (eval-string (if (.exists (io/as-file func))
+                                                   (slurp func)
+                                                   func))]
                               (f input))
                             input)]
                 (case to

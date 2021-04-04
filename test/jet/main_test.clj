@@ -82,4 +82,6 @@
   (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))
 
 (deftest func-test
-  (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "#(-> % :a :b :c)"))))
+  (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "#(-> % :a :b :c)")))
+  (testing "when function is in a file"
+    (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "test-resources/fn.clj")))))
