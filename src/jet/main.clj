@@ -101,36 +101,36 @@
                 :func :interactive :collect
                 :edn-reader-opts
                 :help]} (parse-opts args)]
-      (cond
-          (nil? args) (print-help)
-          version (println (get-version))
-          interactive (start-jeti! interactive)
-          help (print-help)
-          :else
-          (let [reader (case from
-                         :json (formats/json-parser)
-                         :transit (formats/transit-reader)
-                         :edn nil)
-                next-val (case from
-                           :edn #(formats/parse-edn edn-reader-opts *in*)
-                           :json #(formats/parse-json reader keywordize)
-                           :transit #(formats/parse-transit reader))
-                collected (when collect (vec (take-while #(not= % ::formats/EOF)
-                                                         (repeatedly next-val))))]
-            (loop []
-              (let [input (if collect collected (next-val))]
-                (when-not (identical? ::formats/EOF input)
-                  (let [input (if query (q/query input query)
-                                  input)
-                        input (if func
-                                (let [f (eval-string func)]
-                                  (f input))
-                                input)]
-                    (case to
-                      :edn (println (formats/generate-edn input pretty))
-                      :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))))
-                  (when-not collect (recur)))))))))
+    (cond
+      (nil? args) (print-help)
+      version (println (get-version))
+      interactive (start-jeti! interactive)
+      help (print-help)
+      :else
+      (let [reader (case from
+                     :json (formats/json-parser)
+                     :transit (formats/transit-reader)
+                     :edn nil)
+            next-val (case from
+                       :edn #(formats/parse-edn edn-reader-opts *in*)
+                       :json #(formats/parse-json reader keywordize)
+                       :transit #(formats/parse-transit reader))
+            collected (when collect (vec (take-while #(not= % ::formats/EOF)
+                                                     (repeatedly next-val))))]
+        (loop []
+          (let [input (if collect collected (next-val))]
+            (when-not (identical? ::formats/EOF input)
+              (let [input (if query (q/query input query)
+                              input)
+                    input (if func
+                            (let [f (eval-string func)]
+                              (f input))
+                            input)]
+                (case to
+                  :edn (println (formats/generate-edn input pretty))
+                  :json (println (formats/generate-json input pretty))
+                  :transit (println (formats/generate-transit input))))
+              (when-not collect (recur)))))))))
 
 ;;;; Scratch
 
