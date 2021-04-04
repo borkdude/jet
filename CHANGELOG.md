@@ -4,7 +4,7 @@
 
 - Add short options: `-q` for `--query`, `-c` for `--collect` ([@dotemacs](https://github.com/dotemacs))
 - Add tests for option parsing ([@dotemacs](https://github.com/dotemacs))
-- The `-f` / `--func` option can now read from a file
+- The `-f` / `--func` option can now read from a file ([@dotemacs](https://github.com/dotemacs))
 
 ## 0.0.14
 
