@@ -91,7 +91,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function that transforms input.
    - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
-   - `-C`, `--collect`: given separate values, collects them in a vector.
+   - `-c`, `--collect`: given separate values, collects them in a vector.
    - `-v`, `--version`: if present, prints current version of `jet` and exits.
    - `--interactive [ cmd ]`: if present, starts an interactive shell. An
      initial command may be provided. See [here](#interactive-shell).

@@ -26,7 +26,7 @@
   (testing "interactive"
     (is (true? (:interactive (parse-opts '("--interactive"))))))
   (opt-test {:opt :collect
-             :short-opt '("-C")
+             :short-opt '("-c")
              :long-opt '("--collect")
              :outcome true})
   (opt-test {:opt :from
