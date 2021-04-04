@@ -87,7 +87,7 @@
   -o, --to: edn, transit or json, defaults to edn.
   -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   -p, --pretty: if present, pretty-prints JSON and EDN output.
-  -f, --func: a single-arg Clojure function that transforms input.
+  -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See doc/query.md for more.
   -c, --collect: given separate values, collects them in a vector.
@@ -101,36 +101,38 @@
                 :func :interactive :collect
                 :edn-reader-opts
                 :help]} (parse-opts args)]
-      (cond
-          (nil? args) (print-help)
-          version (println (get-version))
-          interactive (start-jeti! interactive)
-          help (print-help)
-          :else
-          (let [reader (case from
-                         :json (formats/json-parser)
-                         :transit (formats/transit-reader)
-                         :edn nil)
-                next-val (case from
-                           :edn #(formats/parse-edn edn-reader-opts *in*)
-                           :json #(formats/parse-json reader keywordize)
-                           :transit #(formats/parse-transit reader))
-                collected (when collect (vec (take-while #(not= % ::formats/EOF)
-                                                         (repeatedly next-val))))]
-            (loop []
-              (let [input (if collect collected (next-val))]
-                (when-not (identical? ::formats/EOF input)
-                  (let [input (if query (q/query input query)
-                                  input)
-                        input (if func
-                                (let [f (eval-string func)]
-                                  (f input))
-                                input)]
-                    (case to
-                      :edn (println (formats/generate-edn input pretty))
-                      :json (println (formats/generate-json input pretty))
-                      :transit (println (formats/generate-transit input))))
-                  (when-not collect (recur)))))))))
+    (cond
+      (nil? args) (print-help)
+      version (println (get-version))
+      interactive (start-jeti! interactive)
+      help (print-help)
+      :else
+      (let [reader (case from
+                     :json (formats/json-parser)
+                     :transit (formats/transit-reader)
+                     :edn nil)
+            next-val (case from
+                       :edn #(formats/parse-edn edn-reader-opts *in*)
+                       :json #(formats/parse-json reader keywordize)
+                       :transit #(formats/parse-transit reader))
+            collected (when collect (vec (take-while #(not= % ::formats/EOF)
+                                                     (repeatedly next-val))))]
+        (loop []
+          (let [input (if collect collected (next-val))]
+            (when-not (identical? ::formats/EOF input)
+              (let [input (if query (q/query input query)
+                              input)
+                    input (if func
+                            (let [f (eval-string (if (.exists (io/as-file func))
+                                                   (slurp func)
+                                                   func))]
+                              (f input))
+                            input)]
+                (case to
+                  :edn (println (formats/generate-edn input pretty))
+                  :json (println (formats/generate-json input pretty))
+                  :transit (println (formats/generate-transit input))))
+              (when-not collect (recur)))))))))
 
 ;;;; Scratch
 

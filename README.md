@@ -89,7 +89,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
      transformation function is `keyword` unless you provide your own.
    - `-p`, `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
-   - `-f`, `--func`: a single-arg Clojure function that transforms input.
+   - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
    - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `-c`, `--collect`: given separate values, collects them in a vector.
    - `-v`, `--version`: if present, prints current version of `jet` and exits.
@@ -115,6 +115,11 @@ $ echo '{:a {:b {:c 1}}}' | jet --query ':a :b :c'
 1
 
 $ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
+1
+
+$ cat /tmp/fn.clj
+#(-> % :a :b :c)
+$ echo '{:a {:b {:c 1}}}' | jet --func /tmp/fn.clj
 1
 
 $ echo '[1 2 3]' | jet -f '#(map inc %)'
