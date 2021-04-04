@@ -45,7 +45,8 @@
         query (first (or (get opts "--query")
                          (get opts "-q")))
         interactive (get opts "--interactive")
-        collect (boolean (get opts "--collect"))
+        collect (boolean (or (get opts "--collect")
+                             (get opts "-C")))
         edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
                           (if opts
                             (eval-string opts)
@@ -89,7 +90,7 @@
   -f, --func: a single-arg Clojure function that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See doc/query.md for more.
-  --collect: given separate values, collects them in a vector.
+  -C, --collect: given separate values, collects them in a vector.
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
 

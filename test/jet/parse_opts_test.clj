@@ -25,6 +25,10 @@
     (is (nil? (:edn-reader-opts (parse-opts '("--edn-reader-opts" "nil"))))))
   (testing "interactive"
     (is (true? (:interactive (parse-opts '("--interactive"))))))
+  (opt-test {:opt :collect
+             :short-opt '("-C")
+             :long-opt '("--collect")
+             :outcome true})
   (opt-test {:opt :from
              :short-opt '("-i" "json")
              :long-opt '("--from" "json")
