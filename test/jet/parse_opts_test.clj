@@ -37,10 +37,10 @@
              :short-opt '("-o" "json")
              :long-opt '("--to" "json")
              :outcome :json})
-  (opt-test {:opt :query
-             :short-opt '("-q")
-             :long-opt '("--query")
-             :outcome nil})
+  (opt-test {:opt       :query
+             :short-opt '("-q" ":a")
+             :long-opt  '("--query" ":a")
+             :outcome   [:a]})
   (opt-test {:opt :version
              :short-opt '("-v")
              :long-opt '("--version")
@@ -58,6 +58,6 @@
              :long-opt '("--keywordize")
              :outcome true})
   (opt-test {:opt :func
-             :short-opt '("-f" nil)
-             :long-opt '("--func" nil)
-             :outcome nil}))
+             :short-opt '("-f" "nil")
+             :long-opt '("--func" "nil")
+             :outcome "nil"}))

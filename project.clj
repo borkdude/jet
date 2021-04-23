@@ -9,6 +9,7 @@
             :url "http://opensource.org/licenses/eclipse-1.0.php"}
   :source-paths ["src"]
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/tools.cli "1.0.206"]
                  [com.cognitect/transit-clj "0.8.319"]
                  [cheshire "5.9.0"]
                  [fipp "0.6.22"]
