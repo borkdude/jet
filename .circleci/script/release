@@ -5,6 +5,13 @@ mkdir -p /tmp/release
 cp jet /tmp/release
 VERSION=$(cat resources/JET_VERSION)
 
+# release jar, adapted from https://github.com/clj-kondo/clj-kondo/blob/master/.circleci/script/release
+
+if [[ "$JET_PLATFORM" = "linux" ]]; then
+    jar="target/jet-$VERSION-standalone.jar"
+    cp "$jar" /tmp/release
+fi
+
 cd /tmp/release
 
 ## release binary as zip archive
