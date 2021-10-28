@@ -144,17 +144,3 @@
                   :json (println (formats/generate-json input pretty))
                   :transit (println (formats/generate-transit input))))
               (when-not collect (recur)))))))))
-
-;;;; Scratch
-
-(comment
-  (eval-string "(keyword (csk/->kebab-case \"anApple\"))"
-    {:namespaces {'csk {'->kebab-case csk/->kebab-case}}})
-  (eval-string* csk-ctx "(keyword (csk/->kebab-case \"anApple\"))")
-  (defn jet [input & args]
-    (with-out-str
-      (with-in-str input
-        (apply -main args))))
-  (jet "{\"anApple\":2} {\"HelloWorld\":3} {\"looks_good\":4}" "--from" "json" "--keywordize" "#(-> % csk/->kebab-case keyword)")
-  (jet "{\"anApple\":2} {\"a\":3} {\"a\":4}" "--from" "json" "--keywordize" "#(-> % csk/->snake_case keyword)")
-  ,)
