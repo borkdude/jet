@@ -87,6 +87,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `-o`, `--to`: `edn`, `transit` or `json`, defaults to `edn`
    - `-k`, `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The default
      transformation function is `keyword` unless you provide your own.
+     In addition, all case conversion functions from camel-snake-kebab lib are available under ns `csk`.
+     e.g. "#(-> % csk/->kebab-case keyword)". Ref: https://clj-commons.org/camel-snake-kebab/
    - `-p`, `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
@@ -107,6 +109,9 @@ $ echo '{"a": 1}' | jet -i json --keywordize -o edn
 
 $ echo '{"my key": 1}' | jet -i json -k '#(keyword (str/replace % " " "_"))' -o edn
 {:my_key 1}
+
+$ echo '{"anApple": 1}' | jet -i json -k '#(-> % csk/->kebab-case keyword)' -o edn
+{:an-apple 1}
 
 $ echo '{"a": 1}' | jet -i json -o transit
 ["^ ","a",1]

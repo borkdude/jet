@@ -157,7 +157,7 @@
                         (recur state current-id current-id))
                     (:jeti/quit :jeti/exit) (println "Goodbye for now!")
                     :jeti/set-val (let [{:keys [:state :next-id]}
-                                        (jeti-set! state current-id first-opts )]
+                                        (jeti-set! state current-id first-opts)]
                                     (recur state current-id next-id))
                     :jeti/slurp
                     (let [{:keys [:state :next-id]}
@@ -189,7 +189,7 @@
                                           print-level)))
                            current-id current-id)
                     :jeti/debug (do (prn state)
-                                    (recur state current-id current-id)            )
+                                    (recur state current-id current-id))
                     (do
                       (println "I did not understand your command.")
                       (recur state current-id current-id)))
