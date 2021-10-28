@@ -89,8 +89,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
      default transformation function is `keyword` unless you provide your own.
      In addition, all case conversion functions from the
      [camel-snake-kebab](https://clj-commons.org/camel-snake-kebab/) library are
-     available under ns `camel-snake-kebab.core` aliased as `csk`.  e.g. "#(-> %
-     csk/->kebab-case keyword)".
+     available under ns `camel-snake-kebab.core` aliased as `csk`.  e.g. `#(-> %
+     csk/->kebab-case keyword)`.
    - `-p`, `--pretty`: if present, pretty-prints JSON and EDN output.
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
