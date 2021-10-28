@@ -13,7 +13,7 @@
                  [cheshire "5.9.0"]
                  [fipp "0.6.22"]
                  [commons-io/commons-io "2.6"]
-                 [borkdude/sci "0.2.4"]
+                 [org.babashka/sci "0.2.7"]
                  [camel-snake-kebab "0.4.2"]]
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.9.0"]]}
              :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.10.3"]]}

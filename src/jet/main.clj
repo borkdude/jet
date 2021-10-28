@@ -1,6 +1,7 @@
 (ns jet.main
   {:no-doc true}
   (:require
+   [camel-snake-kebab.core :as csk]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.string :as str :refer [starts-with?]]
@@ -8,14 +9,13 @@
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
-   [sci.core :as sci :refer [eval-string eval-string*]]
-   [camel-snake-kebab.core :as csk])
+   [sci.core :as sci])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
 
-(def csk-ctx
-  (sci/init {:namespaces {'csk
+(def ctx
+  (sci/init {:namespaces {'camel-snake-kebab.core
                           {'->PascalCase csk/->PascalCase
                            '->camelCase csk/->camelCase
                            '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
@@ -23,6 +23,8 @@
                            '->kebab-case csk/->kebab-case
                            '->Camel_Snake_Case csk/->Camel_Snake_Case
                            '->HTTP-Header-Case csk/->HTTP-Header-Case}}}))
+
+(sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
 (defn parse-opts [options]
   (let [opts (loop [options options
@@ -48,7 +50,7 @@
                          (let [f (first k)]
                            (cond (= "true" f) true
                                  (= "false" f) false
-                                 :else (eval-string* csk-ctx f)))))
+                                 :else (sci/eval-string* ctx f)))))
         version (boolean (or (get opts "--version")
                              (get opts "-v")))
         pretty (boolean (or (get opts "--pretty")
@@ -60,7 +62,7 @@
                              (get opts "-c")))
         edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
                           (if opts
-                            (eval-string opts)
+                            (sci/eval-string* ctx opts)
                             {:default tagged-literal}))
         help (boolean (or (get opts "--help")
                           (get opts "-h")))
@@ -134,9 +136,9 @@
               (let [input (if query (q/query input query)
                               input)
                     input (if func
-                            (let [f (eval-string (if (.exists (io/as-file func))
-                                                   (slurp func)
-                                                   func))]
+                            (let [f (sci/eval-string* ctx (if (.exists (io/as-file func))
+                                                            (slurp func)
+                                                            func))]
                               (f input))
                             input)]
                 (case to
