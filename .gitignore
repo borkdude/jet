@@ -12,3 +12,4 @@ pom.xml.asc
 .hg/
 /jet
 .clj-kondo/.cache
+.lsp/.cache
