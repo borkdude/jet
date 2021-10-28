@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 rm -rf /tmp/release
 mkdir -p /tmp/release
 cp jet /tmp/release
@@ -8,6 +10,7 @@ VERSION=$(cat resources/JET_VERSION)
 # release jar, adapted from https://github.com/clj-kondo/clj-kondo/blob/master/.circleci/script/release
 
 if [[ "$JET_PLATFORM" = "linux" ]]; then
+    lein with-profiles +clojure-1.10.3 do clean, uberjar
     jar="target/jet-$VERSION-standalone.jar"
     cp "$jar" /tmp/release
 fi
