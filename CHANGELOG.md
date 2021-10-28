@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.16
+
+- Allow keywordize fn to access all available conversion functions from camel-snake-kebab lib. e.g. `csk/->PascalCase`
+
 ## 0.0.15
 
 - Add short options: `-q` for `--query`, `-c` for `--collect` ([@dotemacs](https://github.com/dotemacs))

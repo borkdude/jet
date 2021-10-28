@@ -8,10 +8,21 @@
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
-   [sci.core :refer [eval-string]])
+   [sci.core :as sci :refer [eval-string eval-string*]]
+   [camel-snake-kebab.core :as csk])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
+
+(def csk-ctx
+  (sci/init {:namespaces {'csk
+                          {'->PascalCase csk/->PascalCase
+                           '->camelCase csk/->camelCase
+                           '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
+                           '->snake_case csk/->snake_case
+                           '->kebab-case csk/->kebab-case
+                           '->Camel_Snake_Case csk/->Camel_Snake_Case
+                           '->HTTP-Header-Case csk/->HTTP-Header-Case}}}))
 
 (defn parse-opts [options]
   (let [opts (loop [options options
@@ -37,7 +48,7 @@
                          (let [f (first k)]
                            (cond (= "true" f) true
                                  (= "false" f) false
-                                 :else (eval-string f)))))
+                                 :else (eval-string* csk-ctx f)))))
         version (boolean (or (get opts "--version")
                              (get opts "-v")))
         pretty (boolean (or (get opts "--pretty")
@@ -72,9 +83,9 @@
      :help help}))
 
 (defn get-version
- "Gets the current version of the tool"
- []
- (str/trim (slurp (io/resource "JET_VERSION"))))
+  "Gets the current version of the tool"
+  []
+  (str/trim (slurp (io/resource "JET_VERSION"))))
 
 (defn print-help
   "Prints the help text"
@@ -137,4 +148,13 @@
 ;;;; Scratch
 
 (comment
-)
+  (eval-string "(keyword (csk/->kebab-case \"anApple\"))"
+    {:namespaces {'csk {'->kebab-case csk/->kebab-case}}})
+  (eval-string* csk-ctx "(keyword (csk/->kebab-case \"anApple\"))")
+  (defn jet [input & args]
+    (with-out-str
+      (with-in-str input
+        (apply -main args))))
+  (jet "{\"anApple\":2} {\"HelloWorld\":3} {\"looks_good\":4}" "--from" "json" "--keywordize" "#(-> % csk/->kebab-case keyword)")
+  (jet "{\"anApple\":2} {\"a\":3} {\"a\":4}" "--from" "json" "--keywordize" "#(-> % csk/->snake_case keyword)")
+  ,)
