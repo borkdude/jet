@@ -102,7 +102,7 @@
   -p, --pretty: if present, pretty-prints JSON and EDN output.
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
-  -q, --query: given a jet-lang query, transforms input. See doc/query.md for more.
+  -q, --query: given a jet-lang query, transforms input. See https://cljdoc.org/d/borkdude/jet/CURRENT/doc/query for more.
   -c, --collect: given separate values, collects them in a vector.
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
