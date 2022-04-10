@@ -46,7 +46,7 @@ jobs:
     working_directory: ~/repo
     environment:
       LEIN_ROOT: "true"
-      GRAALVM_HOME: /home/circleci/graalvm-ce-java11-21.0.0
+      GRAALVM_HOME: /home/circleci/graalvm-ce-java11-22.0.0.2
       JET_PLATFORM: linux # used in release script
       JET_TEST_ENV: native
     steps:
@@ -69,9 +69,9 @@ jobs:
           name: Download GraalVM
           command: |
             cd ~
-            if ! [ -d graalvm-ce-java11-21.0.0 ]; then
-              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/graalvm-ce-java11-linux-amd64-21.0.0.tar.gz
-              tar xzf graalvm-ce-java11-linux-amd64-21.0.0.tar.gz
+            if ! [ -d graalvm-ce-java11-22.0.0.2 ]; then
+              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.0.0.2/graalvm-ce-java11-linux-amd64-22.0.0.2.tar.gz
+              tar xzf graalvm-ce-java11-linux-amd64-22.0.0.2.tar.gz
             fi
       - run:
           name: Build binary
@@ -93,7 +93,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-            - ~/graalvm-ce-java11-21.0.0
+            - ~/graalvm-ce-java11-22.0.0.2
           key: buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release
@@ -102,7 +102,7 @@ jobs:
     macos:
       xcode: "12.4.0"
     environment:
-      GRAALVM_HOME: /Users/distiller/graalvm-ce-java11-21.0.0/Contents/Home
+      GRAALVM_HOME: /Users/distiller/graalvm-ce-java11-22.0.0.2/Contents/Home
       JET_PLATFORM: macos # used in release script
       JET_TEST_ENV: native
     steps:
@@ -124,9 +124,9 @@ jobs:
           command: |
             cd ~
             ls -la
-            if ! [ -d graalvm-ce-java11-21.0.0 ]; then
-              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/graalvm-ce-java11-darwin-amd64-21.0.0.tar.gz
-              tar xzf graalvm-ce-java11-darwin-amd64-21.0.0.tar.gz
+            if ! [ -d graalvm-ce-java11-22.0.0.2 ]; then
+              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.0.0.2/graalvm-ce-java11-darwin-amd64-22.0.0.2.tar.gz
+              tar xzf graalvm-ce-java11-darwin-amd64-22.0.0.2.tar.gz
             fi
       - run:
           name: Build binary
@@ -148,7 +148,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-            - ~/graalvm-ce-java11-21.0.0
+            - ~/graalvm-ce-java11-22.0.0.2
           key: buildmac-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: /tmp/release

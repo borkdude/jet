@@ -26,6 +26,7 @@ $GRAALVM_HOME/bin/native-image \
   --verbose \
   --no-fallback \
   --no-server \
+  -H:+StaticExecutableWithDynamicLibC \
   "-J-Xmx3g"
 
 lein clean
