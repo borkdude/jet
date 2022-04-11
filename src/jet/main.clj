@@ -168,5 +168,4 @@
 
 (defn -main
   [& args]
-  (let [exit-code (run args)]
-    (System/exit exit-code)))
+  (run args))
