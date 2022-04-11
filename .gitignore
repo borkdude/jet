@@ -11,5 +11,5 @@ pom.xml.asc
 .hgignore
 .hg/
 /jet
-.clj-kondo/.cache
-.lsp/.cache
+.cache
+.cache
