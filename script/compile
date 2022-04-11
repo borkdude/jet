@@ -11,13 +11,31 @@ fi
 
 JET_VERSION=$(cat resources/JET_VERSION)
 
-lein with-profiles +clojure-1.10.3 do clean, uberjar
+lein with-profiles +clojure-1.10.3 "do" clean, uberjar
 
-$GRAALVM_HOME/bin/native-image \
-  -jar target/jet-$JET_VERSION-standalone.jar \
-  -H:+ReportExceptionStackTraces \
-  --verbose \
-  --no-fallback \
-  "-J-Xmx3g"
+BABASHKA_STATIC=${BABASHKA_STATIC:-}
+BABASHKA_MUSL=${BABASHKA_MUSL:-}
+
+args=("-jar" "target/jet-$JET_VERSION-standalone.jar"
+      "-H:+ReportExceptionStackTraces"
+      "--verbose"
+      "--no-fallback"
+      "--no-server"
+      "-J-Xmx3g"
+)
+
+if [ "$BABASHKA_STATIC" = "true" ]; then
+    args+=("--static")
+    if [ "$BABASHKA_MUSL" = "true" ]; then
+        args+=("--libc=musl"
+               # see https://github.com/oracle/graal/issues/3398
+               "-H:CCompilerOption=-Wl,-z,stack-size=2097152")
+    else
+        # see https://github.com/oracle/graal/issues/3737
+        args+=("-H:+StaticExecutableWithDynamicLibC")
+    fi
+fi
+
+"$GRAALVM_HOME/bin/native-image" "${args[@]}"
 
 lein clean

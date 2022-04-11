@@ -107,8 +107,7 @@
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
 
-(defn -main
-  [& args]
+(defn main [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
                 :func :interactive :collect
@@ -146,3 +145,27 @@
                   :json (println (formats/generate-json input pretty))
                   :transit (println (formats/generate-transit input))))
               (when-not collect (recur)))))))))
+
+(def musl?
+  "Captured at compile time, to know if we are running inside a
+  statically compiled executable with musl."
+  (and (= "true" (System/getenv "BABASHKA_STATIC"))
+       (= "true" (System/getenv "BABASHKA_MUSL"))))
+
+(defmacro run [args]
+  (if musl?
+    ;; When running in musl-compiled static executable we lift execution of bb
+    ;; inside a thread, so we have a larger than default stack size, set by an
+    ;; argument to the linker. See https://github.com/oracle/graal/issues/3398
+    `(let [v# (volatile! nil)
+           f# (fn []
+                (vreset! v# (apply main ~args)))]
+       (doto (Thread. nil f# "main")
+         (.start)
+         (.join))
+       @v#)
+    `(apply main ~args)))
+
+(defn -main
+  [& args]
+  (run args))
