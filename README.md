@@ -241,7 +241,7 @@ put this function somewhere in your Emacs configuration, highlight a
 region, and press `M-x jet-pretty <enter>`:
 
 ``` emacs-lisp
-(defun jet ()
+(defun jet-pretty ()
   (interactive)
   (shell-command-on-region
    (region-beginning)

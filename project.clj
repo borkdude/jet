@@ -18,7 +18,8 @@
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.9.0"]]}
              :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.10.3"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}
-             :uberjar {:global-vars {*assert* false}
+             :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "0.1.4"]]
+                       :global-vars {*assert* false}
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"
                                   "-Dclojure.spec.skip-macros=true"]
                        :aot :all}}

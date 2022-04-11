@@ -26,6 +26,13 @@ These Clojure-like functions are supported in jet-lang:
 - copy the entire input value: `identity` (for short `id`, thanks Haskell).
 - print the result of an intermediate query: `jet/debug`.
 - arithmetic: `+`, `-`, `*`, `/`, `inc`, `dec`.
+- integers, keywords, and strings lookup up a value in the input (that's whe we need `#jet/lit`)
+
+All these functions have an implicit _input_ argument.
+
+To pass the input through a sequence of queries, just put them inside a vector.
+Thus `[:user :name]` will get the name of the user inside the input. (You can omit
+the vector for the top-level query.)
 
 To learn more about how to use them, read the [tutorial](#tutorial) or go
 straight to the [gallery](#gallery).

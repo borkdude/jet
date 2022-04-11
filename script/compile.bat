@@ -21,13 +21,7 @@ call %GRAALVM_HOME%\bin\gu.cmd install native-image
 Rem the --no-server option is not supported in GraalVM Windows.
 call %GRAALVM_HOME%\bin\native-image.cmd ^
   "-jar" "target/jet-%JET_VERSION%-standalone.jar" ^
-  "-H:Name=jet" ^
   "-H:+ReportExceptionStackTraces" ^
-  "-J-Dclojure.spec.skip-macros=true" ^
-  "-J-Dclojure.compiler.direct-linking=true" ^
-  "-H:IncludeResources=JET_VERSION" ^
-  "-H:ReflectionConfigurationFiles=reflection.json" ^
-  "--initialize-at-build-time"  ^
   "-H:Log=registerResource:" ^
   "--no-fallback" ^
   "--verbose" ^
