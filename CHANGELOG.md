@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.0.16
+## 0.1.1
+
+- Compile linux binary as static with musl
+
+## 0.1.0
 
 - Allow keywordize fn to access all available conversion functions from camel-snake-kebab lib. e.g. `csk/->PascalCase`
 
