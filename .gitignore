@@ -13,3 +13,4 @@ pom.xml.asc
 /jet
 .cache
 .cache
+jet.build_artifacts.txt
