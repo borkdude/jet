@@ -127,13 +127,16 @@ $ echo '{:a {:b {:c 1}}}' | jet --query ':a :b :c'
 $ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
 1
 
+$ echo '{:a {:b {:c [1 2]}}}' | jet --thread-last ':a :b :c (map inc)'
+1
+
 $ cat /tmp/fn.clj
 #(-> % :a :b :c)
 $ echo '{:a {:b {:c 1}}}' | jet --func /tmp/fn.clj
 1
 
-$ echo '[1 2 3]' | jet -f '#(map inc %)'
-(2 3 4)
+$ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
+{:a {:a 2}}
 ```
 
 - Get the latest commit SHA and date for a project from Github:
@@ -145,12 +148,21 @@ $ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
 {:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
 ```
 
-- Get raw output from query rather than wrapped in quotes
+## Raw output
+
+Get raw output from query rather than wrapped in quotes:
 
 ```shellsession
 $ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a" --to edn
 "hello there"
 
+$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a symbol" --to edn
+hello there
+```
+
+or simply use `println` to get rid of the quotes:
+
+``` clojure
 $ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a symbol" --to edn
 hello there
 ```
@@ -190,8 +202,8 @@ $ echo '{"a": 1} {"a": 1}' | lein jet --from json --keywordize --collect --to ed
 
 ## Query
 
-EDIT 2021: if the query syntax isn't clear, you can now use `--func`to pass a
-normal Clojure function instead.
+EDIT 2021: if the query syntax isn't clear, you can now use `--func`,
+`--thread-last` or `--thread-first` to pass a normal Clojure function/expression instead.
 
 The `--query` option supports an intermediate EDN transformation.
 
@@ -204,6 +216,15 @@ $ echo '{:a {:b 1}}' | jet --query '[:a :b]'
 
 The query language should be pretty familiar to users of Clojure and `jq`. For
 more information about the query language, read the docs [here](doc/query.md).
+
+## Specter
+
+As of version `0.2.18` the [specter](https://github.com/redplanetlabs/specter) library is available in `--func`, `--thread-first` and `--thread-last`:
+
+``` clojure
+$ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
+{:a {:a 2}}
+```
 
 ## Interactive shell
 
@@ -277,6 +298,6 @@ You will need leiningen and GraalVM.
 
 ## License
 
-Copyright © 2019-2021 Michiel Borkent
+Copyright © 2019-2022 Michiel Borkent
 
 Distributed under the EPL License, same as Clojure. See LICENSE.

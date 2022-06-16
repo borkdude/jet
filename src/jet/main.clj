@@ -32,6 +32,11 @@
 
 (sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
+(defn coerce-file [s]
+  (if (.exists (io/as-file s))
+    (slurp s)
+    s))
+
 (defn parse-opts [options]
   (let [opts (loop [options options
                     opts-map {}
@@ -71,12 +76,15 @@
                             {:default tagged-literal}))
         help (boolean (or (get opts "--help")
                           (get opts "-h")))
-        thread-last (first (or (get opts "--thread-last")
-                               (get opts "-t")))
-        thread-first (first (or (get opts "--thread-first")
-                                (get opts "-T")))
-        func (or (first (or (get opts "--func")
-                            (get opts "-f")))
+        thread-last (some-> (first (or (get opts "--thread-last")
+                                       (get opts "-t")))
+                            coerce-file)
+        thread-first (some-> (first (or (get opts "--thread-first")
+                                        (get opts "-T")))
+                             coerce-file)
+        func (or (some-> (first (or (get opts "--func")
+                                    (get opts "-f")))
+                         coerce-file)
                  (when thread-first
                    (format "#(-> %% %s)" thread-first))
                  (when thread-last
@@ -155,9 +163,7 @@
               (let [input (if query (q/query input query)
                               input)
                     input (if func
-                            (let [f (sci/eval-string* ctx (if (.exists (io/as-file func))
-                                                            (slurp func)
-                                                            func))]
+                            (let [f (sci/eval-string* ctx func)]
                               (f input))
                             input)]
                 (case to

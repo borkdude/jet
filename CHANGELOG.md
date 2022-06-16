@@ -1,10 +1,13 @@
 # Changelog
 
-## 0.2.0 (unreleased)
+## 0.2.18 (2022.06.16)
 
 - Provide macOS `aarch64` binary
-- Reverse `--pretty` to `--no-pretty`
-- Introduce colored output when pretty-printing, suppress with `--no-colors`
+- Reverse `--pretty` to `--no-pretty`: pretty printing is now done by default
+- Introduce colored output when pretty-printing. Defaults to `--colors auto`
+  which only prints colors when connected to terminal. Toggle manually with
+  `--colors true` or `--colors false`.
+- Integrate [specter](https://github.com/redplanetlabs/specter)
 
 ## 0.1.1
 
