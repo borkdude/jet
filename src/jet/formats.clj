@@ -13,13 +13,22 @@
   (:import
    [com.fasterxml.jackson.core JsonFactory]
    [java.io Reader]
-   [org.apache.commons.io.input ReaderInputStream]
-   [org.fusesource.jansi.internal CLibrary]))
+   [org.apache.commons.io.input ReaderInputStream]))
 
 (set! *warn-on-reflection* true)
 
+(def ^:private graal?
+  (boolean (resolve 'org.graalvm.nativeimage.ProcessProperties)))
+
+(defmacro ^:no-doc
+  if-graal [then else]
+  (if graal?
+    then else))
+
 (defn in-terminal? []
-  (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO)))
+  (if-graal
+      (pos? (org.babashka.CLibrary/isatty 2))
+    false))
 
 (defn pprint [x no-colorize]
   (if (and (in-terminal?)

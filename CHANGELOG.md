@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+
+- Provide macOS `aarch64` binary
+- Reverse `--pretty` to `--no-pretty`
+- Introduce colored output when pretty-printing, suppress with `--no-colors`
+
 ## 0.1.1
 
 - Compile linux binary as static with musl
