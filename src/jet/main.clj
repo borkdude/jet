@@ -9,21 +9,26 @@
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
+   [jet.specter :as specter :refer [config]]
    [sci.core :as sci])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
 
 (def ctx
-  (sci/init {:namespaces {'camel-snake-kebab.core
-                          {'->PascalCase csk/->PascalCase
-                           '->camelCase csk/->camelCase
-                           '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
-                           '->snake_case csk/->snake_case
-                           '->kebab-case csk/->kebab-case
-                           '->Camel_Snake_Case csk/->Camel_Snake_Case
-                           '->HTTP-Header-Case csk/->HTTP-Header-Case}}
-             :aliases {'str 'clojure.string}}))
+  (-> (sci/init {:namespaces {'camel-snake-kebab.core
+                              {'->PascalCase csk/->PascalCase
+                               '->camelCase csk/->camelCase
+                               '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
+                               '->snake_case csk/->snake_case
+                               '->kebab-case csk/->kebab-case
+                               '->Camel_Snake_Case csk/->Camel_Snake_Case
+                               '->HTTP-Header-Case csk/->HTTP-Header-Case}
+                              'com.rpl.specter
+                              {}}
+                 :aliases {'str 'clojure.string
+                           's 'com.rpl.specter}})
+      (sci/merge-opts config)))
 
 (sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
@@ -69,6 +74,7 @@
         func (first (or (get opts "--func")
                         (get opts "-f")))
         colors (or (some-> (get opts "--colors")
+                           first
                            keyword)
                    :auto)]
     {:from (or from :edn)
@@ -119,7 +125,6 @@
                 :edn-reader-opts
                 :help :colors]} (parse-opts args)]
     (cond
-      (nil? args) (print-help)
       version (println (get-version))
       interactive (start-jeti! interactive colors)
       help (print-help)
@@ -146,10 +151,23 @@
                               (f input))
                             input)]
                 (case to
-                  :edn (println (formats/generate-edn input (not no-pretty) colors))
-                  :json (println (formats/generate-json input (not no-pretty)))
-                  :transit (println (formats/generate-transit input))))
+                  :edn (some->
+                        input
+                        (formats/generate-edn (not no-pretty) colors)
+                        println)
+                  :json (some->
+                         input
+                         (formats/generate-json (not no-pretty))
+                         println)
+                  :transit (some->
+                            (formats/generate-transit input)
+                            println)))
               (when-not collect (recur)))))))))
+
+;; enable println, prn etc.
+(sci/alter-var-root sci/out (constantly *out*))
+(sci/alter-var-root sci/err (constantly *err*))
+(vreset! specter/sci-ctx ctx)
 
 (def musl?
   "Captured at compile time, to know if we are running inside a

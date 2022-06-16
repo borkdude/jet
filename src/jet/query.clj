@@ -45,6 +45,8 @@
     symbol symbol
     drop-while drop-while
     take-while take-while
+    prn prn
+    println println
     nil))
 
 (defn promote-query* [q]
