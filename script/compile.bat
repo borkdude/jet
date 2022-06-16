@@ -8,7 +8,7 @@ if "%GRAALVM_HOME%"=="" (
     exit /b
 )
 set JAVA_HOME=%GRAALVM_HOME%\bin
-set PATH=%PATH%;%GRAALVM_HOME%\bin
+set PATH=%GRAALVM_HOME%\bin;%PATH%
 
 set /P JET_VERSION=< resources\JET_VERSION
 echo Building jet %JET_VERSION%
