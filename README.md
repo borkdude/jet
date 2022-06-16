@@ -97,6 +97,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `-c`, `--collect`: given separate values, collects them in a vector.
    - `-v`, `--version`: if present, prints current version of `jet` and exits.
+   - `--interactive [ cmd ]`: if present, starts an interactive shell. An
+     initial command may be provided. See [here](#interactive-shell).
 
 Examples:
 
@@ -199,6 +201,37 @@ $ echo '{:a {:b 1}}' | jet --query '[:a :b]'
 
 The query language should be pretty familiar to users of Clojure and `jq`. For
 more information about the query language, read the docs [here](doc/query.md).
+
+## Interactive shell
+
+The jet interactive shell can be started with the `--interactive`
+flag. Optionally you can provide the first command for the shell as an argument:
+
+``` shellsession
+$ jet --interactive ':jeti/set-val {:a 1}'
+```
+
+``` shellsession
+$ curl -sL https://api.github.com/repos/clojure/clojure/commits > /tmp/commits.json
+$ jet --interactive ':jeti/slurp "/tmp/commits.json" {:format :json}'
+```
+
+Note that a jeti command has to be valid EDN.  To see a list of available
+commands, type `:jeti/help` in the shell:
+
+``` shellsession
+> :jeti/help
+Available commands:
+:jeti/set-val {:a 1}   : set value.
+:jeti/jump "34d4"      : jump to a previous state.
+:jeti/quit, :jeti/exit : exit this shell.
+:jeti/slurp            : read a file from disk. Type :jeti/help :jeti/slurp for more details.
+:jeti/spit             : writes file to disk. Type :jeti/help :jeti/spit for more details.
+:jeti/bookmark "name"  : save a bookmark.
+:jeti/bookmarks        : show bookmarks.
+:jeti/print-length     : set *print-length*
+:jeti/print-level      : set *print-level*
+```
 
 ## Emacs integration
 

@@ -15,8 +15,7 @@
                  [commons-io/commons-io "2.11.0"]
                  [org.babashka/sci "0.3.5"]
                  [camel-snake-kebab "0.4.3"]
-                 [org.fusesource.jansi/jansi "2.4.0"]
-                 [org.babashka/cli "0.2.17"]]
+                 [org.fusesource.jansi/jansi "2.4.0"]]
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}

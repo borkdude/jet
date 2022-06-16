@@ -7,6 +7,7 @@
    [clojure.string :as str :refer [starts-with?]]
    [jet.data-readers]
    [jet.formats :as formats]
+   [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
    [sci.core :as sci])
   (:gen-class))
@@ -103,18 +104,20 @@
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See https://github.com/borkdude/jet/blob/master/doc/query.md for more.
-  -c, --collect: given separate values, collects them in a vector.")
+  -c, --collect: given separate values, collects them in a vector.
+  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
 
 (defn main [& args]
   (let [{:keys [:from :to :keywordize
                 :pretty :version :query
-                :func :collect
+                :func :interactive :collect
                 :edn-reader-opts
                 :help]} (parse-opts args)]
     (cond
       (nil? args) (print-help)
       version (println (get-version))
+      interactive (start-jeti! interactive)
       help (print-help)
       :else
       (let [reader (case from
