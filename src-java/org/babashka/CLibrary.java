@@ -14,7 +14,12 @@ public final class CLibrary {
     public static final class Directives implements CContext.Directives {
         @Override
         public List<String> getHeaderFiles() {
-            return Collections.singletonList("<unistd.h>");
+            if ((System.getProperty("os.name").startsWith("Win"))) {
+                return Collections.singletonList("<io.h>");
+            }
+            else {
+                return Collections.singletonList("<unistd.h>");
+            }
         }
     }
     @CFunction
