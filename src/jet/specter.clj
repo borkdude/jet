@@ -20,9 +20,8 @@
     (sci/binding [tmp-closure closure]
       (sci/eval-form @sci-ctx `(let [~@lv] ~body)))))
 
-;; Note that when using clojure.compiler.direct-linking=true you might have to
-;; patch more functions, since they aren't going through the patched var.
-(alter-var-root #'com.rpl.specter.impl/closed-code (constantly closed-code))
+(when (System/getProperty "jet.native")
+  (require 'jet.patches))
 
 ;; Private vars, used from path macro
 (def ic-prepare-path #'specter/ic-prepare-path)
@@ -116,14 +115,7 @@
 
 (def config {:namespaces
              {'com.rpl.specter.impl
-              (assoc (ivars i/compiled-transform*
-                            i/get-cell
-                            i/mutable-cell
-                            i/magic-precompilation
-                            i/->VarUse
-                            i/set-cell!
-                            i/cached-path-info-precompiled
-                            i/cached-path-info-dynamic?)
+              (assoc (make-ns (ns-publics 'com.rpl.specter.impl) ins)
                      '*tmp-closure* tmp-closure)
               'com.rpl.specter
               (assoc (make-ns (ns-publics 'com.rpl.specter) sns)

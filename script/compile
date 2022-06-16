@@ -25,7 +25,7 @@ args=("-jar" "target/jet-$JET_VERSION-standalone.jar"
       "--no-fallback"
       "--no-server"
       "-J-Xmx3g"
-)
+      "-J-Djet.native=true")
 
 if [ "$BABASHKA_STATIC" = "true" ]; then
     args+=("--static")

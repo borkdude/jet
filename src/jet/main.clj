@@ -179,6 +179,9 @@
 (sci/alter-var-root sci/err (constantly *err*))
 (vreset! specter/sci-ctx ctx)
 
+(when (System/getProperty "jet.native")
+  (require 'jet.patches))
+
 (def musl?
   "Captured at compile time, to know if we are running inside a
   statically compiled executable with musl."
