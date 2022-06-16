@@ -87,33 +87,13 @@
          ~handle-params-code
          ~precompiled-sym))))
 
-(defn make-ns
-  "Copies public Clojure vars from namespace to a sci namespaces,
-  transforming clojure Vars into sci vars. Returns map which can be
-  used in :namespaces configuration."
-  [ns sci-ns]
-  (reduce (fn [ns-map [var-name var]]
-            (let [m (meta var)
-                  no-doc (:no-doc m)
-                  doc (:doc m)
-                  arglists (:arglists m)]
-              (if no-doc ns-map
-                  (assoc ns-map var-name
-                         (sci/new-var (symbol var-name) @var
-                                      (cond-> {:ns sci-ns
-                                               :name (:name m)}
-                                        (:macro m) (assoc :macro true)
-                                        doc (assoc :doc doc)
-                                        arglists (assoc :arglists arglists)))))))
-          {}
-          (ns-publics ns)))
-
 (def config {:namespaces
              {'com.rpl.specter.impl
-              (assoc (make-ns 'com.rpl.specter.impl ins)
+              (assoc (sci/copy-ns com.rpl.specter.impl ins {:exclude [PathComposer
+                                                                      CoercePath]})
                      '*tmp-closure* tmp-closure)
               'com.rpl.specter
-              (assoc (make-ns 'com.rpl.specter sns)
+              (assoc (sci/copy-ns com.rpl.specter sns)
                      ;; the patched path macro
                      'path (sci/copy-var path sns))}
              :classes {'java.lang.ClassCastException ClassCastException

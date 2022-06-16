@@ -99,8 +99,8 @@
 
 (deftest thread-first-test
   (is (= "3\n"
-         (jet "1" "-tf" "inc inc"))))
+         (jet "1" "-T" "inc inc"))))
 
 (deftest thread-last-test
   (is (= "{:a {:a 2}}\n"
-         (jet "{:a {:a 1}}" "-tl" "(s/transform [s/MAP-VALS s/MAP-VALS] inc)"))))
+         (jet "{:a {:a 1}}" "-t" "(s/transform [s/MAP-VALS s/MAP-VALS] inc)"))))

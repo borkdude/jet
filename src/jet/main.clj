@@ -71,12 +71,10 @@
                             {:default tagged-literal}))
         help (boolean (or (get opts "--help")
                           (get opts "-h")))
-        thread-first (first (or (get opts "--thread-first")
-                                (get opts "--tf")
-                                (get opts "-tf")))
         thread-last (first (or (get opts "--thread-last")
-                               (get opts "--tl")
-                               (get opts "-tl")))
+                               (get opts "-t")))
+        thread-first (first (or (get opts "--thread-first")
+                                (get opts "-T")))
         func (or (first (or (get opts "--func")
                             (get opts "-f")))
                  (when thread-first
@@ -122,8 +120,8 @@
   --no-pretty: disable pretty-printing.
   --colors [auto | true | false]: use colored output while pretty-printing. Defaults to auto.
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
-  -tf, --thread-first: implicit thread first
-  -tl, --thread-last: implicit thread last
+  -t, --thread-last: implicit thread last
+  -T, --thread-first: implicit thread first
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See https://github.com/borkdude/jet/blob/master/doc/query.md for more.
   -c, --collect: given separate values, collects them in a vector.
@@ -135,7 +133,7 @@
                 :no-pretty :version :query
                 :func :interactive :collect
                 :edn-reader-opts
-                :help :colors :thread-first :thread-last]} (parse-opts args)]
+                :help :colors]} (parse-opts args)]
     (cond
       version (println (get-version))
       interactive (start-jeti! interactive colors)
