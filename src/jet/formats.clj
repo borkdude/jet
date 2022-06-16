@@ -18,8 +18,12 @@
 
 (set! *warn-on-reflection* true)
 
-(defn pprint [x]
-  (if (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO))
+(defn in-terminal? []
+  (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO)))
+
+(defn pprint [x no-colorize]
+  (if (and (in-terminal?)
+           (not no-colorize))
     (puget/cprint x)
     (fipp/pprint x)))
 
@@ -37,8 +41,8 @@
 (defn parse-edn [opts *in*]
   (edn/read (assoc opts :eof ::EOF) *in*))
 
-(defn generate-edn [o pretty]
-  (if pretty (str/trim (with-out-str (pprint o)))
+(defn generate-edn [o pretty no-colorize]
+  (if pretty (str/trim (with-out-str (pprint o no-colorize)))
       (pr-str o)))
 
 (defn transit-reader []

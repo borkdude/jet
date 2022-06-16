@@ -49,7 +49,7 @@
   (try (let [next-id (new-id state)
              file-as-string (slurp (str file))
              file-as-edn (case format
-                           :edn (with-in-str file-as-string (formats/parse-edn *in*))
+                           :edn (with-in-str file-as-string (formats/parse-edn nil *in*))
                            :transit (with-in-str file-as-string (formats/parse-transit
                                                                  (formats/transit-reader)))
                            :json (with-in-str file-as-string
@@ -64,14 +64,14 @@
 (defn write-file [value file {:keys [:format :pretty]
                               :or {format :edn}}]
   (try (let [out-string (case format
-                          :edn (formats/generate-edn value pretty)
+                          :edn (formats/generate-edn value pretty true)
                           :transit (formats/generate-transit value)
                           :json (formats/generate-json value pretty))]
          (spit file out-string))
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))
 
-(defn start-jeti! [init-cmd]
+(defn start-jeti! [init-cmd no-colors]
   (println "Welcome to jeti. The answer is just a few queries away!")
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
@@ -93,7 +93,7 @@
                          (not same?))
                 (println (binding [*print-length* print-length
                                    *print-level* print-level]
-                           (formats/generate-edn current-val true)))
+                           (formats/generate-edn current-val true no-colors)))
                 (println))
             proceed? (cond (and start? init-cmd)
                            (do (println ">" init-cmd)
@@ -121,7 +121,7 @@
                       "> ")))
         (flush)
         (when-let [q (if (and start? init-cmd)
-                       (do #_(vreset! cmd-executed? true) init-cmd)
+                       init-cmd
                        (read-line))]
           (let [state (dissoc state :init-cmd)
                 [fst :as q] (try (edn/read-string

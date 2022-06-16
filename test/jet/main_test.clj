@@ -22,7 +22,7 @@
   (is (= "{\"a\":1}\n"
          (jet "{:a 1}"
               "--from" "edn"
-              "--to" "json")))
+              "--to" "json" "--no-pretty")))
   (is (= "[\"^ \",\"~:a\",1]\n"
          (jet "{:a 1}"
               "--from" "edn"
@@ -34,12 +34,12 @@
   (is (= "{\"a\":1}\n"
          (jet "[\"^ \",\"~:a\",1]\n"
               "--from" "transit"
-              "--to" "json")))
+              "--to" "json" "--no-pretty")))
   (testing "pretty printing"
     (is (= "{\n  \"a\" : [ {\n    \"b\" : {\n      \"c\" : \"d\"\n    }\n  } ]\n}\n"
            (jet "{:a [{:b {:c :d}}]}" "--from" "edn" "--to" "json" "--pretty")))
     (is (= "{:a [{:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}\n     {:b {:c :d}}]}\n"
-           (jet "{:a [{:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}}]}" "--from" "edn" "--to" "edn" "--pretty"))))
+           (jet "{:a [{:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}} {:b {:c :d}}]}" "--no-colors" "--from" "edn" "--to" "edn" "--pretty"))))
   (testing "query"
     (is (= "1\n" (jet "{:a 1 :b 2}" "--from" "edn" "--to" "edn" "--query" ":a"))))
   (testing "from and to default to edn"
@@ -50,19 +50,19 @@
 (deftest interactive-test
   (testing "passing correct query will please jeti"
     (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" [{:a 1} "Y" :a "Y"]) "--interactive"))))
+                 (jet (str/join "\n" [{:a 1} "Y" :a "Y"]) "--interactive" "--no-colors"))))
   (testing "passing --interactive arg as edn"
     (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" "{:a 1}"))))
+                 (jet (str/join "\n" ["Y" :a "Y"]) "--no-colors" "--interactive" "{:a 1}"))))
   (testing "passing --interactive arg as edn"
     (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" ":jeti/set-val {:a 1}"))))
+                 (jet (str/join "\n" ["Y" :a "Y"]) "--no-colors" "--interactive" ":jeti/set-val {:a 1}"))))
   (testing "slurping json file"
     (is (re-find #"[0-9a-f]{4}> 30"
-                 (jet (str/join "\n" ["Y" "count" "Y"]) "--interactive" ":jeti/slurp test/data/commits.json {:format :json}"))))
+                 (jet (str/join "\n" ["Y" "count" "Y"]) "--no-colors" "--interactive" ":jeti/slurp test/data/commits.json {:format :json}"))))
   (testing "jeti doesn't get stuck in a loop and executes the command only once"
     (is (re-find #"Available commands"
-                 (jet "" "--interactive" ":jeti/help")))))
+                 (jet "" "--no-colors" "--interactive" ":jeti/help")))))
 
 (deftest stream-test
   (is (= "2\n3\n4\n" (jet "2 3 4" "--from" "edn" "--to" "edn")))
@@ -89,8 +89,8 @@
            (jet casing-samples "--from" "json" "--keywordize" "#(-> % csk/->snake_case keyword)")))))
 
 (deftest edn-reader-opts-test
-  (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:default tagged-literal}")))
-  (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))
+  (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--no-pretty" "--edn-reader-opts" "{:default tagged-literal}")))
+  (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--no-pretty" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))
 
 (deftest func-test
   (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "#(-> % :a :b :c)")))

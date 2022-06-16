@@ -45,10 +45,6 @@
              :short-opt '("-v")
              :long-opt '("--version")
              :outcome true})
-  (opt-test {:opt :pretty
-             :short-opt '("-p")
-             :long-opt '("--pretty")
-             :outcome true})
   (opt-test {:opt :help
              :short-opt '("-h")
              :long-opt '("--help")
