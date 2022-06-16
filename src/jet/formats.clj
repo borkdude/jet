@@ -7,13 +7,20 @@
    [clojure.edn :as edn]
    [clojure.string :as str]
    [cognitect.transit :as transit]
-   [fipp.edn :as fipp]
-   [jet.data-readers])
-  (:import [com.fasterxml.jackson.core JsonFactory]
-           [java.io Reader]
-           [org.apache.commons.io.input ReaderInputStream]))
+   [jet.data-readers]
+   [puget.printer :as puget])
+  (:import
+   [com.fasterxml.jackson.core JsonFactory]
+   [java.io Reader]
+   [org.apache.commons.io.input ReaderInputStream]
+   [org.fusesource.jansi.internal CLibrary]))
 
 (set! *warn-on-reflection* true)
+
+(defn pprint [x]
+  (if (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO))
+    (puget/cprint x)
+    (puget/pprint x)))
 
 (defn json-parser []
   (.createParser ^JsonFactory (or factory/*json-factory*
@@ -30,7 +37,7 @@
   (edn/read (assoc opts :eof ::EOF) *in*))
 
 (defn generate-edn [o pretty]
-  (if pretty (str/trim (with-out-str (fipp/pprint o)))
+  (if pretty (str/trim (with-out-str (pprint o)))
       (pr-str o)))
 
 (defn transit-reader []

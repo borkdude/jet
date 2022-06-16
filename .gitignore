@@ -2,7 +2,6 @@
 /classes
 /checkouts
 profiles.clj
-pom.xml
 pom.xml.asc
 *.jar
 *.class
@@ -15,3 +14,4 @@ pom.xml.asc
 .cache
 jet.build_artifacts.txt
 .clj-kondo/babashka
+.cpcache

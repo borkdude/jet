@@ -11,10 +11,11 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [com.cognitect/transit-clj "1.0.329"]
                  [cheshire "5.11.0"]
-                 [fipp "0.6.26"]
+                 [mvxcvi/puget "1.3.2"]
                  [commons-io/commons-io "2.11.0"]
                  [org.babashka/sci "0.3.5"]
-                 [camel-snake-kebab "0.4.3"]]
+                 [camel-snake-kebab "0.4.3"]
+                 [org.fusesource.jansi/jansi "2.4.0"]]
   :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}
