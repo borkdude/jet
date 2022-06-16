@@ -1,29 +1,29 @@
 macos_instance:
   image: ghcr.io/cirruslabs/macos-monterey-base:latest
 
-  task:
-    env:
-      LEIN_ROOT: "true"
-      GRAALVM_VERSION: "22.1.0"
-      GRAALVM_HOME: ${HOME}/graalvm-ce-java11-22.1.0/Contents/Home
-      JET_PLATFORM: macos # used in release script
-      JET_ARCH: aarch64
-      JET_TEST_ENV: native
-    script: |
-      sudo script/install-clojure
-      sudo script/install-leiningen
-      script/install-graalvm
-      export PATH=$GRAALVM_HOME/bin:$PATH
-      sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-      java -version
+task:
+  env:
+    LEIN_ROOT: "true"
+    GRAALVM_VERSION: "22.1.0"
+    GRAALVM_HOME: ${HOME}/graalvm-ce-java11-22.1.0/Contents/Home
+    JET_PLATFORM: macos # used in release script
+    JET_ARCH: aarch64
+    JET_TEST_ENV: native
+  script: |
+    sudo script/install-clojure
+    sudo script/install-leiningen
+    script/install-graalvm
+    export PATH=$GRAALVM_HOME/bin:$PATH
+    sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+    java -version
 
-      script/compile
+    script/compile
 
-      script/test
+    script/test
 
-      VERSION=$(cat resources/JET_VERSION)
-      arch=${JET_ARCH:-amd64}
-      archive="jet-$VERSION-$JET_PLATFORM-$arch.tar.gz"
-      tar zcvf "$archive" jet
-    binaries_artifacts:
-      path: "./jet"
+    VERSION=$(cat resources/JET_VERSION)
+    arch=${JET_ARCH:-amd64}
+    archive="jet-$VERSION-$JET_PLATFORM-$arch.tar.gz"
+    tar zcvf "$archive" jet
+  binaries_artifacts:
+    path: "./jet"
