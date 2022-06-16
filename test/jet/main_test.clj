@@ -47,23 +47,6 @@
   (testing "implicity wrapping multiple queries"
     (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b")))))
 
-(deftest interactive-test
-  (testing "passing correct query will please jeti"
-    (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" [{:a 1} "Y" :a "Y"]) "--interactive"))))
-  (testing "passing --interactive arg as edn"
-    (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" "{:a 1}"))))
-  (testing "passing --interactive arg as edn"
-    (is (re-find #"[0-9a-f]{4}> 1"
-                 (jet (str/join "\n" ["Y" :a "Y"]) "--interactive" ":jeti/set-val {:a 1}"))))
-  (testing "slurping json file"
-    (is (re-find #"[0-9a-f]{4}> 30"
-                 (jet (str/join "\n" ["Y" "count" "Y"]) "--interactive" ":jeti/slurp test/data/commits.json {:format :json}"))))
-  (testing "jeti doesn't get stuck in a loop and executes the command only once"
-    (is (re-find #"Available commands"
-                 (jet "" "--interactive" ":jeti/help")))))
-
 (deftest stream-test
   (is (= "2\n3\n4\n" (jet "2 3 4" "--from" "edn" "--to" "edn")))
   (is (= "2\n3\n4\n" (jet "{:x 2} {:x 3} {:x 4}" "--query" ":x")))
