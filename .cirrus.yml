@@ -10,15 +10,14 @@ task:
     JET_ARCH: aarch64
     JET_TEST_ENV: native
   script: |
+    git clone
     sudo script/install-clojure
     sudo script/install-leiningen
     script/install-graalvm
     export PATH=$GRAALVM_HOME/bin:$PATH
-    sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
     java -version
 
     script/compile
-
     script/test
 
     VERSION=$(cat resources/JET_VERSION)
