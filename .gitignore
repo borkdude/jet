@@ -14,3 +14,4 @@ pom.xml.asc
 .cache
 .cache
 jet.build_artifacts.txt
+.clj-kondo/babashka
