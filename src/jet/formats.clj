@@ -17,16 +17,16 @@
 
 (set! *warn-on-reflection* true)
 
-(def ^:private graal?
-  (boolean (resolve 'org.graalvm.nativeimage.ProcessProperties)))
+(def ^:private with-c-lib?
+  (boolean (resolve 'org.babashka.CLibrary)))
 
 (defmacro ^:no-doc
-  if-graal [then else]
-  (if graal?
+  if-c-lib [then else]
+  (if with-c-lib?
     then else))
 
 (defn in-terminal? []
-  (if-graal
+  (if-c-lib
       (pos? (org.babashka.CLibrary/isatty 2))
     false))
 
