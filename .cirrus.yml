@@ -9,7 +9,7 @@ task:
     JET_PLATFORM: macos # used in release script
     JET_ARCH: aarch64
     JET_TEST_ENV: native
-    GITHUB_TOKEN: ENCRYPTED[d6ff8cdc392157f211c754fa0763875434d1bfde0c00a05e48ba9470003a76c14c9213adb80623f81e13f2f0fa8fbd57]
+    GITHUB_TOKEN: ENCRYPTED[!2542f8eaef6c92f10eae1d5113838d473d5b8ef8affc17e7257cc5b137fae3f12b5d91ab9f8f97a9dc258fd47291e952!]
 
   script: |
     ls script
