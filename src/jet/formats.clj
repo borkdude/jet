@@ -18,9 +18,11 @@
 (set! *warn-on-reflection* true)
 
 (def ^:private with-c-lib?
-  (and (= "executable"
-          (System/getProperty "org.graalvm.nativeimage.kind") )
-       (boolean (resolve 'org.babashka.CLibrary))))
+  (and
+   ;; this is true during image compilation
+   (= "true"
+      (System/getProperty "com.oracle.graalvm.isaot") )
+   (boolean (resolve 'org.babashka.CLibrary))))
 
 (defmacro ^:no-doc
   if-c-lib [then else]
