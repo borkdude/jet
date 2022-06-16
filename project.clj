@@ -15,14 +15,15 @@
                  [commons-io/commons-io "2.11.0"]
                  [org.babashka/sci "0.3.5"]
                  [camel-snake-kebab "0.4.3"]
-                 [org.fusesource.jansi/jansi "2.4.0"]]
+                 [com.rpl/specter "1.1.4"]]
   :profiles {:test {:dependencies [[clj-commons/conch "0.9.2"]]}
              :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "0.1.4"]]
                        :global-vars {*assert* false}
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"
-                                  "-Dclojure.spec.skip-macros=true"]
-                       :aot :all}
-             :native-image {:java-source-paths ["src-java"]}}
+                       :jvm-opts [#_"-Dclojure.compiler.direct-linking=true"
+                                  #_"-Dclojure.spec.skip-macros=true"]
+                       :aot [jet.main]}
+             :native-image {:jvm-opts ["-Djet.native=true"]
+                            :java-source-paths ["src-java"]}}
   :main jet.main
   :aliases {"jet" ["run" "-m" "jet.main"]}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"

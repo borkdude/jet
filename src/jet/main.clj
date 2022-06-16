@@ -9,21 +9,26 @@
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
+   [jet.specter :as specter :refer [config]]
    [sci.core :as sci])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
 
 (def ctx
-  (sci/init {:namespaces {'camel-snake-kebab.core
-                          {'->PascalCase csk/->PascalCase
-                           '->camelCase csk/->camelCase
-                           '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
-                           '->snake_case csk/->snake_case
-                           '->kebab-case csk/->kebab-case
-                           '->Camel_Snake_Case csk/->Camel_Snake_Case
-                           '->HTTP-Header-Case csk/->HTTP-Header-Case}}
-             :aliases {'str 'clojure.string}}))
+  (-> (sci/init {:namespaces {'camel-snake-kebab.core
+                              {'->PascalCase csk/->PascalCase
+                               '->camelCase csk/->camelCase
+                               '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE
+                               '->snake_case csk/->snake_case
+                               '->kebab-case csk/->kebab-case
+                               '->Camel_Snake_Case csk/->Camel_Snake_Case
+                               '->HTTP-Header-Case csk/->HTTP-Header-Case}
+                              'com.rpl.specter
+                              {}}
+                 :aliases {'str 'clojure.string
+                           's 'com.rpl.specter}})
+      (sci/merge-opts config)))
 
 (sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
@@ -66,9 +71,18 @@
                             {:default tagged-literal}))
         help (boolean (or (get opts "--help")
                           (get opts "-h")))
-        func (first (or (get opts "--func")
-                        (get opts "-f")))
+        thread-last (first (or (get opts "--thread-last")
+                               (get opts "-t")))
+        thread-first (first (or (get opts "--thread-first")
+                                (get opts "-T")))
+        func (or (first (or (get opts "--func")
+                            (get opts "-f")))
+                 (when thread-first
+                   (format "#(-> %% %s)" thread-first))
+                 (when thread-last
+                   (format "#(->> %% %s)" thread-last)))
         colors (or (some-> (get opts "--colors")
+                           first
                            keyword)
                    :auto)]
     {:from (or from :edn)
@@ -106,6 +120,8 @@
   --no-pretty: disable pretty-printing.
   --colors [auto | true | false]: use colored output while pretty-printing. Defaults to auto.
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
+  -t, --thread-last: implicit thread last
+  -T, --thread-first: implicit thread first
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See https://github.com/borkdude/jet/blob/master/doc/query.md for more.
   -c, --collect: given separate values, collects them in a vector.
@@ -119,7 +135,6 @@
                 :edn-reader-opts
                 :help :colors]} (parse-opts args)]
     (cond
-      (nil? args) (print-help)
       version (println (get-version))
       interactive (start-jeti! interactive colors)
       help (print-help)
@@ -146,10 +161,26 @@
                               (f input))
                             input)]
                 (case to
-                  :edn (println (formats/generate-edn input (not no-pretty) colors))
-                  :json (println (formats/generate-json input (not no-pretty)))
-                  :transit (println (formats/generate-transit input))))
+                  :edn (some->
+                        input
+                        (formats/generate-edn (not no-pretty) colors)
+                        println)
+                  :json (some->
+                         input
+                         (formats/generate-json (not no-pretty))
+                         println)
+                  :transit (some->
+                            (formats/generate-transit input)
+                            println)))
               (when-not collect (recur)))))))))
+
+;; enable println, prn etc.
+(sci/alter-var-root sci/out (constantly *out*))
+(sci/alter-var-root sci/err (constantly *err*))
+(vreset! specter/sci-ctx ctx)
+
+(when (System/getProperty "jet.native")
+  (require 'jet.patches))
 
 (def musl?
   "Captured at compile time, to know if we are running inside a

@@ -95,6 +95,8 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
    - `--colors [auto | true | false]`: use colored output while pretty-printing. Defaults to auto.
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
+   - `-t`, `--thread-last`: implicit thread last
+   - `-T`, `--thread-first`: implicit thread first
    - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
    - `-c`, `--collect`: given separate values, collects them in a vector.
    - `-v`, `--version`: if present, prints current version of `jet` and exits.
