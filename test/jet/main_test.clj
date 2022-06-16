@@ -96,3 +96,11 @@
   (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "#(-> % :a :b :c)")))
   (testing "when function is in a file"
     (is (= "1\n" (jet "{:a {:b {:c 1}}}" "--func" "test-resources/fn.clj")))))
+
+(deftest thread-first-test
+  (is (= "3\n"
+         (jet "1" "-tf" "inc inc"))))
+
+(deftest thread-last-test
+  (is (= "{:a {:a 2}}\n"
+         (jet "{:a {:a 1}}" "-tl" "(s/transform [s/MAP-VALS s/MAP-VALS] inc)"))))
