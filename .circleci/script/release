@@ -21,7 +21,7 @@ cd /tmp/release
 
 arch=${JET_ARCH:-amd64}
 
-archive="jet-$VERSION-$JET_PLATFORM-$arch.zip"
+archive="jet-$VERSION-$JET_PLATFORM-$arch.tar.gz"
 
 tar zcvf "$archive" jet
 
