@@ -22,7 +22,8 @@
                            '->snake_case csk/->snake_case
                            '->kebab-case csk/->kebab-case
                            '->Camel_Snake_Case csk/->Camel_Snake_Case
-                           '->HTTP-Header-Case csk/->HTTP-Header-Case}}}))
+                           '->HTTP-Header-Case csk/->HTTP-Header-Case}}
+             :aliases {'str 'clojure.string}}))
 
 (sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
