@@ -11,7 +11,10 @@ fi
 
 JET_VERSION=$(cat resources/JET_VERSION)
 
-lein with-profiles +clojure-1.10.3 "do" clean, uberjar
+export PATH=$GRAALVM_HOME/bin:$PATH
+export JAVA_HOME=$GRAALVM_HOME
+
+lein with-profiles +native-image "do" clean, uberjar
 
 BABASHKA_STATIC=${BABASHKA_STATIC:-}
 BABASHKA_MUSL=${BABASHKA_MUSL:-}
