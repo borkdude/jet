@@ -19,7 +19,13 @@ cd /tmp/release
 
 ## release binary as zip archive
 
-zip "jet-$VERSION-$JET_PLATFORM-amd64.zip" jet
+arch=${JET_ARCH:-amd64}
+
+archive="jet-$VERSION-$JET_PLATFORM-$arch.zip"
+
+tar zcvf "$archive" jet
+
+bb release-artifact "$archive" || true
 
 ## cleanup
 

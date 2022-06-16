@@ -148,7 +148,9 @@ jobs:
       - run:
           name: Release
           command: |
+            sudo bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
             .circleci/script/release
+
       - save_cache:
           paths:
             - ~/.m2
