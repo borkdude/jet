@@ -8,15 +8,15 @@
   :license {:name "Eclipse Public License 1.0"
             :url "http://opensource.org/licenses/eclipse-1.0.php"}
   :source-paths ["src"]
-  :dependencies [[org.clojure/clojure "1.9.0"]
-                 [com.cognitect/transit-clj "0.8.319"]
-                 [cheshire "5.9.0"]
-                 [fipp "0.6.22"]
-                 [commons-io/commons-io "2.6"]
-                 [org.babashka/sci "0.3.4"]
-                 [camel-snake-kebab "0.4.2"]]
-  :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.9.0"]]}
-             :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.10.3"]]}
+  :dependencies [[org.clojure/clojure "1.11.1"]
+                 [com.cognitect/transit-clj "1.0.329"]
+                 [cheshire "5.11.0"]
+                 [fipp "0.6.26"]
+                 [commons-io/commons-io "2.11.0"]
+                 [org.babashka/sci "0.3.5"]
+                 [camel-snake-kebab "0.4.3"]]
+  :profiles {:clojure-1.9.0 {:dependencies [[org.clojure/clojure "1.11.1"]]}
+             :clojure-1.10.3 {:dependencies [[org.clojure/clojure "1.11.1"]]}
              :test {:dependencies [[clj-commons/conch "0.9.2"]]}
              :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "0.1.4"]]
                        :global-vars {*assert* false}
