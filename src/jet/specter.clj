@@ -87,13 +87,46 @@
          ~handle-params-code
          ~precompiled-sym))))
 
+(defn make-ns
+  "Copies public Clojure vars created with `ns-publics` from namespace to a sci namespaces,
+  transforming clojure Vars into SCI vars. Returns map which can be
+  used in :namespaces configuration."
+  [publics sci-ns]
+  (reduce (fn [ns-map [var-name var]]
+            (let [m (meta var)
+                  no-doc (:no-doc m)
+                  doc (:doc m)
+                  arglists (:arglists m)]
+              (if no-doc ns-map
+                  (assoc ns-map var-name
+                         (sci/new-var (symbol var-name) @var
+                                      (cond-> {:ns sci-ns
+                                               :name (:name m)}
+                                        (:macro m) (assoc :macro true)
+                                        doc (assoc :doc doc)
+                                        arglists (assoc :arglists arglists)))))))
+          {}
+          publics))
+
+(defmacro ivars [& names]
+  (into {} (map (fn [name]
+                     (let [name (symbol (clojure.core/name name))]
+                       [(list 'quote name) `(sci/copy-var ~(symbol "i" (str name)) ~'ins)]))
+                   names)))
+
 (def config {:namespaces
              {'com.rpl.specter.impl
-              (assoc (sci/copy-ns com.rpl.specter.impl ins {:exclude [PathComposer
-                                                                      CoercePath]})
+              (assoc (ivars i/compiled-transform*
+                            i/get-cell
+                            i/mutable-cell
+                            i/magic-precompilation
+                            i/->VarUse
+                            i/set-cell!
+                            i/cached-path-info-precompiled
+                            i/cached-path-info-dynamic?)
                      '*tmp-closure* tmp-closure)
               'com.rpl.specter
-              (assoc (sci/copy-ns com.rpl.specter sns)
+              (assoc (make-ns (ns-publics 'com.rpl.specter) sns)
                      ;; the patched path macro
                      'path (sci/copy-var path sns))}
              :classes {'java.lang.ClassCastException ClassCastException
