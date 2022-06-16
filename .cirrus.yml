@@ -10,7 +10,7 @@ task:
     JET_ARCH: aarch64
     JET_TEST_ENV: native
   script: |
-    ls
+    ls script
     sudo script/install-clojure
     sudo script/install-leiningen
     script/install-graalvm
