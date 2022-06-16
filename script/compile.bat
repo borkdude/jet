@@ -8,12 +8,13 @@ if "%GRAALVM_HOME%"=="" (
     exit /b
 )
 set JAVA_HOME=%GRAALVM_HOME%\bin
-set PATH=%PATH%;%GRAALVM_HOME%\bin
+set PATH=%GRAALVM_HOME%\bin;%PATH%
 
 set /P JET_VERSION=< resources\JET_VERSION
 echo Building jet %JET_VERSION%
 
-call lein with-profiles +clojure-1.10.3 do clean, uberjar
+java -version
+call lein with-profiles +native-image do clean, uberjar
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 call %GRAALVM_HOME%\bin\gu.cmd install native-image

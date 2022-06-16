@@ -13,13 +13,22 @@
   (:import
    [com.fasterxml.jackson.core JsonFactory]
    [java.io Reader]
-   [org.apache.commons.io.input ReaderInputStream]
-   [org.fusesource.jansi.internal CLibrary]))
+   [org.apache.commons.io.input ReaderInputStream]))
 
 (set! *warn-on-reflection* true)
 
+(def ^:private with-c-lib?
+  (boolean (resolve 'org.babashka.CLibrary)))
+
+(defmacro ^:no-doc
+  if-c-lib [then else]
+  (if with-c-lib?
+    then else))
+
 (defn in-terminal? []
-  (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO)))
+  (if-c-lib
+      (pos? (org.babashka.CLibrary/isatty 1))
+    false))
 
 (defn pprint [x no-colorize]
   (if (and (in-terminal?)
