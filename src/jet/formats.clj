@@ -7,6 +7,7 @@
    [clojure.edn :as edn]
    [clojure.string :as str]
    [cognitect.transit :as transit]
+   [fipp.edn :as fipp]
    [jet.data-readers]
    [puget.printer :as puget])
   (:import
@@ -20,7 +21,7 @@
 (defn pprint [x]
   (if (pos? (CLibrary/isatty CLibrary/STDOUT_FILENO))
     (puget/cprint x)
-    (puget/pprint x)))
+    (fipp/pprint x)))
 
 (defn json-parser []
   (.createParser ^JsonFactory (or factory/*json-factory*
