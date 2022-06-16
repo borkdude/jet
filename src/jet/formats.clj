@@ -18,11 +18,11 @@
 (set! *warn-on-reflection* true)
 
 (def ^:private with-c-lib?
-  (and
-   ;; this is true during image compilation
-   (= "true"
-      (System/getProperty "com.oracle.graalvm.isaot") )
-   (boolean (resolve 'org.babashka.CLibrary))))
+  (boolean (resolve 'org.babashka.CLibrary)))
+
+(def in-native-image?
+  (= "true"
+     (System/getProperty "com.oracle.graalvm.isaot") ))
 
 (defmacro ^:no-doc
   if-c-lib [then else]
@@ -31,7 +31,8 @@
 
 (defn in-terminal? []
   (if-c-lib
-      (pos? (org.babashka.CLibrary/isatty 1))
+      (when in-native-image?
+        (pos? (org.babashka.CLibrary/isatty 1)))
     false))
 
 (defn pprint [x colors]
