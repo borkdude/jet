@@ -30,9 +30,11 @@
       (pos? (org.babashka.CLibrary/isatty 1))
     false))
 
-(defn pprint [x no-colorize]
-  (if (and (in-terminal?)
-           (not no-colorize))
+(defn pprint [x colors]
+  (if (or (= :true colors)
+          (= :always colors)
+          (and (= :auto colors)
+               (in-terminal?)))
     (puget/cprint x)
     (fipp/pprint x)))
 
@@ -50,8 +52,8 @@
 (defn parse-edn [opts *in*]
   (edn/read (assoc opts :eof ::EOF) *in*))
 
-(defn generate-edn [o pretty no-colorize]
-  (if pretty (str/trim (with-out-str (pprint o no-colorize)))
+(defn generate-edn [o pretty color]
+  (if pretty (str/trim (with-out-str (pprint o color)))
       (pr-str o)))
 
 (defn transit-reader []

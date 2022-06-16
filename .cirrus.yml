@@ -24,5 +24,8 @@ task:
     arch=${JET_ARCH:-amd64}
     archive="jet-$VERSION-$JET_PLATFORM-$arch.tar.gz"
     tar zcvf "$archive" jet
+
+    sudo bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+    bb release-artifact "$archive" || true
   binaries_artifacts:
-    path: "./jet"
+    path: "jet-*.tar.gz"

@@ -71,7 +71,7 @@
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))
 
-(defn start-jeti! [init-cmd no-colors]
+(defn start-jeti! [init-cmd colors]
   (println "Welcome to jeti. The answer is just a few queries away!")
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
@@ -93,7 +93,7 @@
                          (not same?))
                 (println (binding [*print-length* print-length
                                    *print-level* print-level]
-                           (formats/generate-edn current-val true no-colors)))
+                           (formats/generate-edn current-val true colors)))
                 (println))
             proceed? (cond (and start? init-cmd)
                            (do (println ">" init-cmd)

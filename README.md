@@ -92,7 +92,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
      available under ns `camel-snake-kebab.core` aliased as `csk`.  e.g. `#(-> %
      csk/->kebab-case keyword)`.
    - `--no-pretty`: disable pretty-printing.
-   - `--no-colors`: disable colors when pretty-printing.
+   - `--colors [auto | true | false]`: use colored output while pretty-printing. Defaults to auto.
    - `--edn-reader-opts`: options passed to the EDN reader.
    - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
    - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).

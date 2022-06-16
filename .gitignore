@@ -15,3 +15,4 @@ pom.xml.asc
 jet.build_artifacts.txt
 .clj-kondo/babashka
 .cpcache
+*.tar.gz

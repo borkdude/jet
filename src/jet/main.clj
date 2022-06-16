@@ -68,7 +68,9 @@
                           (get opts "-h")))
         func (first (or (get opts "--func")
                         (get opts "-f")))
-        no-colors (boolean (get opts "--no-colors"))]
+        colors (or (some-> (get opts "--colors")
+                           keyword)
+                   :auto)]
     {:from (or from :edn)
      :to (or to :edn)
      :keywordize keywordize
@@ -83,7 +85,7 @@
                       (not-empty (str/join " " interactive)))
      :collect collect
      :edn-reader-opts edn-reader-opts
-     :no-colors no-colors
+     :colors colors
      :help help}))
 
 (defn get-version
@@ -102,7 +104,7 @@
   -o, --to: edn, transit or json, defaults to edn.
   -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
   --no-pretty: disable pretty-printing.
-  --no-colors: disable colors when pretty-printing.
+  --colors [auto | true | false]: use colored output while pretty-printing. Defaults to auto.
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
   --edn-reader-opts: options passed to the EDN reader.
   -q, --query: given a jet-lang query, transforms input. See https://github.com/borkdude/jet/blob/master/doc/query.md for more.
@@ -115,11 +117,11 @@
                 :no-pretty :version :query
                 :func :interactive :collect
                 :edn-reader-opts
-                :help :no-colors]} (parse-opts args)]
+                :help :colors]} (parse-opts args)]
     (cond
       (nil? args) (print-help)
       version (println (get-version))
-      interactive (start-jeti! interactive no-colors)
+      interactive (start-jeti! interactive colors)
       help (print-help)
       :else
       (let [reader (case from
@@ -144,7 +146,7 @@
                               (f input))
                             input)]
                 (case to
-                  :edn (println (formats/generate-edn input (not no-pretty) no-colors))
+                  :edn (println (formats/generate-edn input (not no-pretty) colors))
                   :json (println (formats/generate-json input (not no-pretty)))
                   :transit (println (formats/generate-transit input))))
               (when-not collect (recur)))))))))
