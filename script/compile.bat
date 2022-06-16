@@ -13,6 +13,7 @@ set PATH=%PATH%;%GRAALVM_HOME%\bin
 set /P JET_VERSION=< resources\JET_VERSION
 echo Building jet %JET_VERSION%
 
+java -version
 call lein with-profiles +native-image do clean, uberjar
 if %errorlevel% neq 0 exit /b %errorlevel%
 
