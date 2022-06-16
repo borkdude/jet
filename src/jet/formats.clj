@@ -27,7 +27,7 @@
 
 (defn in-terminal? []
   (if-c-lib
-      (pos? (org.babashka.CLibrary/isatty 2))
+      (pos? (org.babashka.CLibrary/isatty 1))
     false))
 
 (defn pprint [x no-colorize]
