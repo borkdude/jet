@@ -8,6 +8,7 @@
   which only prints colors when connected to terminal. Toggle manually with
   `--colors true` or `--colors false`.
 - Integrate [specter](https://github.com/redplanetlabs/specter)
+- Introduce `--thread-last` and `--thread-first`
 
 ## 0.1.1
 
