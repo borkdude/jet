@@ -70,7 +70,7 @@ following in your `.lein/profiles`:
 
 ``` clojure
 {:user
- {:dependencies [[borkdude/jet "0.0.6"]]
+ {:dependencies [[borkdude/jet "0.2.20"]]
   :aliases {"jet" ["run" "-m" "jet.main"]}}}
 ```
 
@@ -86,7 +86,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 In `deps.edn`:
 
 ``` clojure
-:jet {:deps {borkdude/jet {:mvn/version "0.2.19"}}
+:jet {:deps {borkdude/jet {:mvn/version "0.2.20"}}
      :exec-fn jet.main/exec
      :main-opts ["-m" "jet.main"]}
 ```

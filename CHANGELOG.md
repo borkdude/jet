@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.20 (2022.06.17)
+
+- Make suitable as clj tool
+
 ## 0.2.19 (2022.06.17)
 
 - Migrate CLI to [babashka CLI](https://github.com/babashka/cli)
