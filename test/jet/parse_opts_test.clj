@@ -26,7 +26,7 @@
   (testing "interactive"
     (is (true? (:interactive (parse-opts '("--interactive"))))))
   (testing "long opt + ="
-    (is (= {:from :edn, :to :json, :colors :auto}
+    (is (= {:from :edn, :to :json}
            (parse-opts '("--from=edn" "--to=json")))))
   (opt-test {:opt :collect
              :short-opt '("-c")

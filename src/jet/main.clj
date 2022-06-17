@@ -86,9 +86,6 @@
               :v :version
               :h :help
               :k :keywordize}
-    :exec-args {:from :edn
-                :to :edn
-                :colors :auto}
     :no-keyword-opts true}))
 
 (defn get-version
@@ -117,11 +114,14 @@
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
 
-(defn exec [{:keys [:from :to :keywordize
-                    :no-pretty :version :query
-                    :func :thread-first :thread-last :interactive :collect
-                    :edn-reader-opts
-                    :help :colors]}]
+(defn exec [{:keys [from to keywordize
+                    no-pretty version query
+                    func thread-first thread-last interactive collect
+                    edn-reader-opts
+                    help colors]
+             :or {from :edn
+                  to :edn
+                  colors :auto}}]
   (let [[func thread-first thread-last keywordize edn-reader-opts]
         (mapv #(cli/coerce % coerce-eval-string)
               [func thread-first thread-last keywordize edn-reader-opts])]
