@@ -47,7 +47,7 @@
   (testing "implicity wrapping multiple queries"
     (is (= "1\n" (jet "{:a {:b 1}}" "--query" ":a :b")))))
 
-#_(deftest interactive-test
+(deftest interactive-test
   (testing "passing correct query will please jeti"
     (is (re-find #"[0-9a-f]{4}> 1"
                  (jet (str/join "\n" [{:a 1} "Y" :a "Y"]) "--interactive" "--no-colors"))))
