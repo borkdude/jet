@@ -87,16 +87,14 @@
          ~precompiled-sym))))
 
 (def impl-ns (update-vals (ns-publics 'com.rpl.specter.impl) #(sci/copy-var* % ins)))
-
-(prn (count (filter (comp :macro meta) (vals (ns-publics 'com.rpl.specter.impl)))))
-(prn (count (filter (comp :macro meta) (vals impl-ns))))
+(def specter-ns (update-vals (ns-publics 'com.rpl.specter) #(sci/copy-var* % sns)))
 
 (def config {:namespaces
              {'com.rpl.specter.impl
               (assoc impl-ns
                      '*tmp-closure* tmp-closure)
               'com.rpl.specter
-              (assoc (update-vals (ns-publics 'com.rpl.specter) #(sci/copy-var* % sns))
+              (assoc specter-ns
                      ;; the patched path macro
                      'path (sci/copy-var path sns))}
              :classes {'java.lang.ClassCastException ClassCastException

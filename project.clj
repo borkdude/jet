@@ -13,7 +13,7 @@
                  [cheshire "5.11.0"]
                  [mvxcvi/puget "1.3.2"]
                  [commons-io/commons-io "2.11.0"]
-                 [org.babashka/sci "0.3.30"]
+                 [org.babashka/sci "0.3.31"]
                  [org.babashka/cli "0.2.17"]
                  [camel-snake-kebab "0.4.3"]
                  [com.rpl/specter "1.1.4"]]
