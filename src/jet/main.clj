@@ -1,6 +1,7 @@
 (ns jet.main
   {:no-doc true}
   (:require
+   [babashka.cli :as cli]
    [camel-snake-kebab.core :as csk]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
@@ -37,7 +38,7 @@
     (slurp s)
     s))
 
-(defn parse-opts [options]
+(defn parse-opts* [options]
   (let [opts (loop [options options
                     opts-map {}
                     current-opt nil]
@@ -110,6 +111,51 @@
      :colors colors
      :help help}))
 
+(defn coerce-keywordize [x]
+  (cli/coerce x (fn [x]
+                  (cond (= "true" x) true
+                        (= "false" x) false
+                        :else (sci/eval-string* ctx x)))))
+
+(defn coerce-query [query]
+  (edn/read-string
+   {:readers *data-readers*}
+   (format "[%s]" query)))
+
+(defn coerce-thread-last [s]
+  (->> s coerce-file
+       (format "#(->> %% %s)")))
+
+(defn coerce-thread-first [s]
+  (->> s coerce-file
+       (format "#(-> %% %s)")))
+
+(defn coerce-interactive [interactive]
+  (not-empty (str/join " " interactive)))
+
+(defn parse-opts [args]
+  (cli/parse-opts
+   args
+   {:coerce {:from :keyword
+             :to :keyword
+             :colors :boolean
+             :edn-reader-opts :edn
+             :keywordize coerce-keywordize
+             :func coerce-file
+             :thread-last coerce-thread-last
+             :thread-first coerce-thread-first
+             :query coerce-query}
+    :aliases {:i :from
+              :o :to
+              :t :thread-last
+              :T :thread-first
+              :f :func
+              :q :query
+              :c :collect
+              :v :version
+              :h :help}
+    :exec-args {:from :edn :to :edn}}))
+
 (defn get-version
   "Gets the current version of the tool"
   []
@@ -139,7 +185,7 @@
 (defn main [& args]
   (let [{:keys [:from :to :keywordize
                 :no-pretty :version :query
-                :func :interactive :collect
+                :func :thread-first :thread-last :interactive :collect
                 :edn-reader-opts
                 :help :colors]} (parse-opts args)]
     (cond
@@ -156,7 +202,8 @@
                        :json #(formats/parse-json reader keywordize)
                        :transit #(formats/parse-transit reader))
             collected (when collect (vec (take-while #(not= % ::formats/EOF)
-                                                     (repeatedly next-val))))]
+                                                     (repeatedly next-val))))
+            func (or func thread-first thread-last)]
         (loop []
           (let [input (if collect collected (next-val))]
             (when-not (identical? ::formats/EOF input)
