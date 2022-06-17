@@ -91,7 +91,7 @@ In `deps.edn`:
       :main-opts ["-m" "jet.main"]}
 ```
 
-You can use both the `-M` and `-X` style invocation, which ever you prefer:
+You can use both the `-M` and `-X` style invocation, whichever you prefer:
 
 ``` clojure
 $ echo '[1 2 3]' | clj -M:jet --colors --func '#(-> % first inc)'
