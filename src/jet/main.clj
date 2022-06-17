@@ -117,12 +117,14 @@
   --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
   (println))
 
-(defn main [& args]
-  (let [{:keys [:from :to :keywordize
-                :no-pretty :version :query
-                :func :thread-first :thread-last :interactive :collect
-                :edn-reader-opts
-                :help :colors]} (parse-opts args)]
+(defn exec [{:keys [:from :to :keywordize
+                    :no-pretty :version :query
+                    :func :thread-first :thread-last :interactive :collect
+                    :edn-reader-opts
+                    :help :colors]}]
+  (let [[func thread-first thread-last keywordize edn-reader-opts]
+        (mapv #(cli/coerce % coerce-eval-string)
+              [func thread-first thread-last keywordize edn-reader-opts])]
     (cond
       version (println (get-version))
       interactive (start-jeti! interactive colors)
@@ -160,6 +162,10 @@
                             (formats/generate-transit input)
                             println)))
               (when-not collect (recur)))))))))
+
+(defn main [& args]
+  (let [opts (parse-opts args)]
+    (exec opts)))
 
 ;; enable println, prn etc.
 (sci/alter-var-root sci/out (constantly *out*))

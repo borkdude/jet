@@ -36,7 +36,7 @@
     false))
 
 (defn pprint [x colors]
-  (if (or (= :true colors)
+  (if (or (= true colors)
           (= :always colors)
           (and (= :auto colors)
                (in-terminal?)))
