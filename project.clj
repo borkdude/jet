@@ -22,10 +22,10 @@
                        :global-vars {*assert* false}
                        :jvm-opts [#_"-Dclojure.compiler.direct-linking=true"
                                   #_"-Dclojure.spec.skip-macros=true"]
-                       :aot [jet.main]}
+                       :aot [jet.main]
+                       :main jet.main}
              :native-image {:jvm-opts ["-Djet.native=true"]
                             :java-source-paths ["src-java"]}}
-  :main jet.main
   :aliases {"jet" ["run" "-m" "jet.main"]}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_user

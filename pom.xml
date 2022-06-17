@@ -18,7 +18,7 @@
     <url>https://github.com/borkdude/jet</url>
     <connection>scm:git:git://github.com/borkdude/jet.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/borkdude/jet.git</developerConnection>
-    <tag>7845a0167e3eabc09f1a2c8ae38fd1607bebf52c</tag>
+    <tag>9215036a2399436b47089964d55abe7e0eca8f65</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>

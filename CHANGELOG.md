@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.19 (2022.06.17)
+
+- Migrate CLI to [babashka CLI](https://github.com/babashka/cli)
+- Introduce `jet.main/exec` which can be called as clojure CLI exec fn
+
 ## 0.2.18 (2022.06.16)
 
 - Provide macOS `aarch64` binary

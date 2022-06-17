@@ -63,6 +63,8 @@ You may also download a binary from [Github](https://github.com/borkdude/jet/rel
 
 ### JVM
 
+#### Leiningen
+
 This tool can also be used via the JVM. If you use leiningen, you can put the
 following in your `.lein/profiles`:
 
@@ -78,6 +80,12 @@ And then call `jet` like:
 $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 {:a 1}
 ```
+
+#### Deps.edn
+
+In `deps.edn`:
+
+
 
 ## Usage
 
