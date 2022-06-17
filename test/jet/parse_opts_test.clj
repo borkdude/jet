@@ -21,8 +21,6 @@
 (deftest parse-opts-test
   (testing "collect"
     (is (true? (:collect (parse-opts '("--collect"))))))
-  (testing "edn-reader-opts"
-    (is (nil? (:edn-reader-opts (parse-opts '("--edn-reader-opts" "nil"))))))
   (testing "interactive"
     (is (true? (:interactive (parse-opts '("--interactive"))))))
   (testing "long opt + ="
@@ -51,8 +49,4 @@
   (opt-test {:opt :keywordize
              :short-opt '("-k")
              :long-opt '("--keywordize")
-             :outcome true})
-  (opt-test {:opt :func
-             :short-opt '("-f" "nil")
-             :long-opt '("--func" "nil")
-             :outcome nil}))
+             :outcome true}))

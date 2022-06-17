@@ -69,13 +69,7 @@
    args
    {:coerce {:from :keyword
              :to :keyword
-             :colors :boolean
-             :edn-reader-opts coerce-eval-string
-             :keywordize coerce-keywordize
-             :func coerce-eval-string
-             :thread-last coerce-thread-last
-             :thread-first coerce-thread-first
-             :query coerce-query}
+             :colors :boolean}
     :aliases {:i :from
               :o :to
               :t :thread-last
@@ -122,11 +116,12 @@
              :or {from :edn
                   to :edn
                   colors :auto}}]
-  (let [[func thread-first thread-last keywordize edn-reader-opts]
+  (let [[func thread-first thread-last keywordize edn-reader-opts query]
         [(cli/coerce func coerce-eval-string) (cli/coerce thread-first coerce-thread-first)
          (cli/coerce thread-last coerce-thread-last)
          (cli/coerce keywordize coerce-eval-string)
-         (cli/coerce edn-reader-opts coerce-eval-string)]]
+         (cli/coerce edn-reader-opts coerce-eval-string)
+         (cli/coerce query coerce-query)]]
     (cond
       version (println (get-version))
       interactive (start-jeti! interactive colors)
