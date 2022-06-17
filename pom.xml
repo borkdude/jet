@@ -18,7 +18,7 @@
     <url>https://github.com/borkdude/jet</url>
     <connection>scm:git:git://github.com/borkdude/jet.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/borkdude/jet.git</developerConnection>
-    <tag>bcb1359e4336f552c47e4f78a35d26c266a7ac88</tag>
+    <tag>7845a0167e3eabc09f1a2c8ae38fd1607bebf52c</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>org.babashka</groupId>
       <artifactId>cli</artifactId>
-      <version>0.2.18</version>
+      <version>0.2.19</version>
     </dependency>
     <dependency>
       <groupId>camel-snake-kebab</groupId>

@@ -5,7 +5,7 @@
    [camel-snake-kebab.core :as csk]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
-   [clojure.string :as str :refer [starts-with?]]
+   [clojure.string :as str]
    [jet.data-readers]
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
@@ -27,95 +27,24 @@
                                '->HTTP-Header-Case csk/->HTTP-Header-Case}
                               'com.rpl.specter
                               {}}
-                 :aliases {'str 'clojure.string
-                           's 'com.rpl.specter}})
+                 :aliases '{str clojure.string
+                            s com.rpl.specter
+                            csk camel-snake-kebab.core}})
       (sci/merge-opts config)))
-
-(sci/eval-form ctx '(require '[camel-snake-kebab.core :as csk]))
 
 (defn coerce-file [s]
   (if (.exists (io/as-file s))
     (slurp s)
     s))
 
-(defn parse-opts* [options]
-  (let [opts (loop [options options
-                    opts-map {}
-                    current-opt nil]
-               (if-let [opt (first options)]
-                 (if (starts-with? opt "-")
-                   (recur (rest options)
-                          (assoc opts-map opt [])
-                          opt)
-                   (recur (rest options)
-                          (update opts-map current-opt conj opt)
-                          current-opt))
-                 opts-map))
-        from (some-> (or (get opts "--from")
-                         (get opts "-i")) first keyword)
-        to (some-> (or (get opts "--to")
-                       (get opts "-o"))
-                   first keyword)
-        keywordize (when-let [k (or (get opts "--keywordize")
-                                    (get opts "-k"))]
-                     (if (empty? k) true
-                         (let [f (first k)]
-                           (cond (= "true" f) true
-                                 (= "false" f) false
-                                 :else (sci/eval-string* ctx f)))))
-        version (boolean (or (get opts "--version")
-                             (get opts "-v")))
-        no-pretty (boolean (get opts "--no-pretty"))
-        query (first (or (get opts "--query")
-                         (get opts "-q")))
-        interactive (get opts "--interactive")
-        collect (boolean (or (get opts "--collect")
-                             (get opts "-c")))
-        edn-reader-opts (let [opts (first (get opts "--edn-reader-opts"))]
-                          (if opts
-                            (sci/eval-string* ctx opts)
-                            {:default tagged-literal}))
-        help (boolean (or (get opts "--help")
-                          (get opts "-h")))
-        thread-last (some-> (first (or (get opts "--thread-last")
-                                       (get opts "-t")))
-                            coerce-file)
-        thread-first (some-> (first (or (get opts "--thread-first")
-                                        (get opts "-T")))
-                             coerce-file)
-        func (or (some-> (first (or (get opts "--func")
-                                    (get opts "-f")))
-                         coerce-file)
-                 (when thread-first
-                   (format "#(-> %% %s)" thread-first))
-                 (when thread-last
-                   (format "#(->> %% %s)" thread-last)))
-        colors (or (some-> (get opts "--colors")
-                           first
-                           keyword)
-                   :auto)]
-    {:from (or from :edn)
-     :to (or to :edn)
-     :keywordize keywordize
-     :version version
-     :no-pretty no-pretty
-     :query (when query
-              (edn/read-string
-               {:readers *data-readers*}
-               (format "[%s]" query)))
-     :func func
-     :interactive (or (and interactive (empty? interactive))
-                      (not-empty (str/join " " interactive)))
-     :collect collect
-     :edn-reader-opts edn-reader-opts
-     :colors colors
-     :help help}))
+(defn coerce-eval-string [x]
+  (->> x coerce-file (sci/eval-string* ctx)))
 
 (defn coerce-keywordize [x]
   (cli/coerce x (fn [x]
                   (cond (= "true" x) true
                         (= "false" x) false
-                        :else (sci/eval-string* ctx x)))))
+                        :else (coerce-eval-string x)))))
 
 (defn coerce-query [query]
   (edn/read-string
@@ -124,11 +53,13 @@
 
 (defn coerce-thread-last [s]
   (->> s coerce-file
-       (format "#(->> %% %s)")))
+       (format "#(->> %% %s)")
+       (sci/eval-string* ctx)))
 
 (defn coerce-thread-first [s]
   (->> s coerce-file
-       (format "#(-> %% %s)")))
+       (format "#(-> %% %s)")
+       (sci/eval-string* ctx)))
 
 (defn coerce-interactive [interactive]
   (not-empty (str/join " " interactive)))
@@ -139,9 +70,9 @@
    {:coerce {:from :keyword
              :to :keyword
              :colors :boolean
-             :edn-reader-opts :edn
+             :edn-reader-opts coerce-eval-string
              :keywordize coerce-keywordize
-             :func coerce-file
+             :func coerce-eval-string
              :thread-last coerce-thread-last
              :thread-first coerce-thread-first
              :query coerce-query}
@@ -153,8 +84,12 @@
               :q :query
               :c :collect
               :v :version
-              :h :help}
-    :exec-args {:from :edn :to :edn}}))
+              :h :help
+              :k :keywordize}
+    :exec-args {:from :edn
+                :to :edn
+                :colors :auto}
+    :no-keyword-opts true}))
 
 (defn get-version
   "Gets the current version of the tool"
@@ -210,8 +145,7 @@
               (let [input (if query (q/query input query)
                               input)
                     input (if func
-                            (let [f (sci/eval-string* ctx func)]
-                              (f input))
+                            (func input)
                             input)]
                 (case to
                   :edn (some->

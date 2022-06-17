@@ -18,7 +18,7 @@
        ~outcome ~long-opt)
      (is (true? (opts-match? ~short-opt ~long-opt)))))
 
-#_(deftest parse-opts-test
+(deftest parse-opts-test
   (testing "collect"
     (is (true? (:collect (parse-opts '("--collect"))))))
   (testing "edn-reader-opts"
@@ -37,10 +37,6 @@
              :short-opt '("-o" "json")
              :long-opt '("--to" "json")
              :outcome :json})
-  (opt-test {:opt :query
-             :short-opt '("-q")
-             :long-opt '("--query")
-             :outcome nil})
   (opt-test {:opt :version
              :short-opt '("-v")
              :long-opt '("--version")
