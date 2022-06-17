@@ -85,7 +85,21 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 
 In `deps.edn`:
 
+``` clojure
+:jet {:deps {borkdude/jet {:mvn/version "0.2.19"}}
+     :exec-fn jet.main/exec
+     :main-opts ["-m" "jet.main"]}
+```
 
+You can use both the `-M` and `-X` style invocation, which ever you prefer:
+
+``` clojure
+$ echo '[1 2 3]' | clj -M:jet --colors --func '#(-> % first inc)'
+2
+
+$ echo '[1 2 3]' | clj -X:jet :colors true :thread-last '"(map inc)"'
+(2 3 4)
+```
 
 ## Usage
 
