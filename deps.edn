@@ -1,1 +1,4 @@
-{:deps {borkdude/jet {:local/root "." :deps/manifest :pom}}}
+{:deps {borkdude/jet {:local/root "." :deps/manifest :pom}}
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {clj-commons/conch {:mvn/version "0.9.2"}}}}}
