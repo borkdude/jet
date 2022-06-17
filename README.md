@@ -87,8 +87,8 @@ In `deps.edn`:
 
 ``` clojure
 :jet {:deps {borkdude/jet {:mvn/version "0.2.20"}}
-     :exec-fn jet.main/exec
-     :main-opts ["-m" "jet.main"]}
+      :exec-fn jet.main/exec
+      :main-opts ["-m" "jet.main"]}
 ```
 
 You can use both the `-M` and `-X` style invocation, which ever you prefer:
