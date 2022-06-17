@@ -4,7 +4,7 @@
   <groupId>borkdude</groupId>
   <artifactId>jet</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.2-SNAPSHOT</version>
+  <version>0.2.19-SNAPSHOT</version>
   <name>jet</name>
   <description>jet</description>
   <url>https://github.com/borkdude/jet</url>
@@ -18,7 +18,7 @@
     <url>https://github.com/borkdude/jet</url>
     <connection>scm:git:git://github.com/borkdude/jet.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/borkdude/jet.git</developerConnection>
-    <tag>05964e337ff1e7748664cc14147b3707dcde6c3d</tag>
+    <tag>c5fea73de61d41c16f1498f71460f9775e8bd46a</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -91,7 +91,12 @@
     <dependency>
       <groupId>org.babashka</groupId>
       <artifactId>sci</artifactId>
-      <version>0.3.5</version>
+      <version>0.3.30</version>
+    </dependency>
+    <dependency>
+      <groupId>org.babashka</groupId>
+      <artifactId>cli</artifactId>
+      <version>0.2.17</version>
     </dependency>
     <dependency>
       <groupId>camel-snake-kebab</groupId>
@@ -99,9 +104,9 @@
       <version>0.4.3</version>
     </dependency>
     <dependency>
-      <groupId>org.fusesource.jansi</groupId>
-      <artifactId>jansi</artifactId>
-      <version>2.4.0</version>
+      <groupId>com.rpl</groupId>
+      <artifactId>specter</artifactId>
+      <version>1.1.4</version>
     </dependency>
     <dependency>
       <groupId>clj-commons</groupId>
