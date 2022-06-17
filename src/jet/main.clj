@@ -123,8 +123,10 @@
                   to :edn
                   colors :auto}}]
   (let [[func thread-first thread-last keywordize edn-reader-opts]
-        (mapv #(cli/coerce % coerce-eval-string)
-              [func thread-first thread-last keywordize edn-reader-opts])]
+        [(cli/coerce func coerce-eval-string) (cli/coerce thread-first coerce-thread-first)
+         (cli/coerce thread-last coerce-thread-last)
+         (cli/coerce keywordize coerce-eval-string)
+         (cli/coerce edn-reader-opts coerce-eval-string)]]
     (cond
       version (println (get-version))
       interactive (start-jeti! interactive colors)
