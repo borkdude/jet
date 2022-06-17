@@ -101,6 +101,17 @@ $ echo '[1 2 3]' | clj -X:jet :colors true :thread-last '"(map inc)"'
 (2 3 4)
 ```
 
+Or install jet as a clj tool:
+
+``` clojure
+$ clojure -Ttools install io.github.borkdude/jet '{:git/sha "18bfbda4237f295877addafe87e5a5eb8e1b0698"}' :as jet
+Checking out: https://github.com/borkdude/jet.git at 18bfbda4237f295877addafe87e5a5eb8e1b0698
+Installed jet
+
+$ echo '[1 2 3]' | clj -Tjet exec :colors true :func '"#(-> % first inc)"'
+2
+```
+
 ## Usage
 
 `jet` supports the following options:

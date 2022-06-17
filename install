@@ -18,7 +18,7 @@ case "$(uname -s)" in
     Darwin*)    platform=macos;;
 esac
 
-download_url="https://github.com/borkdude/jet/releases/download/v$latest_release/jet-$latest_release-$platform-amd64.zip"
+download_url="https://github.com/borkdude/jet/releases/download/v$latest_release/jet-$latest_release-$platform-amd64.tar.gz"
 
 cd "$download_dir"
 echo -e "Downloading $download_url."
