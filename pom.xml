@@ -4,7 +4,7 @@
   <groupId>borkdude</groupId>
   <artifactId>jet</artifactId>
   <packaging>jar</packaging>
-  <version>0.2.19</version>
+  <version>0.2.20</version>
   <name>jet</name>
   <description>jet</description>
   <url>https://github.com/borkdude/jet</url>
@@ -18,7 +18,7 @@
     <url>https://github.com/borkdude/jet</url>
     <connection>scm:git:git://github.com/borkdude/jet.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/borkdude/jet.git</developerConnection>
-    <tag>cc913f3d4b34a88cd556cd4dad06390f71b42b5f</tag>
+    <tag>ba0003356930932af8a3fa341908a636071484ca</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
