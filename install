@@ -19,12 +19,13 @@ case "$(uname -s)" in
 esac
 
 download_url="https://github.com/borkdude/jet/releases/download/v$latest_release/jet-$latest_release-$platform-amd64.tar.gz"
+download_file="jet-$latest_release-$platform-amd64.tar.gz"
 
 cd "$download_dir"
 echo -e "Downloading $download_url."
-curl -o "jet-$latest_release-$platform-amd64.zip" -sL "https://github.com/borkdude/jet/releases/download/v$latest_release/jet-$latest_release-$platform-amd64.zip"
-unzip -qqo "jet-$latest_release-$platform-amd64.zip"
-rm "jet-$latest_release-$platform-amd64.zip"
+curl -o "$download_file" -sL "$download_url"
+tar -xzf "$download_file"
+rm "$download_file"
 
 cd "$install_dir"
 if [ -f jet ]; then
