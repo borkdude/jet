@@ -196,7 +196,7 @@ hello there
 or simply use `println` to get rid of the quotes:
 
 ``` clojure
-$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a symbol" --to edn
+$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a println" --to edn
 hello there
 ```
 
