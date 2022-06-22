@@ -161,7 +161,7 @@ $ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
 1
 
 $ echo '{:a {:b {:c [1 2]}}}' | jet --thread-last ':a :b :c (map inc)'
-1
+(2 3)
 
 $ cat /tmp/fn.clj
 #(-> % :a :b :c)
