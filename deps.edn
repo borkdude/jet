@@ -1,4 +1,5 @@
-{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         com.cognitect/transit-clj {:mvn/version "1.0.329"}
         cheshire/cheshire {:mvn/version "5.11.0"}
         clj-commons/clj-yaml {:mvn/version "1.0.26"}

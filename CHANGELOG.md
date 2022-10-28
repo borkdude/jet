@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.31 (2022.10.28)
+
+- [#74](https://github.com/borkdude/jet/issues/74): Add yaml support ([@qdzo](https://github.com/qdzo))
+
 ## 0.2.20 (2022.06.17)
 
 - Make suitable as clj tool
