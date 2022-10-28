@@ -4,7 +4,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/borkdude/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com/edn-format/edn) and [Transit](https://github.com/cognitect/transit-format), powered with a minimal query
+CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com/edn-format/edn), [YAML](https://yaml.org/) and [Transit](https://github.com/cognitect/transit-format), powered with a minimal query
 language.
 
 ## Quickstart
@@ -116,8 +116,8 @@ $ echo '[1 2 3]' | clj -Tjet exec :colors true :func '"#(-> % first inc)"'
 
 `jet` supports the following options:
 
-   - `-i`, `--from`: `edn`, `transit` or `json`, defaults to `edn`
-   - `-o`, `--to`: `edn`, `transit` or `json`, defaults to `edn`
+   - `-i`, `--from`: `edn`, `transit`, `json` or `yaml`, defaults to `edn`
+   - `-o`, `--to`: `edn`, `transit`, `json` or `yaml`, defaults to `edn`
    - `-k`, `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The
      default transformation function is `keyword` unless you provide your own.
      In addition, all case conversion functions from the
@@ -150,6 +150,9 @@ $ echo '{"my key": 1}' | jet -i json -k '#(keyword (str/replace % " " "_"))' -o 
 
 $ echo '{"anApple": 1}' | jet -i json -k '#(-> % csk/->kebab-case keyword)' -o edn
 {:an-apple 1}
+
+$ echo '{"a": 1}' | jet -i json -o yaml
+a: 1
 
 $ echo '{"a": 1}' | jet -i json -o transit
 ["^ ","a",1]

@@ -1,6 +1,7 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
         com.cognitect/transit-clj {:mvn/version "1.0.329"}
         cheshire/cheshire {:mvn/version "5.11.0"}
+        clj-commons/clj-yaml {:mvn/version "1.0.26"}
         mvxcvi/puget {:mvn/version "1.3.2"}
         commons-io/commons-io {:mvn/version "2.11.0"}
         org.babashka/sci {:mvn/version "0.3.31"}

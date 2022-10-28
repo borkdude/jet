@@ -11,6 +11,7 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [com.cognitect/transit-clj "1.0.329"]
                  [cheshire "5.11.0"]
+                 [clj-commons/clj-yaml "1.0.26"]
                  [mvxcvi/puget "1.3.2"]
                  [commons-io/commons-io "2.11.0"]
                  [org.babashka/sci "0.3.31"]

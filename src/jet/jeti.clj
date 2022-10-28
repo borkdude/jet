@@ -19,9 +19,9 @@
   (if sub-command
     (case sub-command
       :jeti/slurp
-      (println ":jeti/slurp <file> [{:format ..., :keywordize ...}]: slurps a file into the shell from disk. :format is one of :json, :edn or :transit (defaults to :edn) and :keywordize is a boolean that only applies to :json.")
+      (println ":jeti/slurp <file> [{:format ..., :keywordize ...}]: slurps a file into the shell from disk. :format is one of :json, :edn, :yaml or :transit (defaults to :edn) and :keywordize is a boolean that only applies to :json and :yaml.")
       :jeti/spit
-      (println ":jeti/spit <file> [{:format ..., :pretty ...}]: spits a file to disk. :format is one of :json, :edn or :transit (defaults to :edn) and :pretty is a boolean that indicates if the output should be pretty printed.")
+      (println ":jeti/spit <file> [{:format ..., :pretty ...}]: spits a file to disk. :format is one of :json, :edn, :yaml or :transit (defaults to :edn) and :pretty is a boolean that indicates if the output should be pretty printed.")
       (println "Help for" sub-command "not found."))
     (do (println "Available commands:")
         (println ":jeti/set-val {:a 1}   : set value.")
@@ -53,7 +53,9 @@
                            :transit (with-in-str file-as-string (formats/parse-transit
                                                                  (formats/transit-reader)))
                            :json (with-in-str file-as-string
-                                   (formats/parse-json (formats/json-parser) keywordize)))]
+                                   (formats/parse-json (formats/json-parser) keywordize))
+                           :yaml (with-in-str file-as-string
+                                   (formats/parse-yaml *in* keywordize)))]
          {:state (assoc state next-id file-as-edn)
           :next-id next-id})
        (catch Exception e
@@ -66,7 +68,8 @@
   (try (let [out-string (case format
                           :edn (formats/generate-edn value pretty true)
                           :transit (formats/generate-transit value)
-                          :json (formats/generate-json value pretty))]
+                          :json (formats/generate-json value pretty)
+                          :yaml (formats/generate-yaml value pretty))]
          (spit file out-string))
        (catch Exception e
          (println "Could not write to" (str file ":") (.getMessage e)))))

@@ -35,6 +35,51 @@
          (jet "[\"^ \",\"~:a\",1]\n"
               "--from" "transit"
               "--to" "json" "--no-pretty")))
+
+  (is (= "{\"a\" 1}\n"
+         (jet "{a: 1}"
+              "--from" "yaml"
+              "--to" "edn")))
+  ;; YAML coll should convert to EDN vector
+  (is (= "[1 2]\n"
+         (jet "- 1\n- 2\n\n"
+              "--from" "yaml"
+              "--to" "edn")))
+  (is (= "{:a 1}\n"
+         (jet "a: 1"
+              "--from" "yaml"
+              "--keywordize"
+              "--to" "edn")))
+  (is (= "[\"^ \",\"~:a\",1]\n"
+         (jet "{a: 1}"
+              "--from" "yaml"
+              "--keywordize" "true"
+              "--to" "transit")))
+  (is (= "{\"a\":1}\n"
+         (jet "{a: 1}"
+              "--from" "yaml"
+              "--to" "json" "--no-pretty")))
+  (is (= "[\"^ \",\"a\",1]\n"
+         (jet "{a: 1}"
+              "--from" "yaml"
+              "--to" "transit")))
+  (is (= "a: 1\n\n"
+         (jet "[\"^ \",\"~:a\",1]\n"
+              "--from" "transit"
+              "--to" "yaml")))
+  (is (= "{a: 1}\n\n"
+         (jet "[\"^ \",\"~:a\",1]\n"
+              "--from" "transit"
+              "--to" "yaml" "--no-pretty")))
+  (is (= "a: 1\n\n"
+         (jet "{:a 1}\n"
+              "--from" "edn"
+              "--to" "yaml")))
+  (is (= "a: 1\n\n"
+         (jet "{\"a\":1}\n"
+              "--from" "json"
+              "--to" "yaml")))
+
   (testing "pretty printing"
     (is (= "{\n  \"a\" : [ {\n    \"b\" : {\n      \"c\" : \"d\"\n    }\n  } ]\n}\n"
            (jet "{:a [{:b {:c :d}}]}" "--from" "edn" "--to" "json" "--pretty")))
