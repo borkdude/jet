@@ -4,8 +4,8 @@ macos_instance:
 task:
   env:
     LEIN_ROOT: "true"
-    GRAALVM_VERSION: "22.1.0"
-    GRAALVM_HOME: ${HOME}/graalvm-ce-java11-22.1.0/Contents/Home
+    GRAALVM_VERSION: "22.3.0"
+    GRAALVM_HOME: ${HOME}/graalvm-ce-java11-22.3.0/Contents/Home
     JET_PLATFORM: macos # used in release script
     JET_ARCH: aarch64
     JET_TEST_ENV: native
