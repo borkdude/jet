@@ -94,9 +94,9 @@
   (println "
   -h, --help: print this help text.
   -v, --version: print the current version of jet.
-  -i, --from: edn, transit or json, defaults to edn.
-  -o, --to: edn, transit or json, defaults to edn.
-  -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON keys. The default transformation function is keyword unless you provide your own.
+  -i, --from: edn, transit, json or yaml, defaults to edn.
+  -o, --to: edn, transit, json or yaml, defaults to edn.
+  -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own.
   --no-pretty: disable pretty-printing.
   --colors [auto | true | false]: use colored output while pretty-printing. Defaults to auto.
   -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
@@ -130,11 +130,13 @@
       (let [reader (case from
                      :json (formats/json-parser)
                      :transit (formats/transit-reader)
+                     :yaml nil
                      :edn nil)
             next-val (case from
                        :edn #(formats/parse-edn edn-reader-opts *in*)
                        :json #(formats/parse-json reader keywordize)
-                       :transit #(formats/parse-transit reader))
+                       :transit #(formats/parse-transit reader)
+                       :yaml #(formats/parse-yaml *in* keywordize))
             collected (when collect (vec (take-while #(not= % ::formats/EOF)
                                                      (repeatedly next-val))))
             func (or func thread-first thread-last)]
@@ -157,7 +159,11 @@
                          println)
                   :transit (some->
                             (formats/generate-transit input)
-                            println)))
+                            println)
+                  :yaml (some->
+                         input
+                         (formats/generate-yaml (not no-pretty))
+                         println)))
               (when-not collect (recur)))))))))
 
 (defn main [& args]

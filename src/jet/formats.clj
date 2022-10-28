@@ -4,8 +4,10 @@
    [cheshire.core :as cheshire]
    [cheshire.factory :as factory]
    [cheshire.parse :as cheshire-parse]
+   [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
+   [clojure.walk :as walk]
    [cognitect.transit :as transit]
    [fipp.edn :as fipp]
    [jet.data-readers]
@@ -78,3 +80,16 @@
         writer (transit/writer bos :json)]
     (transit/write writer o)
     (String. (.toByteArray bos) "UTF-8")))
+
+(defn parse-yaml [rdr keywordize]
+  (try
+    (or (some->> (yaml/parse-stream rdr :keywords (boolean keywordize))
+                 (walk/postwalk (fn [x] (if (seq? x) (vec x) x))))
+        ::EOF)
+    (catch org.yaml.snakeyaml.parser.ParserException e
+      (if (str/includes? (ex-message e) "but got <stream end>")
+        ::EOF
+        (throw e)))))
+
+(defn generate-yaml [o pretty]
+  (yaml/generate-string o :dumper-options {:flow-style (if pretty :block :auto)}))
