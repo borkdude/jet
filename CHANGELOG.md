@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.31 (2022.10.28)
+## 0.3.21 (2022.10.28)
 
 - [#74](https://github.com/borkdude/jet/issues/74): Add yaml support ([@qdzo](https://github.com/qdzo))
 
