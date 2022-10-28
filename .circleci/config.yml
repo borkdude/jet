@@ -104,7 +104,7 @@ jobs:
           destination: release
   buildmac:
     macos:
-      xcode: "12.4.0"
+      xcode: "14.0.0"
     environment:
       GRAALVM_HOME: /Users/distiller/graalvm-ce-java11-22.1.0/Contents/Home
       JET_PLATFORM: macos # used in release script
