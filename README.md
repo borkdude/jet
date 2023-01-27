@@ -66,7 +66,7 @@ following in your `.lein/profiles`:
 
 ``` clojure
 {:user
- {:dependencies [[borkdude/jet "0.2.20"]]
+ {:dependencies [[borkdude/jet "0.4.23"]]
   :aliases {"jet" ["run" "-m" "jet.main"]}}}
 ```
 
@@ -82,7 +82,7 @@ $ echo '["^ ","~:a",1]' | lein jet --from transit --to edn
 In `deps.edn`:
 
 ``` clojure
-:jet {:deps {borkdude/jet {:mvn/version "0.2.20"}}
+:jet {:deps {borkdude/jet {:mvn/version "0.4.23"}}
       :exec-fn jet.main/exec
       :main-opts ["-m" "jet.main"]}
 ```
@@ -100,9 +100,7 @@ $ echo '[1 2 3]' | clj -X:jet :colors true :thread-last '"(map inc)"'
 Or install jet as a clj tool:
 
 ``` clojure
-$ clojure -Ttools install io.github.borkdude/jet '{:git/sha "18bfbda4237f295877addafe87e5a5eb8e1b0698"}' :as jet
-Checking out: https://github.com/borkdude/jet.git at 18bfbda4237f295877addafe87e5a5eb8e1b0698
-Installed jet
+$ clojure -Ttools install-latest :lib io.github.borkdude/jet :as jet
 
 $ echo '[1 2 3]' | clj -Tjet exec :colors true :func '"#(-> % first inc)"'
 2
