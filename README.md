@@ -4,8 +4,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/borkdude/jet.svg)](https://clojars.org/borkdude/jet)
 [![cljdoc badge](https://cljdoc.org/badge/borkdude/jet)](https://cljdoc.org/d/borkdude/jet/CURRENT)
 
-CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com/edn-format/edn), [YAML](https://yaml.org/) and [Transit](https://github.com/cognitect/transit-format), powered with a minimal query
-language.
+CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com/edn-format/edn), [YAML](https://yaml.org/) and [Transit](https://github.com/cognitect/transit-format) using Clojure.
 
 ## Quickstart
 

@@ -4,7 +4,7 @@
   <groupId>borkdude</groupId>
   <artifactId>jet</artifactId>
   <packaging>jar</packaging>
-  <version>0.3.21</version>
+  <version>0.4.23</version>
   <name>jet</name>
   <description>jet</description>
   <url>https://github.com/borkdude/jet</url>
@@ -18,7 +18,7 @@
     <url>https://github.com/borkdude/jet</url>
     <connection>scm:git:git://github.com/borkdude/jet.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/borkdude/jet.git</developerConnection>
-    <tag>74a5b3e5a197579388093e8842c9fab085e3d260</tag>
+    <tag>4c35500524f9045ec52c5724b4f97aa51208da23</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -96,12 +96,12 @@
     <dependency>
       <groupId>org.babashka</groupId>
       <artifactId>sci</artifactId>
-      <version>0.3.31</version>
+      <version>0.5.34</version>
     </dependency>
     <dependency>
       <groupId>org.babashka</groupId>
       <artifactId>cli</artifactId>
-      <version>0.2.19</version>
+      <version>0.6.45</version>
     </dependency>
     <dependency>
       <groupId>camel-snake-kebab</groupId>

@@ -1,6 +1,8 @@
 # Changelog
 
-## 0.4.22 (2023.01.27)
+[jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
+
+## 0.4.23 (2023.01.27)
 
 - [#123](https://github.com/borkdude/jet/issues/123): Add `base64/encode` and `base64/decode`
 - Add `jet/paths` and `jet/when-pred`
