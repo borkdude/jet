@@ -17,12 +17,9 @@ $ echo '{:a 1}' | jet --to json
 
 ## Rationale
 
-This is a command line tool to transform between JSON, EDN and Transit, powered
-with a minimal query language. It runs as a GraalVM binary with fast startup
-time which makes it suited for shell scripting. It comes with a query language
-to do intermediate transformation. It may seem familiar to users of `jq`.
-Although in 2021, you may just want to use the `--func` option instead (who
-needs a DSL if you can use normal Clojure?)
+This is a command line tool to transform between JSON, EDN and Transit using
+Clojure. It runs as a GraalVM binary with fast startup time which makes it
+suited for shell scripting. It may seem familiar to users of `jq`.
 
 ## Installation
 
@@ -116,25 +113,22 @@ $ echo '[1 2 3]' | clj -Tjet exec :colors true :func '"#(-> % first inc)"'
 
 `jet` supports the following options:
 
-   - `-i`, `--from`: `edn`, `transit`, `json` or `yaml`, defaults to `edn`
-   - `-o`, `--to`: `edn`, `transit`, `json` or `yaml`, defaults to `edn`
-   - `-k`, `--keywordize [ <key-fn> ]`: if present, keywordizes JSON keys. The
-     default transformation function is `keyword` unless you provide your own.
-     In addition, all case conversion functions from the
-     [camel-snake-kebab](https://clj-commons.org/camel-snake-kebab/) library are
-     available under ns `camel-snake-kebab.core` aliased as `csk`.  e.g. `#(-> %
-     csk/->kebab-case keyword)`.
-   - `--no-pretty`: disable pretty-printing.
-   - `--colors [auto | true | false]`: use colored output while pretty-printing. Defaults to auto.
-   - `--edn-reader-opts`: options passed to the EDN reader.
-   - `-f`, `--func`: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
-   - `-t`, `--thread-last`: implicit thread last
-   - `-T`, `--thread-first`: implicit thread first
-   - `-q`, `--query`: given a jet-lang query, transforms input. See [jet-lang docs](doc/query.md).
-   - `-c`, `--collect`: given separate values, collects them in a vector.
-   - `-v`, `--version`: if present, prints current version of `jet` and exits.
-   - `--interactive [ cmd ]`: if present, starts an interactive shell. An
-     initial command may be provided. See [here](#interactive-shell).
+``` shell
+  -i, --from            [ edn | transit | json | yaml ] defaults to edn.
+  -o, --to              [ edn | transit | json | yaml ] defaults to edn.
+  -t, --thread-last                                     implicit thread last
+  -T, --thread-first                                    implicit thread first
+  -f, --func                                            a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
+      --no-pretty                                       disable pretty printing
+  -k, --keywordize      [ <key-fn> ]                    if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own.
+      --colors          [ auto | true | false]          use colored output while pretty-printing. Defaults to auto.
+      --edn-reader-opts                                 options passed to the EDN reader.
+  -c, --collect                                         given separate values, collects them in a vector.
+  -h, --help                                            print this help text.
+  -v, --version                                         print the current version of jet.
+```
+
+Transform EDN using `--thread-last`, `--thread-first` or `--func`.
 
 Examples:
 
@@ -157,13 +151,13 @@ a: 1
 $ echo '{"a": 1}' | jet -i json -o transit
 ["^ ","a",1]
 
-$ echo '{:a {:b {:c 1}}}' | jet --query ':a :b :c'
+$ echo '{:a {:b {:c 1}}}' | jet --thread-last ':a :b :c'
 1
 
 $ echo '{:a {:b {:c 1}}}' | jet --func '#(-> % :a :b :c)'
 1
 
-$ echo '{:a {:b {:c [1 2]}}}' | jet --thread-last ':a :b :c (map inc)'
+$ echo '{:a {:b {:c [1 2]}}}' | jet -t ':a :b :c (map inc)'
 (2 3)
 
 $ cat /tmp/fn.clj
@@ -175,31 +169,22 @@ $ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
 {:a {:a 2}}
 ```
 
-- Get the latest commit SHA and date for a project from Github:
-
-``` shellsession
-$ curl -s https://api.github.com/repos/borkdude/clj-kondo/commits \
-| jet --from json --keywordize --to edn \
---query '[0 {:sha :sha :date [:commit :author :date]}]'
-{:sha "bde8b1cbacb2b44ad2cd57d5875338f0926c8c0b", :date "2019-08-05T21:11:56Z"}
-```
-
 ## Raw output
 
 Get raw output from query rather than wrapped in quotes:
 
 ```shellsession
-$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a" --to edn
+$ echo '{"a": "hello there"}' | jet --from json --keywordize -t ":a" --to edn
 "hello there"
 
-$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a symbol" --to edn
+$ echo '{"a": "hello there"}' | jet --from json --keywordize -t ":a symbol" --to edn
 hello there
 ```
 
 or simply use `println` to get rid of the quotes:
 
 ``` clojure
-$ echo '{"a": "hello there"}' | jet --from json --keywordize --query ":a println" --to edn
+$ echo '{"a": "hello there"}' | jet --from json --keywordize -t ":a println" --to edn
 hello there
 ```
 
@@ -224,7 +209,7 @@ Jet supports streaming over multiple values, without reading the entire input
 into memory:
 
 ``` shellsession
-$ echo '{"a": 1} {"a": 1}' | jet --from json --keywordize --query ':a' --to edn
+$ echo '{"a": 1} {"a": 1}' | jet --from json --keywordize -t ':a' --to edn
 1
 1
 ```
@@ -236,23 +221,6 @@ $ echo '{"a": 1} {"a": 1}' | lein jet --from json --keywordize --collect --to ed
 [{:a 1} {:a 1}]
 ```
 
-## Query
-
-EDIT 2021: if the query syntax isn't clear, you can now use `--func`,
-`--thread-last` or `--thread-first` to pass a normal Clojure function/expression instead.
-
-The `--query` option supports an intermediate EDN transformation.
-
-``` shellsession
-$ echo '{:a 1 :b 2 :c 3}' | jet --query '(select-keys [:a :b])'
-{:a 1, :b 2}
-$ echo '{:a {:b 1}}' | jet --query '[:a :b]'
-1
-```
-
-The query language should be pretty familiar to users of Clojure and `jq`. For
-more information about the query language, read the docs [here](doc/query.md).
-
 ## Specter
 
 As of version `0.2.18` the [specter](https://github.com/redplanetlabs/specter) library is available in `--func`, `--thread-first` and `--thread-last`:
@@ -260,37 +228,6 @@ As of version `0.2.18` the [specter](https://github.com/redplanetlabs/specter) l
 ``` clojure
 $ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
 {:a {:a 2}}
-```
-
-## Interactive shell
-
-The jet interactive shell can be started with the `--interactive`
-flag. Optionally you can provide the first command for the shell as an argument:
-
-``` shellsession
-$ jet --interactive ':jeti/set-val {:a 1}'
-```
-
-``` shellsession
-$ curl -sL https://api.github.com/repos/clojure/clojure/commits > /tmp/commits.json
-$ jet --interactive ':jeti/slurp "/tmp/commits.json" {:format :json}'
-```
-
-Note that a jeti command has to be valid EDN.  To see a list of available
-commands, type `:jeti/help` in the shell:
-
-``` shellsession
-> :jeti/help
-Available commands:
-:jeti/set-val {:a 1}   : set value.
-:jeti/jump "34d4"      : jump to a previous state.
-:jeti/quit, :jeti/exit : exit this shell.
-:jeti/slurp            : read a file from disk. Type :jeti/help :jeti/slurp for more details.
-:jeti/spit             : writes file to disk. Type :jeti/help :jeti/spit for more details.
-:jeti/bookmark "name"  : save a bookmark.
-:jeti/bookmarks        : show bookmarks.
-:jeti/print-length     : set *print-length*
-:jeti/print-level      : set *print-level*
 ```
 
 ## Emacs integration
@@ -334,6 +271,6 @@ You will need leiningen and GraalVM.
 
 ## License
 
-Copyright © 2019-2022 Michiel Borkent
+Copyright © 2019-2023 Michiel Borkent
 
 Distributed under the EPL License, same as Clojure. See LICENSE.

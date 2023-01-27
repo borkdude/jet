@@ -6,6 +6,7 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.string :as str]
+   [jet.base64 :refer [base64-namespace]]
    [jet.data-readers]
    [jet.formats :as formats]
    [jet.jeti :refer [start-jeti!]]
@@ -26,7 +27,8 @@
                                '->Camel_Snake_Case csk/->Camel_Snake_Case
                                '->HTTP-Header-Case csk/->HTTP-Header-Case}
                               'com.rpl.specter
-                              {}}
+                              {}
+                              'base64 base64-namespace}
                  :aliases '{str clojure.string
                             s com.rpl.specter
                             csk camel-snake-kebab.core}})
@@ -64,23 +66,49 @@
 (defn coerce-interactive [interactive]
   (not-empty (str/join " " interactive)))
 
+(def cli-spec
+  {:from            {:coerce :keyword
+                     :alias  :i
+                     :ref "[ edn | transit | json | yaml ]"
+                     :desc   "defaults to edn."}
+   :to              {:coerce :keyword
+                     :alias  :o
+                     :ref "[ edn | transit | json | yaml ]"
+                     :desc   "defaults to edn."}
+   :colors          {:ref  "[ auto | true | false]"
+                     :desc "use colored output while pretty-printing. Defaults to auto."}
+   :thread-last     {:alias :t
+                     :desc  "implicit thread last"}
+   :thread-first    {:alias :T
+                     :desc  "implicit thread first"}
+   :func            {:alias :f
+                     :desc  "a single-arg Clojure function, or a path to a file that contains a function, that transforms input."}
+   :query           {:alias :q
+                     :desc  "DEPRECATED, prefer -t, -T or -f. Given a jet-lang query, transforms input."}
+   :collect         {:alias :c
+                     :desc  "given separate values, collects them in a vector."}
+   :version         {:alias :v
+                     :desc  "print the current version of jet."}
+   :help            {:alias :h
+                     :desc  "print this help text."}
+   :keywordize      {:alias :k
+                     :ref   "[ <key-fn> ]"
+                     :desc  "if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own."}
+   :no-pretty       {:coerce :boolean
+                     :desc   "disable pretty printing"}
+   :edn-reader-opts {:desc "options passed to the EDN reader."}})
+
+(def cli-opts
+  {:spec cli-spec
+   :order (let [first-ks [:from :to
+                          :thread-last :thread-first :func]]
+            (into first-ks (remove (set first-ks) (keys cli-spec))))
+   :no-keyword-opts true})
+
 (defn parse-opts [args]
   (cli/parse-opts
    args
-   {:coerce {:from :keyword
-             :to :keyword
-             :colors :boolean}
-    :aliases {:i :from
-              :o :to
-              :t :thread-last
-              :T :thread-first
-              :f :func
-              :q :query
-              :c :collect
-              :v :version
-              :h :help
-              :k :keywordize}
-    :no-keyword-opts true}))
+   cli-opts))
 
 (defn get-version
   "Gets the current version of the tool"
@@ -91,21 +119,10 @@
   "Prints the help text"
   []
   (println (str "jet v" (get-version)))
-  (println "
-  -h, --help: print this help text.
-  -v, --version: print the current version of jet.
-  -i, --from: edn, transit, json or yaml, defaults to edn.
-  -o, --to: edn, transit, json or yaml, defaults to edn.
-  -k, --keywordize [ <key-fn> ]: if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own.
-  --no-pretty: disable pretty-printing.
-  --colors [auto | true | false]: use colored output while pretty-printing. Defaults to auto.
-  -f, --func: a single-arg Clojure function, or a path to a file that contains a function, that transforms input.
-  -t, --thread-last: implicit thread last
-  -T, --thread-first: implicit thread first
-  --edn-reader-opts: options passed to the EDN reader.
-  -q, --query: given a jet-lang query, transforms input. See https://github.com/borkdude/jet/blob/master/doc/query.md for more.
-  -c, --collect: given separate values, collects them in a vector.
-  --interactive [ cmd ]: if present, starts an interactive shell. An initial command may be provided. See README.md for more.")
+  (println)
+  (println "Options:")
+  (println)
+  (println (cli/format-opts cli-opts))
   (println))
 
 (defn exec [{:keys [from to keywordize
