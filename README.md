@@ -230,6 +230,10 @@ $ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
 {:a {:a 2}}
 ```
 
+## Base64
+
+To encode and decode base64 you can use `base64/encode` and `base64/decode`.
+
 ## Emacs integration
 
 Sometimes it's useful to reformat REPL output in Emacs to make it more
