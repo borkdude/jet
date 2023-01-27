@@ -234,6 +234,40 @@ $ echo '{:a {:a 1}}' | ./jet -t '(s/transform [s/MAP-VALS s/MAP-VALS] inc)'
 
 To encode and decode base64 you can use `base64/encode` and `base64/decode`.
 
+## Jet utility functions
+
+In the `jet` namespace, the following utilities are available:
+
+### `paths`
+
+Return all paths (and sub-paths) in maps and vectors. Each result is a map of `:path` and `:val` (via `get-in`).
+
+``` clojure
+$ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths)'
+[{:path [:a], :val {:b [1 2 3 {:x 2}], :c {:d 3}}}
+ {:path [:a :b], :val [1 2 3 {:x 2}]}
+ {:path [:a :c], :val {:d 3}}
+ {:path [:a :b 0], :val 1}
+ {:path [:a :b 1], :val 2}
+ {:path [:a :b 2], :val 3}
+ {:path [:a :b 3], :val {:x 2}}
+ {:path [:a :b 3 :x], :val 2}
+ {:path [:a :c :d], :val 3}]
+```
+
+### `when-pred`
+
+Given a predicate and arguments, run predicate on arguments and return first
+argument when truthy. When exception happens, `when-pred` return `nil`, so you
+can safely use functions like `odd?` on anything without checking for numbers.
+
+The following returns all paths for which the leafs are odd numbers:
+
+``` clojure
+$ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths) (filter #(jet/when-pred odd? (:val %))) (mapv :path)'
+[[:a :b 0] [:a :b 2] [:a :c :d]]
+```
+
 ## Emacs integration
 
 Sometimes it's useful to reformat REPL output in Emacs to make it more

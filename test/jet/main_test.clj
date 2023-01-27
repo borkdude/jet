@@ -1,5 +1,6 @@
 (ns jet.main-test
   (:require
+   [clojure.edn :as edn]
    [clojure.string :as str]
    [clojure.test :as test :refer [deftest is testing]]
    [jet.test-utils :refer [jet]]))
@@ -157,3 +158,7 @@
 (deftest base64-test
   (is (= "\"Zm9v\"\n" (jet "{:a \"foo\"}" "-t" ":a base64/encode")))
   (is (= "\"foo\"\n" (jet "{:a \"foo\"}" "-t" ":a base64/encode base64/decode"))))
+
+(deftest paths-test
+  (is (= [[:a :b 0] [:a :b 2] [:a :c :d]]
+         (edn/read-string (jet "{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}" "-t" "(jet/paths) (filter #(jet/when-pred odd? (:val %))) (mapv :path)")))))

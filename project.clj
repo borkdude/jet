@@ -15,7 +15,7 @@
                  [mvxcvi/puget "1.3.2"]
                  [commons-io/commons-io "2.11.0"]
                  [org.babashka/sci "0.5.34"]
-                 [org.babashka/cli "0.5.40"]
+                 [org.babashka/cli "0.6.45"]
                  [camel-snake-kebab "0.4.3"]
                  [com.rpl/specter "1.1.4"]]
   :profiles {:test {:dependencies [[clj-commons/conch "0.9.2"]]}

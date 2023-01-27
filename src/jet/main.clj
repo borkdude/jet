@@ -17,6 +17,42 @@
 
 (set! *warn-on-reflection* true)
 
+(defn -paths [m opts]
+  (cond
+    (map? m)
+    (vec
+     (concat (map vector (keys m))
+             (mapcat (fn [[k v]]
+                       (let [sub (-paths v opts)
+                             nested (map #(into [k] %) (filter (comp not empty?) sub))]
+                         (when (seq nested)
+                           nested)))
+                     m)))
+    (vector? m)
+    (vec (concat (map vector (range (count m)))
+                 (mapcat (fn [idx]
+                           (let [sub (-paths (get m idx) opts)
+                                 nested (map #(into [idx] %) (filter (comp not empty?) sub))]
+                             (when (seq nested)
+                               nested)))
+                         (range (count m)))))
+    :else []))
+
+(defn paths
+  [m]
+  (let [paths (-paths m nil)
+        paths (mapv (fn [path]
+                      (let [v (get-in m path)]
+                        {:path path
+                         :val v}))
+                    paths)]
+    paths))
+
+(defn when-pred [pred x & args]
+  (try (when (apply pred x args)
+         x)
+       (catch Exception _ nil)))
+
 (def ctx
   (-> (sci/init {:namespaces {'camel-snake-kebab.core
                               {'->PascalCase csk/->PascalCase
@@ -28,7 +64,9 @@
                                '->HTTP-Header-Case csk/->HTTP-Header-Case}
                               'com.rpl.specter
                               {}
-                              'base64 base64-namespace}
+                              'base64 base64-namespace
+                              'jet {'paths paths
+                                    'when-pred when-pred}}
                  :aliases '{str clojure.string
                             s com.rpl.specter
                             csk camel-snake-kebab.core}})
@@ -55,12 +93,12 @@
 
 (defn coerce-thread-last [s]
   (->> s coerce-file
-       (format "#(->> %% %s)")
+       (format "(fn [edn] (->> edn %s))")
        (sci/eval-string* ctx)))
 
 (defn coerce-thread-first [s]
   (->> s coerce-file
-       (format "#(-> %% %s)")
+       (format "(fn [edn] (-> edn %s))")
        (sci/eval-string* ctx)))
 
 (defn coerce-interactive [interactive]

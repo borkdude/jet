@@ -3,6 +3,7 @@
 ## 0.4.22 (2023.01.27)
 
 - [#123](https://github.com/borkdude/jet/issues/123): Add `base64/encode` and `base64/decode`
+- Add `jet/paths` and `jet/when-pred`
 - Deprecate interactive mode
 - Deprecate `--query` in favor of `--thread-last`, `--thread-first` or `--func`
 
