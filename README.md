@@ -255,7 +255,7 @@ $ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths)'
 ### `when-pred`
 
 Given a predicate, return predicate that returns the given argument when
-predicate was truthy. In case of an exception during the predicte call, catches
+predicate was truthy. In case of an exception during the predicate call, catches
 and returns `nil`.
 
 The following returns all paths for which the leafs are odd numbers:
