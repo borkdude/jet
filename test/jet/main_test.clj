@@ -161,4 +161,4 @@
 
 (deftest paths-test
   (is (= [[:a :b 0] [:a :b 2] [:a :c :d]]
-         (edn/read-string (jet "{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}" "-t" "(jet/paths) (filter #(jet/when-pred odd? (:val %))) (mapv :path)")))))
+         (edn/read-string (jet "{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}" "-t" "(jet/paths) (filter (comp (jet/when-pred odd?) :val)) (mapv :path)")))))

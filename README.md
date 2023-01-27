@@ -257,14 +257,14 @@ $ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths)'
 
 ### `when-pred`
 
-Given a predicate and arguments, run predicate on arguments and return first
-argument when truthy. When exception happens, `when-pred` return `nil`, so you
-can safely use functions like `odd?` on anything without checking for numbers.
+Given a predicate, return predicate that returns the given argument when
+predicate was truthy. In case of an exception during the predicte call, catches
+and returns `nil`.
 
 The following returns all paths for which the leafs are odd numbers:
 
 ``` clojure
-$ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths) (filter #(jet/when-pred odd? (:val %))) (mapv :path)'
+$ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths) (filter (comp (jet/when-pred odd?) :val)) (mapv :path)'
 [[:a :b 0] [:a :b 2] [:a :c :d]]
 ```
 

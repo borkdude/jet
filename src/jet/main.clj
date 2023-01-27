@@ -48,10 +48,11 @@
                     paths)]
     paths))
 
-(defn when-pred [pred x & args]
-  (try (when (apply pred x args)
-         x)
-       (catch Exception _ nil)))
+(defn when-pred [pred]
+  (fn [x]
+    (try (when (pred x)
+           x)
+         (catch Exception _ nil))))
 
 (def ctx
   (-> (sci/init {:namespaces {'camel-snake-kebab.core
