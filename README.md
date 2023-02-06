@@ -268,25 +268,8 @@ $ echo '{:a {:b [1 2 3 {:x 2}] :c {:d 3}}}' | jet -t '(jet/paths) (filter (comp 
 ## Emacs integration
 
 Sometimes it's useful to reformat REPL output in Emacs to make it more
-readable. You can do this by piping the relevant region via jet. Just
-put this function somewhere in your Emacs configuration, highlight a
-region, and press `M-x jet-pretty <enter>`:
-
-``` emacs-lisp
-(defun jet-pretty ()
-  (interactive)
-  (shell-command-on-region
-   (region-beginning)
-   (region-end)
-   "jet --edn-reader-opts '{:default tagged-literal}'"
-   (current-buffer)
-   t
-   "*jet error buffer*"
-   t))
-```
-
-Passing `--edn-reader-opts` ensures that jet will respect any tagged
-literals that are particular to your codebase.
+readable, copy to clipboard or just pretty-print to another buffer.
+All of that is avaiable in the [jet.el](https://github.com/ericdallo/jet.el) package.
 
 ## Test
 
