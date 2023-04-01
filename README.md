@@ -9,7 +9,7 @@ CLI to transform between [JSON](https://www.json.org/), [EDN](https://github.com
 ## Quickstart
 
 ``` shellsession
-$ bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
+$ bash < <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)
 $ echo '{:a 1}' | jet --to json
 {"a":1}
 ```

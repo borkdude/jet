@@ -9,7 +9,7 @@
             :url "http://opensource.org/licenses/eclipse-1.0.php"}
   :source-paths ["src"]
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [com.cognitect/transit-clj "1.0.329"]
+                 [com.cognitect/transit-clj "1.0.333"]
                  [cheshire "5.11.0"]
                  [clj-commons/clj-yaml "1.0.26"]
                  [mvxcvi/puget "1.3.2"]
