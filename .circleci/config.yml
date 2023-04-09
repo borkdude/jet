@@ -91,6 +91,10 @@ jobs:
       #     command: |
       #       .circleci/script/performance
       - run:
+          name: Install bb
+          command: |
+            sudo bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+      - run:
           name: Release
           command: |
             .circleci/script/release
@@ -145,6 +149,10 @@ jobs:
       #     name: Performance report
       #     command: |
       #       .circleci/script/performance
+      - run:
+          name: Install bb
+          command: |
+            sudo bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
       - run:
           name: Release
           command: |
@@ -213,6 +221,10 @@ jobs:
       #     name: Performance report
       #     command: |
       #       .circleci/script/performance
+      - run:
+          name: Install bb
+          command: |
+            sudo bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
       - run:
           name: Release
           command: |
