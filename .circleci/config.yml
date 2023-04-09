@@ -40,6 +40,71 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "project.clj" }}
+  buildlinux-aarch64:
+    machine:
+      enabled: true
+      image: ubuntu-2004:current
+    resource_class: arm.medium
+    working_directory: ~/repo
+    environment:
+      LEIN_ROOT: "true"
+      GRAALVM_HOME: /home/circleci/graalvm-ce-java11-22.3.0
+      JET_PLATFORM: linux # used in release script
+      JET_TEST_ENV: native
+      BABASHKA_STATIC: "true"
+
+    steps:
+      - checkout
+      - run:
+          name: Check max glibc version
+          command: script/check_glibc.sh
+      - restore_cache:
+          keys:
+            - buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
+      - run:
+          name: Install Clojure
+          command: |
+            wget https://download.clojure.org/install/linux-install-1.10.1.447.sh
+            chmod +x linux-install-1.10.1.447.sh
+            sudo ./linux-install-1.10.1.447.sh
+      - run:
+          name: Install native dev tools
+          command: |
+            sudo apt-get update
+            sudo apt-get -y install build-essential zlib1g-dev
+      - run:
+          name: Download GraalVM
+          command: |
+            cd ~
+            if ! [ -d graalvm-ce-java11-22.3.0 ]; then
+              curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java11-linux-amd64-22.3.0.tar.gz
+              tar xzf graalvm-ce-java11-linux-amd64-22.3.0.tar.gz
+            fi
+      - run:
+          name: Build binary
+          command: |
+            script/compile
+          no_output_timeout: 30m
+      - run:
+          name: Run tests
+          command: |
+            script/test
+      # - run:
+      #     name: Performance report
+      #     command: |
+      #       .circleci/script/performance
+      - run:
+          name: Release
+          command: |
+            .circleci/script/release
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/graalvm-ce-java11-22.3.0
+          key: buildlinux-{{ checksum "project.clj" }}-{{ checksum ".circleci/config.yml" }}
+      - store_artifacts:
+          path: /tmp/release
+          destination: release
   buildlinux:
     docker:
       - image: circleci/clojure:lein-2.9.1
@@ -102,7 +167,7 @@ jobs:
       - store_artifacts:
           path: /tmp/release
           destination: release
-  buildmac:
+buildmac:
     macos:
       xcode: "14.0.0"
     environment:
@@ -194,6 +259,7 @@ workflows:
     jobs:
       - testjvm
       - buildlinux
+      - buildlinux-aarch64
       - buildmac
       - deploy:
           filters:
@@ -202,6 +268,7 @@ workflows:
           requires:
             - testjvm
             - buildlinux
+            - buildlinux-aarch64
             - buildmac
       # - docker:
       #     filters:
