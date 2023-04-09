@@ -169,6 +169,7 @@ jobs:
       LEIN_ROOT: "true"
       GRAALVM_HOME: /home/circleci/graalvm-ce-java11-22.3.0
       JET_PLATFORM: linux # used in release script
+      JET_ARCH: aarch64
       JET_TEST_ENV: native
       BABASHKA_STATIC: "true"
 
