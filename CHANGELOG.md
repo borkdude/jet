@@ -2,31 +2,35 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
-## 0.4.24 (2023.04.09)
+## 0.5.25 (2023-04-26)
+
+- #130: `--no-commas` option strips commas from EDN. Only works with uncolored output.
+
+## 0.4.24 (2023-04-09)
 
 - [#127](https://github.com/borkdude/jet/issues/127): support linux aarch64 binary
 
-## 0.4.23 (2023.01.27)
+## 0.4.23 (2023-01-27)
 
 - [#123](https://github.com/borkdude/jet/issues/123): Add `base64/encode` and `base64/decode`
 - Add `jet/paths` and `jet/when-pred`
 - Deprecate interactive mode
 - Deprecate `--query` in favor of `--thread-last`, `--thread-first` or `--func`
 
-## 0.3.21 (2022.10.28)
+## 0.3.21 (2022-10-28)
 
 - [#74](https://github.com/borkdude/jet/issues/74): Add yaml support ([@qdzo](https://github.com/qdzo))
 
-## 0.2.20 (2022.06.17)
+## 0.2.20 (2022-06-17)
 
 - Make suitable as clj tool
 
-## 0.2.19 (2022.06.17)
+## 0.2.19 (2022-06-17)
 
 - Migrate CLI to [babashka CLI](https://github.com/babashka/cli)
 - Introduce `jet.main/exec` which can be called as clojure CLI exec fn
 
-## 0.2.18 (2022.06.16)
+## 0.2.18 (2022-06-16)
 
 - Provide macOS `aarch64` binary
 - Reverse `--pretty` to `--no-pretty`: pretty printing is now done by default
