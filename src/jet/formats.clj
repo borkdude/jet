@@ -11,7 +11,8 @@
    [cognitect.transit :as transit]
    [fipp.edn :as fipp]
    [jet.data-readers]
-   [puget.printer :as puget])
+   [puget.printer :as puget]
+   [rewrite-clj.zip :as z])
   (:import
    [com.fasterxml.jackson.core JsonFactory]
    [java.io Reader]
@@ -37,12 +38,15 @@
         (pos? (org.babashka.CLibrary/isatty 1)))
     false))
 
-(defn pprint [x colors]
-  (if (or (= true colors)
-          (= :always colors)
-          (and (= :auto colors)
-               (in-terminal?)))
-    (puget/cprint x)
+(defn colorize? [colors]
+  (or (= true colors)
+      (= :always colors)
+      (and (= :auto colors)
+           (in-terminal?))))
+
+(defn pprint [x colors uncomma]
+  (if colors
+    (puget/cprint x {:map-delimiter (if uncomma "" ",")})
     (fipp/pprint x)))
 
 (defn json-parser []
@@ -59,9 +63,22 @@
 (defn parse-edn [opts *in*]
   (edn/read (assoc opts :eof ::EOF) *in*))
 
-(defn generate-edn [o pretty color]
-  (if pretty (str/trim (with-out-str (pprint o color)))
-      (pr-str o)))
+(defn uncomma-edn [edn-str]
+  (-> (let [loc (z/of-string edn-str)]
+        (loop [loc loc]
+          (let [next (z/next* loc)]
+            (if (z/end? loc) (z/root loc)
+                (if (= :comma (z/tag loc))
+                  (recur (z/remove* loc))
+                  (recur next))))))
+      str))
+
+(defn generate-edn [o pretty color uncomma]
+  (let [edn-str (if pretty (str/trim (with-out-str (pprint o color uncomma)))
+                (pr-str o))]
+    (if (and uncomma (not color))
+      (uncomma-edn edn-str)
+      edn-str)))
 
 (defn transit-reader []
   (transit/reader (ReaderInputStream. *in*) :json))

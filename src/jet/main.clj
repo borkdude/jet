@@ -135,7 +135,9 @@
                      :desc  "if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own."}
    :no-pretty       {:coerce :boolean
                      :desc   "disable pretty printing"}
-   :edn-reader-opts {:desc "options passed to the EDN reader."}})
+   :edn-reader-opts {:desc "options passed to the EDN reader."}
+   :no-commas       {:coerce :boolean
+                     :desc "remove commas from EDN"}})
 
 (def cli-opts
   {:spec cli-spec
@@ -168,11 +170,12 @@
                     no-pretty version query
                     func thread-first thread-last interactive collect
                     edn-reader-opts
-                    help colors]
+                    help colors no-commas]
              :or {from :edn
                   to :edn
                   colors :auto}}]
-  (let [[func thread-first thread-last keywordize edn-reader-opts query]
+  (let [colors (formats/colorize? colors)
+        [func thread-first thread-last keywordize edn-reader-opts query]
         [(cli/coerce func coerce-eval-string) (cli/coerce thread-first coerce-thread-first)
          (cli/coerce thread-last coerce-thread-last)
          (cli/coerce keywordize coerce-eval-string)
@@ -207,7 +210,7 @@
                 (case to
                   :edn (some->
                         input
-                        (formats/generate-edn (not no-pretty) colors)
+                        (formats/generate-edn (not no-pretty) colors no-commas)
                         println)
                   :json (some->
                          input

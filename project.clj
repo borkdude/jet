@@ -14,10 +14,11 @@
                  [clj-commons/clj-yaml "1.0.26"]
                  [mvxcvi/puget "1.3.2"]
                  [commons-io/commons-io "2.11.0"]
-                 [org.babashka/sci "0.5.34"]
-                 [org.babashka/cli "0.6.45"]
+                 [org.babashka/sci "0.7.39"]
+                 [org.babashka/cli "0.7.51"]
                  [camel-snake-kebab "0.4.3"]
-                 [com.rpl/specter "1.1.4"]]
+                 [com.rpl/specter "1.1.4"]
+                 [rewrite-clj/rewrite-clj "1.1.47"]]
   :profiles {:test {:dependencies [[clj-commons/conch "0.9.2"]]}
              :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "0.1.4"]]
                        :global-vars {*assert* false}
