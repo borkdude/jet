@@ -79,7 +79,8 @@
   (println "Running jet" (str "v" (str/trim (slurp (io/resource "JET_VERSION"))) "."))
   (println "Type :jeti/help to print help.")
   (println)
-  (let [init-cmd (when (string? init-cmd) init-cmd)
+  (let [init-cmd (when-not (boolean? init-cmd)
+                   init-cmd)
         init-id (new-id nil)]
     (loop [{:keys [:bookmarks :print-level :print-length :init-cmd] :as state}
            {:init-cmd init-cmd
@@ -96,7 +97,7 @@
                          (not same?))
                 (println (binding [*print-length* print-length
                                    *print-level* print-level]
-                           (formats/generate-edn current-val true colors)))
+                           (formats/generate-edn current-val true colors false)))
                 (println))
             proceed? (cond (and start? init-cmd)
                            (do (println ">" init-cmd)

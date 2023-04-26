@@ -120,9 +120,11 @@ $ echo '[1 2 3]' | clj -Tjet exec :colors true :func '"#(-> % first inc)"'
   -k, --keywordize      [ <key-fn> ]                    if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own.
       --colors          [ auto | true | false]          use colored output while pretty-printing. Defaults to auto.
       --edn-reader-opts                                 options passed to the EDN reader.
+      --no-commas                                       remove commas from EDN
   -c, --collect                                         given separate values, collects them in a vector.
   -h, --help                                            print this help text.
   -v, --version                                         print the current version of jet.
+  -q, --query                                           DEPRECATED, prefer -t, -T or -f. Given a jet-lang query, transforms input.
 ```
 
 Transform EDN using `--thread-last`, `--thread-first` or `--func`.
