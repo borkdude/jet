@@ -15,7 +15,7 @@ if [[ "$JET_PLATFORM" = "linux" ]]; then
     cp "$jar" /tmp/release
 fi
 
-cd /tmp/release
+pushd /tmp/release
 
 ## release binary as zip archive
 
@@ -24,9 +24,10 @@ arch=${JET_ARCH:-amd64}
 archive="jet-$VERSION-$JET_PLATFORM-$arch.tar.gz"
 
 tar zcvf "$archive" jet
-
-bb release-artifact "$archive" || true
-
 ## cleanup
 
 rm jet
+
+popd
+
+bb release-artifact "/tmp/release/$archive" || true
