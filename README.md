@@ -273,6 +273,12 @@ Sometimes it's useful to reformat REPL output in Emacs to make it more
 readable, copy to clipboard or just pretty-print to another buffer.
 All of that is avaiable in the [jet.el](https://github.com/ericdallo/jet.el) package.
 
+## Vim integration
+
+To convert data in vim buffers, you can select the data you want to convert in visual mode,
+then invoke `jet` by typing for example `:'<,'>!jet -k --from json` (vim will insert the 
+`'<,'>` for you as you type).
+
 ## Test
 
 Test the JVM version:
