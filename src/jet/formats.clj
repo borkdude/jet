@@ -100,7 +100,11 @@
 
 (defn parse-yaml [rdr keywordize]
   (try
-    (or (some->> (yaml/parse-stream rdr :keywords (boolean keywordize))
+    (or (some->> (if (fn? keywordize)
+                   [:key-fn #(-> % :key keywordize)]
+                   [:keywords (boolean keywordize)])
+                 (concat [rdr])
+                 (apply yaml/parse-stream)
                  (walk/postwalk (fn [x] (if (seq? x) (vec x) x))))
         ::EOF)
     (catch org.yaml.snakeyaml.parser.ParserException e
