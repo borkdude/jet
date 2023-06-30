@@ -2,6 +2,11 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
+## Unreleased
+
+- [#134](https://github.com/borkdude/jet/issues/134): From YAML,
+  `--keywordize [<key-fn>]` now uses the provided `key-fn`.
+
 ## 0.5.25 (2023-04-26)
 
 - #130: `--no-commas` option strips commas from EDN. Only works with uncolored output.

@@ -51,6 +51,18 @@
               "--from" "yaml"
               "--keywordize"
               "--to" "edn")))
+  (is (= "{:a-b 1}\n"
+         (jet "a_b: 1"
+              "--from" "yaml"
+              "--keywordize"
+              "#(keyword (str/replace % \"_\" \"-\"))"
+              "--to" "edn")))
+  (is (= "{:x/a 1}\n"
+         (jet "a: 1"
+              "--from" "yaml"
+              "--keywordize"
+              "#(keyword \"x\" %)"
+              "--to" "edn")))
   (is (= "[\"^ \",\"~:a\",1]\n"
          (jet "{a: 1}"
               "--from" "yaml"
