@@ -2,7 +2,7 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
-## Unreleased
+## 0.6.26 (2023-07-03)
 
 - [#134](https://github.com/borkdude/jet/issues/134): From YAML,
   `--keywordize [<key-fn>]` now uses the provided `key-fn`.
