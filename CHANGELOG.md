@@ -2,6 +2,11 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
+## Unreleased
+
+- [#137] Added missing functions from clojure v1.11:
+  `update-keys`, `update-vals`, `parse-long`, `parse-double`, `parse-boolean` and `parse-uuid`
+
 ## 0.6.26 (2023-07-03)
 
 - [#134](https://github.com/borkdude/jet/issues/134): From YAML,
