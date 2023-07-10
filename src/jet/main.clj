@@ -12,7 +12,8 @@
    [jet.jeti :refer [start-jeti!]]
    [jet.query :as q]
    [jet.specter :as specter :refer [config]]
-   [sci.core :as sci])
+   [sci.core :as sci]
+   [sci.impl.utils :refer [clojure-core-ns]])
   (:gen-class))
 
 (set! *warn-on-reflection* true)
@@ -55,7 +56,13 @@
          (catch Exception _ nil))))
 
 (def ctx
-  (-> (sci/init {:namespaces {'camel-snake-kebab.core
+  (-> (sci/init {:namespaces {'clojure.core {'update-vals (sci/copy-var update-vals clojure-core-ns)
+                                             'update-keys (sci/copy-var update-keys clojure-core-ns)
+                                             'parse-boolean (sci/copy-var parse-boolean clojure-core-ns)
+                                             'parse-double (sci/copy-var parse-double clojure-core-ns)
+                                             'parse-long (sci/copy-var parse-long clojure-core-ns)
+                                             'parse-uuid (sci/copy-var parse-uuid clojure-core-ns)}
+                              'camel-snake-kebab.core
                               {'->PascalCase csk/->PascalCase
                                '->camelCase csk/->camelCase
                                '->SCREAMING_SNAKE_CASE csk/->SCREAMING_SNAKE_CASE

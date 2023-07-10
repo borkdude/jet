@@ -178,3 +178,7 @@
 (deftest no-commas-test
   (is (= "[{:a 1 :b 2}]\n"
          (jet "[{:a 1 :b 2}]" "--no-commas"))))
+
+(deftest update-keys-and-vals-test
+  (is (= "{:a 1}"
+         (jet "{\"a\" \"1\"}" "-T" "(update-vals parse-long) (update-keys keyword)"))))
