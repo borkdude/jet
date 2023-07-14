@@ -92,6 +92,13 @@
   (cli/coerce x (fn [x]
                   (cond (= "true" x) true
                         (= "false" x) false
+                        (= "kebab" x) (coerce-eval-string "#(-> % csk/->kebab-case keyword)")
+                        (= "snake" x) (coerce-eval-string "#(-> % csk/->snake_case keyword)")
+                        (= "pascal" x) (coerce-eval-string "#(-> % csk/->PascalCase keyword)")
+                        (= "camel" x) (coerce-eval-string "#(-> % csk/->camelCase keyword)")
+                        (= "camel-snake" x) (coerce-eval-string "#(-> % csk/->Camel_Snake_Case keyword)")
+                        (= "screaming-snake" x) (coerce-eval-string "#(-> % csk/->SCREAMING_SNAKE_CASE keyword)")
+                        (= "http-header" x) (coerce-eval-string "#(-> % csk/->HTTP-Header-Case keyword)")
                         :else (coerce-eval-string x)))))
 
 (defn coerce-query [query]
@@ -138,7 +145,7 @@
    :help            {:alias :h
                      :desc  "print this help text."}
    :keywordize      {:alias :k
-                     :ref   "[ <key-fn> ]"
+                     :ref   "[ <key-fn> | kebab | snake | pascal | camel | camel-snake | screaming-snake | http-header ]"
                      :desc  "if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own."}
    :no-pretty       {:coerce :boolean
                      :desc   "disable pretty printing"}
@@ -182,10 +189,10 @@
                   to :edn
                   colors :auto}}]
   (let [colors (formats/colorize? colors)
-        [func thread-first thread-last keywordize edn-reader-opts query]
+        keywordize (coerce-keywordize keywordize)
+        [func thread-first thread-last  edn-reader-opts query]
         [(cli/coerce func coerce-eval-string) (cli/coerce thread-first coerce-thread-first)
          (cli/coerce thread-last coerce-thread-last)
-         (cli/coerce keywordize coerce-eval-string)
          (cli/coerce edn-reader-opts coerce-eval-string)
          (cli/coerce query coerce-query)]]
     (cond

@@ -5,6 +5,48 @@
    [clojure.test :as test :refer [deftest is testing]]
    [jet.test-utils :refer [jet]]))
 
+(def json "{\"onceMoreUntoTheBreach\": \"dear friends\"}")
+(deftest named-camel-keywordize-test
+  (is (= "{:onceMoreUntoTheBreach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "camel"))))
+(deftest named-pascal-keywordize-test
+  (is (= "{:OnceMoreUntoTheBreach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "pascal"))))
+
+(deftest named-snake-keywordize-test
+  (is (= "{:once_more_unto_the_breach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "snake"))))
+
+(deftest named-kebab-keywordize-test
+  (is (= "{:once-more-unto-the-breach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "kebab"))))
+
+(deftest named-screaming-snake-keywordize-test
+  (is (= "{:ONCE_MORE_UNTO_THE_BREACH \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "screaming-snake"))))
+
+(deftest named-http-header-keywordize-test
+  (is (= "{:Once-More-Unto-The-Breach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "http-header"))))
+
+(deftest named-camel-snake-keywordize-test
+  (is (= "{:Once_More_Unto_The_Breach \"dear friends\"}\n"
+         (jet json
+              "--from" "json"
+              "--keywordize" "camel-snake"))))
+
 (deftest main-test
   (is (= "{\"a\" 1}\n"
          (jet "{\"a\": 1}"
