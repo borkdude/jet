@@ -89,10 +89,17 @@
   (->> x coerce-file (sci/eval-string* ctx)))
 
 (defn coerce-keywordize [x]
-  (cli/coerce x (fn [x]
-                  (cond (= "true" x) true
-                        (= "false" x) false
-                        :else (coerce-eval-string x)))))
+  (cond (= :kebab-case x) (comp keyword csk/->kebab-case)
+        (= :snake_case x) (comp keyword csk/->snake_case)
+        (= :PascalCase x) (comp keyword csk/->PascalCase)
+        (= :camelCase x) (comp keyword csk/->camelCase)
+        (= :Camel_Snake_Case x) (comp keyword csk/->Camel_Snake_Case)
+        (= :SCREAMING_SNAKE_CASE x) (comp keyword csk/->SCREAMING_SNAKE_CASE)
+        (= :HTTP-Header-Case x) (comp keyword csk/->HTTP-Header-Case)
+        :else  (cli/coerce x (fn [x]
+                               (cond (= "true" x) true
+                                     (= "false" x) false
+                                     :else (coerce-eval-string x))))))
 
 (defn coerce-query [query]
   (edn/read-string
@@ -138,7 +145,7 @@
    :help            {:alias :h
                      :desc  "print this help text."}
    :keywordize      {:alias :k
-                     :ref   "[ <key-fn> ]"
+                     :ref   "[ <key-fn> | :kebab-case | :snake_case | :PascalCase | :camelCase | :Camel_Snake_Case | :SCREAMING_SNAKE_CASE | :HTTP-Header-Case ]"
                      :desc  "if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own."}
    :no-pretty       {:coerce :boolean
                      :desc   "disable pretty printing"}
@@ -182,10 +189,10 @@
                   to :edn
                   colors :auto}}]
   (let [colors (formats/colorize? colors)
-        [func thread-first thread-last keywordize edn-reader-opts query]
+        keywordize (coerce-keywordize keywordize)
+        [func thread-first thread-last  edn-reader-opts query]
         [(cli/coerce func coerce-eval-string) (cli/coerce thread-first coerce-thread-first)
          (cli/coerce thread-last coerce-thread-last)
-         (cli/coerce keywordize coerce-eval-string)
          (cli/coerce edn-reader-opts coerce-eval-string)
          (cli/coerce query coerce-query)]]
     (cond
