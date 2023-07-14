@@ -2,6 +2,10 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
+## Unreleased 
+- [#143] Add named cases for convenience to the --keywordize / -k switch:
+  `key-fn | kebab | snake | pascal | camel | camel-snake | screaming-snake | http-header`
+
 ## Unreleased
 
 - [#137] Added missing functions from clojure v1.11:
