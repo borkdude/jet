@@ -11,8 +11,9 @@ pom.xml.asc
 .hg/
 /jet
 .cache
-.cache
 jet.build_artifacts.txt
 .clj-kondo/babashka
 .cpcache
 *.tar.gz
+jet.iml
+.idea/

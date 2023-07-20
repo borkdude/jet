@@ -1,14 +1,18 @@
 (ns jet.test-utils
   (:require
-   [jet.main :as main]
-   [me.raynes.conch :refer [let-programs] :as sh]))
+    [clojure.string :as str]
+    [jet.main :as main]
+    [me.raynes.conch :refer [let-programs] :as sh]))
 
 (set! *warn-on-reflection* true)
 
 (defn jet-jvm [input & args]
-  (with-out-str
-    (with-in-str input
-      (apply main/-main args))))
+  (str/replace
+    (with-out-str
+      (with-in-str input
+        (apply main/-main args)))
+    "\r\n"
+    "\n"))
 
 (defn jet-native [input & args]
   (let-programs [jet "./jet"]
