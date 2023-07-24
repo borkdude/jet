@@ -9,14 +9,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1685989873,
-        "narHash": "sha256-TpobDAZe0qH+Rgc/3sZuty1Gw4NsHv0V6IVGytvKOo0=",
-        "type": "git",
-        "url": "file:///Users/slim/slimslenderslacks/clj-nix"
+        "lastModified": 1689867456,
+        "narHash": "sha256-vMQ7r3ghUyuTmFvZQ4ehIAeP93fWDswL3GunYVcmttg=",
+        "owner": "jlesquembre",
+        "repo": "clj-nix",
+        "rev": "3dffacf858ec9eb882d06695734b5b4300aa9448",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///Users/slim/slimslenderslacks/clj-nix"
+        "owner": "jlesquembre",
+        "repo": "clj-nix",
+        "type": "github"
       }
     },
     "devshell": {
