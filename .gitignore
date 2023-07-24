@@ -17,3 +17,4 @@ jet.build_artifacts.txt
 *.tar.gz
 jet.iml
 .idea/
+/result
