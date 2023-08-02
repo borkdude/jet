@@ -190,6 +190,7 @@
            (jet casing-samples "--from" "json" "--keywordize" "#(-> % csk/->snake_case keyword)")))))
 
 (deftest edn-reader-opts-test
+  (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--no-pretty")))
   (is (= "#foo {:a 1}\n" (jet "#foo{:a 1}" "--no-pretty" "--edn-reader-opts" "{:default tagged-literal}")))
   (is (= "[:foo {:a 1}]\n" (jet "#foo{:a 1}" "--no-pretty" "--edn-reader-opts" "{:readers {'foo (fn [x] [:foo x])}}"))))
 

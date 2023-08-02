@@ -149,7 +149,8 @@
                      :desc  "if present, keywordizes JSON/YAML keys. The default transformation function is keyword unless you provide your own."}
    :no-pretty       {:coerce :boolean
                      :desc   "disable pretty printing"}
-   :edn-reader-opts {:desc "options passed to the EDN reader."}
+   :edn-reader-opts {:desc "options passed to the EDN reader."
+                     :default "{:default tagged-literal}"}
    :no-commas       {:coerce :boolean
                      :desc "remove commas from EDN"}})
 
