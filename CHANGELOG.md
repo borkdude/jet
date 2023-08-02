@@ -4,10 +4,10 @@
 
 ## 0.7.27 (2023-08-02)
 
-- #137: Added missing functions from clojure v1.11:
+- [#137](https://github.com/borkdude/jet/issues/137): Added missing functions from clojure v1.11:
   `update-keys`, `update-vals`, `parse-long`, `parse-double`, `parse-boolean` and `parse-uuid`
-- #148: restore default EDN `tagged-literal` data reader
-- #143: Add named cases for convenience to the --keywordize / -k switch:
+- [#148](https://github.com/borkdude/jet/issues/148): restore default EDN `tagged-literal` data reader
+- [#143](https://github.com/borkdude/jet/issues/143): Add named cases for convenience to the --keywordize / -k switch:
   `key-fn | :kebab-case | :snake_case | :PascalCase | :camelCase | :Camel_Snake_Case | :SCREAMING_SNAKE_CASE | :HTTP-Header-Case`
 
 ## 0.6.26 (2023-07-03)
@@ -17,7 +17,7 @@
 
 ## 0.5.25 (2023-04-26)
 
-- #130: `--no-commas` option strips commas from EDN. Only works with uncolored output.
+- [#130](https://github.com/borkdude/jet/issues/130): `--no-commas` option strips commas from EDN. Only works with uncolored output.
 
 ## 0.4.24 (2023-04-09)
 
