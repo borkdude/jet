@@ -2,14 +2,13 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
-## Unreleased 
-- [#143] Add named cases for convenience to the --keywordize / -k switch:
-  `key-fn | :kebab-case | :snake_case | :PascalCase | :camelCase | :Camel_Snake_Case | :SCREAMING_SNAKE_CASE | :HTTP-Header-Case`
+## 0.6.27 (2023-08-02)
 
-## Unreleased
-
-- [#137] Added missing functions from clojure v1.11:
+- #137: Added missing functions from clojure v1.11:
   `update-keys`, `update-vals`, `parse-long`, `parse-double`, `parse-boolean` and `parse-uuid`
+- #148: restore default EDN `tagged-literal` data reader
+- #143: Add named cases for convenience to the --keywordize / -k switch:
+  `key-fn | :kebab-case | :snake_case | :PascalCase | :camelCase | :Camel_Snake_Case | :SCREAMING_SNAKE_CASE | :HTTP-Header-Case`
 
 ## 0.6.26 (2023-07-03)
 

@@ -24,7 +24,7 @@
   (testing "interactive"
     (is (true? (:interactive (parse-opts '("--interactive"))))))
   (testing "long opt + ="
-    (is (= {:from :edn, :to :json}
+    (is (= {:from :edn, :to :json :edn-reader-opts "{:default tagged-literal}"}
            (parse-opts '("--from=edn" "--to=json")))))
   (opt-test {:opt :collect
              :short-opt '("-c")
