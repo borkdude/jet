@@ -44,10 +44,11 @@
       (and (= :auto colors)
            (in-terminal?))))
 
-(defn pprint [x colors uncomma]
+(defn pprint [x colors {:keys [uncomma print-width]}]
   (if colors
-    (puget/cprint x {:map-delimiter (if uncomma "" ",")})
-    (fipp/pprint x)))
+    (puget/cprint x {:map-delimiter (if uncomma "" ",")
+                     :width print-width})
+    (fipp/pprint x {:width print-width})))
 
 (defn json-parser []
   (.createParser ^JsonFactory (or factory/*json-factory*
@@ -73,8 +74,9 @@
                   (recur next))))))
       str))
 
-(defn generate-edn [o pretty color uncomma]
-  (let [edn-str (if pretty (str/trim (with-out-str (pprint o color uncomma)))
+(defn generate-edn [o pretty color uncomma {:keys [print-width]}]
+  (let [edn-str (if pretty (str/trim (with-out-str (pprint o color {:uncomma uncomma
+                                                                    :print-width print-width})))
                 (pr-str o))]
     (if (and uncomma (not color))
       (uncomma-edn edn-str)
