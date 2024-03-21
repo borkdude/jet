@@ -46,9 +46,10 @@
 
 (defn pprint [x colors {:keys [uncomma print-width]}]
   (if colors
-    (puget/cprint x {:map-delimiter (if uncomma "" ",")
-                     :width print-width})
-    (fipp/pprint x {:width print-width})))
+    (puget/cprint x (cond-> {:map-delimiter (if uncomma "" ",")}
+                      print-width (assoc :width print-width)))
+    (fipp/pprint x (cond-> {}
+                     print-width (assoc :width print-width)))))
 
 (defn json-parser []
   (.createParser ^JsonFactory (or factory/*json-factory*
@@ -74,13 +75,15 @@
                   (recur next))))))
       str))
 
-(defn generate-edn [o pretty color uncomma {:keys [print-width]}]
-  (let [edn-str (if pretty (str/trim (with-out-str (pprint o color {:uncomma uncomma
-                                                                    :print-width print-width})))
-                (pr-str o))]
-    (if (and uncomma (not color))
-      (uncomma-edn edn-str)
-      edn-str)))
+(defn generate-edn
+  ([o pretty color uncomma] (generate-edn o pretty color uncomma {}))
+  ([o pretty color uncomma {:keys [print-width]}]
+   (let [edn-str (if pretty (str/trim (with-out-str (pprint o color {:uncomma uncomma
+                                                                     :print-width print-width})))
+                     (pr-str o))]
+     (if (and uncomma (not color))
+       (uncomma-edn edn-str)
+       edn-str))))
 
 (defn transit-reader []
   (transit/reader (ReaderInputStream. *in*) :json))
