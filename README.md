@@ -39,6 +39,11 @@ Upgrade:
 On Windows you can install using [scoop](https://scoop.sh/) and the
 [scoop-clojure](https://github.com/littleli/scoop-clojure) bucket.
 
+### ASDF
+
+jet can be installed with [asdf version manager](https://asdf-vm.com).
+More information on the [plugin page](https://github.com/rynkowsg/asdf-jet).
+
 ### Installer script
 
 Install via the installer script:
