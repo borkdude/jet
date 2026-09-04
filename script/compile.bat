@@ -26,7 +26,8 @@ call %GRAALVM_HOME%\bin\native-image.cmd ^
   "-H:Log=registerResource:" ^
   "--no-fallback" ^
   "--verbose" ^
-  "-J-Xmx3g"
+  "-J-Xmx3g" ^
+  "--features=clj_easy.graal_build_time.InitClojureClasses"
 
 if %errorlevel% neq 0 exit /b %errorlevel%
 

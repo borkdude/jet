@@ -20,7 +20,7 @@
                  [com.rpl/specter "1.1.4"]
                  [rewrite-clj/rewrite-clj "1.1.47"]]
   :profiles {:test {:dependencies [[clj-commons/conch "0.9.2"]]}
-             :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "0.1.4"]]
+             :uberjar {:dependencies [[com.github.clj-easy/graal-build-time "1.0.6"]]
                        :global-vars {*assert* false}
                        :jvm-opts [#_"-Dclojure.compiler.direct-linking=true"
                                   #_"-Dclojure.spec.skip-macros=true"]
