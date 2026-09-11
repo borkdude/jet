@@ -20,7 +20,6 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 call %GRAALVM_HOME%\bin\native-image.cmd ^
   "-jar" "target/jet-%JET_VERSION%-standalone.jar" ^
   "-H:+ReportExceptionStackTraces" ^
-  "-H:Log=registerResource:" ^
   "--no-fallback" ^
   "--verbose" ^
   "--future-defaults=all" ^
