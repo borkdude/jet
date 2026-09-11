@@ -296,7 +296,7 @@ Test the native version:
 
 ## Build
 
-You will need leiningen and GraalVM.
+You will need leiningen and Oracle GraalVM 25.
 
     script/compile
 

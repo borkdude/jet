@@ -7,7 +7,7 @@ if "%GRAALVM_HOME%"=="" (
     echo Please set GRAALVM_HOME
     exit /b
 )
-set JAVA_HOME=%GRAALVM_HOME%\bin
+set JAVA_HOME=%GRAALVM_HOME%
 set PATH=%GRAALVM_HOME%\bin;%PATH%
 
 set /P JET_VERSION=< resources\JET_VERSION
@@ -17,15 +17,13 @@ java -version
 call lein with-profiles +native-image do clean, uberjar
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call %GRAALVM_HOME%\bin\gu.cmd install native-image
-
-Rem the --no-server option is not supported in GraalVM Windows.
 call %GRAALVM_HOME%\bin\native-image.cmd ^
   "-jar" "target/jet-%JET_VERSION%-standalone.jar" ^
   "-H:+ReportExceptionStackTraces" ^
   "-H:Log=registerResource:" ^
   "--no-fallback" ^
   "--verbose" ^
+  "--future-defaults=all" ^
   "-J-Xmx3g"
 
 if %errorlevel% neq 0 exit /b %errorlevel%
