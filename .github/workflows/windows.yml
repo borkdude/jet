@@ -1,0 +1,58 @@
+name: windows build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Cache deps
+        uses: actions/cache@v5
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1.5.2
+        with:
+          java-version: '25.0.4'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@13.6.1
+        with:
+          bb: latest
+          # lein 'latest' downloads 2.13.0, its lein.ps1 expects 2.12.0
+          lein: 2.12.0
+
+      - name: Build binary
+        shell: cmd
+        run: |
+          call script/compile.bat
+
+      - name: Test binary
+        shell: cmd
+        run: |
+          echo {:a 1} | jet --to json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: jet.exe
+          name: jet-windows-amd64
+
+      - name: Release
+        shell: cmd
+        run: |
+          set /P JET_VERSION=< resources\JET_VERSION
+          call bb release-artifact jet-%JET_VERSION%-windows-amd64.zip
