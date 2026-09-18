@@ -152,7 +152,9 @@
    :edn-reader-opts {:desc "options passed to the EDN reader."
                      :default "{:default tagged-literal}"}
    :no-commas       {:coerce :boolean
-                     :desc "remove commas from EDN"}})
+                     :desc "remove commas from EDN"}
+   :print-width     {:coerce :long
+                     :desc "Max print width, when pretty-printing EDN"}})
 
 (def cli-opts
   {:spec cli-spec
@@ -185,7 +187,7 @@
                     no-pretty version query
                     func thread-first thread-last interactive collect
                     edn-reader-opts
-                    help colors no-commas]
+                    help colors no-commas print-width]
              :or {from :edn
                   to :edn
                   colors :auto}}]
@@ -225,7 +227,7 @@
                 (case to
                   :edn (some->
                         input
-                        (formats/generate-edn (not no-pretty) colors no-commas)
+                        (formats/generate-edn (not no-pretty) colors no-commas {:print-width print-width})
                         println)
                   :json (some->
                          input

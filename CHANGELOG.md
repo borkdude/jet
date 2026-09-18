@@ -2,6 +2,10 @@
 
 [jet](https://github.com/borkdude/jet): CLI to transform between JSON, EDN, YAML and Transit using Clojure.
 
+## Unreleased
+
+- [#151](https://github.com/borkdude/jet/issues/151): `--print-width` option to limit width of pretty printed EDN
+
 ## 0.7.27 (2023-08-02)
 
 - [#137](https://github.com/borkdude/jet/issues/137): Added missing functions from clojure v1.11:
